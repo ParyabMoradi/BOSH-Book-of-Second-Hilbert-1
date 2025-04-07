@@ -267,8 +267,8 @@ public class PlayerMovement : MonoBehaviour
             float fHorizontalVelocity = rb.linearVelocity.x;
             fHorizontalVelocity += dir.x;
             
-            if (Mathf.Abs(dir.x) < 0.01f)
-                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
+            if (Mathf.Abs(dir.x) < 0.1f)
+                fHorizontalVelocity *= 0.1f * Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
             else if (Mathf.Sign(dir.x) != Mathf.Sign(fHorizontalVelocity))
                 fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
             else

@@ -518,7 +518,7 @@ MonoBehaviour:
   slideSpeed: 5
   wallJumpLerp: 10
   dashSpeed: 20
-  nudgeStrength: 0.1
+  nudgeStrength: 0.02
   canMove: 1
   wallGrab: 0
   wallJumped: 0
@@ -529,7 +529,7 @@ MonoBehaviour:
   fJumpPressedRememberTime: 0.2
   fGroundedRememberTime: 0.25
   fHorizontalDampingBasic: 0.5
-  fHorizontalDampingWhenStopping: 0.5
+  fHorizontalDampingWhenStopping: 0
   fHorizontalDampingWhenTurning: 0.5
   fCutJumpHeight: 0.5
 --- !u!61 &1135539381
@@ -671,12 +671,13 @@ MonoBehaviour:
   hitCeilingTopRight: 0
   hitCeilingTopLeft: 0
   wallSide: 0
-  collisionRadius: 0.25
+  collisionRadius: 0.1
+  ceilCollisionRadius: 0.05
   bottomOffset: {x: 0, y: -0.5}
   rightOffset: {x: 0.5, y: 0}
   leftOffset: {x: -0.5, y: 0}
-  topLeftOffset: {x: -0.25, y: 0.5}
-  topRightOffset: {x: 0.25, y: 0.5}
+  topLeftOffset: {x: -0.45, y: 0.5}
+  topRightOffset: {x: 0.45, y: 0.5}
 --- !u!50 &1135539385
 Rigidbody2D:
   serializedVersion: 5

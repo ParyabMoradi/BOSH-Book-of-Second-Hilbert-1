@@ -25,6 +25,7 @@ public class PlayerCollision : MonoBehaviour
     [Header("Collision")]
 
     public float collisionRadius = 0.25f;
+    public float ceilCollisionRadius = 0.05f;
     public Vector2 bottomOffset, rightOffset, leftOffset;
     public Vector2 topLeftOffset, topRightOffset;
 
@@ -46,8 +47,15 @@ public class PlayerCollision : MonoBehaviour
         onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
         onLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
         
-        hitCeilingTopLeft = Physics2D.OverlapCircle((Vector2)transform.position + topLeftOffset, collisionRadius, groundLayer);
-        hitCeilingTopRight = Physics2D.OverlapCircle((Vector2)transform.position + topRightOffset, collisionRadius, groundLayer);
+        hitCeilingTopLeft = 
+    			Physics2D.OverlapCircle((Vector2)transform.position + topLeftOffset, ceilCollisionRadius, groundLayer)
+    			&&
+    			(!Physics2D.OverlapCircle((Vector2)transform.position + topLeftOffset + new Vector2(2 * ceilCollisionRadius, 0), ceilCollisionRadius, groundLayer));
+
+        hitCeilingTopRight = 
+				Physics2D.OverlapCircle((Vector2)transform.position + topRightOffset, ceilCollisionRadius, groundLayer)
+				&&
+    			(!Physics2D.OverlapCircle((Vector2)transform.position + topRightOffset - new Vector2(2 * ceilCollisionRadius, 0), ceilCollisionRadius, groundLayer));
         hitCeilingCorner = hitCeilingTopLeft || hitCeilingTopRight;
         
         wallSide = onRightWall ? -1 : 1;
@@ -62,34 +70,9 @@ public class PlayerCollision : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position  + bottomOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + topLeftOffset, collisionRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + topRightOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + topLeftOffset, ceilCollisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + topRightOffset, ceilCollisionRadius);
 
-    }
-    
-    public float GetHorizontalNudgeDistance(bool hittingLeftCorner)
-    {
-        float maxNudge = 0.5f; // Max distance we’ll try nudging
-        float step = 0.01f;    // Precision of the check
-
-        Vector2 origin = (Vector2)transform.position;
-        Vector2 direction = hittingLeftCorner ? Vector2.right : Vector2.left;
-
-        // Try shifting step by step until we no longer hit the platform
-        for (float dist = step; dist <= maxNudge; dist += step)
-        {
-            Vector2 checkPos = origin + direction * dist + (hittingLeftCorner ? topLeftOffset : topRightOffset);
-
-            bool stillHitting = Physics2D.OverlapCircle(checkPos, collisionRadius, groundLayer);
-
-            if (!stillHitting)
-            {
-                return dist;
-            }
-        }
-
-        // Default fallback
-        return maxNudge;
     }
 
 }

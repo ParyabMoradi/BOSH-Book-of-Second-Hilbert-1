@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float slideSpeed = 5;
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
-    public float nudgeStrength = 2f;
+    public float nudgeStrength = 0.05f;
     [Space]
     [Header("Booleans")]
     public bool canMove = true;
@@ -227,20 +227,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (!wallJumped)
         {
-            rb.linearVelocity = new Vector2(dir.x * speed, rb.linearVelocity.y);
+            // rb.linearVelocity = new Vector2(dir.x * speed, rb.linearVelocity.y);
             
             
-            // float fHorizontalVelocity = rb.linearVelocity.x;
-            // fHorizontalVelocity += dir.x;
-            //
-            // if (Mathf.Abs(dir.x) < 0.01f)
-            //     fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
-            // else if (Mathf.Sign(dir.x) != Mathf.Sign(fHorizontalVelocity))
-            //     fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
-            // else
-            //     fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
-            //
-            // rb.linearVelocity = new Vector2(fHorizontalVelocity, rb.linearVelocity.y);
+            float fHorizontalVelocity = rb.linearVelocity.x;
+            fHorizontalVelocity += dir.x;
+            
+            if (Mathf.Abs(dir.x) < 0.01f)
+                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
+            else if (Mathf.Sign(dir.x) != Mathf.Sign(fHorizontalVelocity))
+                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime);
+            else
+                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
+            if (Mathf.Abs(fHorizontalVelocity) < speed)
+                rb.linearVelocity = new Vector2(fHorizontalVelocity, rb.linearVelocity.y);
+            else
+                rb.linearVelocity = new Vector2(side * speed, rb.linearVelocity.y);
         }
         else
         {

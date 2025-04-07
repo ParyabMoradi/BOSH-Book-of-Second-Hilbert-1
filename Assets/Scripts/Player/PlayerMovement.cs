@@ -55,6 +55,12 @@ public class PlayerMovement : MonoBehaviour
 
     private float maxFallSpeed = 20;
     
+    float wallGrabHoldTime = 0.2f;
+    float wallGrabTimer = 0f;
+    int moveInput = 0;
+    int previousInput = 0;
+    bool isHoldingToWall = false;
+    
     Vector2 originalVelocity;
     // private bool hittedCeiling = false;
 
@@ -71,6 +77,13 @@ public class PlayerMovement : MonoBehaviour
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
         Vector2 dir = new Vector2(x, y);
+
+        if (x > 0)
+            moveInput = 1;
+        else if (x < 0)
+            moveInput = -1;
+        else
+            moveInput = 0;
 
         if (isJumping && !coll.onGround)
         {
@@ -92,12 +105,33 @@ public class PlayerMovement : MonoBehaviour
         
         Walk(dir);
         
-        if (coll.onWall && Input.GetButton("Fire3") && canMove)
+        if (coll.onWall && moveInput == side && canMove)
         {
+            if (previousInput == moveInput)
+                wallGrabTimer += Time.deltaTime;
+            else
+                wallGrabTimer = 0f;
             // if(side != coll.wallSide)
             //     anim.Flip(side*-1);
-            wallGrab = true;
-            wallSlide = false;
+            if (wallGrabTimer >= wallGrabHoldTime || (!coll.onGround && ((coll.onRightWall && moveInput == 1)||(coll.onLeftWall && moveInput == -1))))
+            {
+                wallGrab = true;
+                wallSlide = false;
+            }
+            previousInput = moveInput;
+        }else if (wallGrab)
+        {
+            if (!coll.onWall || !canMove || moveInput == 0 || moveInput == -coll.wallSide)
+            {
+                wallGrab = false;
+                wallSlide = false;
+                wallGrabTimer = 0f;
+                previousInput = 0;
+            }
+        }else
+        {
+            wallGrabTimer = 0f;
+            previousInput = moveInput;
         }
 
         if (Input.GetButtonUp("Fire3") || !coll.onWall || !canMove)
@@ -118,9 +152,9 @@ public class PlayerMovement : MonoBehaviour
             if(x > .2f || x < -.2f)
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
 
-            float speedModifier = y > 0 ? .5f : 1;
+            float speedModifier = 0.5f;
 
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, y * (speed * speedModifier));
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
         }
         else
         {
@@ -176,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
             WallJump();
         }
 
-        if (Input.GetButtonDown("Fire1") && !hasDashed)
+        if (Input.GetButtonDown("Fire3") && !hasDashed)
         {
             if(xRaw != 0 || yRaw != 0)
                 Dash(xRaw, yRaw);
@@ -236,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
             if (Mathf.Abs(dir.x) < 0.01f)
                 fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
             else if (Mathf.Sign(dir.x) != Mathf.Sign(fHorizontalVelocity))
-                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime);
+                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
             else
                 fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
             if (Mathf.Abs(fHorizontalVelocity) < speed)

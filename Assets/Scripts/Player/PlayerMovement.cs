@@ -28,6 +28,10 @@ public class PlayerMovement : MonoBehaviour
     private bool groundTouch;
     private bool hasDashed;
     public int side = 1;
+    
+    [Header("Crouch Settings")]
+    public bool isCrouching = false;
+    public float crouchSpeedMultiplier = 0.5f;
 
     
     [Space]
@@ -77,6 +81,17 @@ public class PlayerMovement : MonoBehaviour
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
         Vector2 dir = new Vector2(x, y);
+        
+        Vector2 moveDirection = Vector2.zero;
+        if (Input.GetKey(KeyCode.W))
+            moveDirection.y += 1;
+        if (Input.GetKey(KeyCode.S))
+            moveDirection.y -= 1;
+        if (Input.GetKey(KeyCode.A))
+            moveDirection.x -= 1;
+        if (Input.GetKey(KeyCode.D))
+            moveDirection.x += 1;
+        moveDirection = moveDirection.normalized;
 
         if (x > 0)
             moveInput = 1;
@@ -84,6 +99,15 @@ public class PlayerMovement : MonoBehaviour
             moveInput = -1;
         else
             moveInput = 0;
+        
+        if (coll.onGround && Input.GetAxisRaw("Vertical") < 0)
+        {
+            isCrouching = true;
+        }
+        else
+        {
+            isCrouching = false;
+        }
 
         if (isJumping && !coll.onGround)
         {
@@ -103,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             fJumpPressedRemember = fJumpPressedRememberTime;
         }
         
-        Walk(dir);
+        Walk(dir,moveDirection);
         
         if (coll.onWall && moveInput == side && canMove)
         {
@@ -113,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
                 wallGrabTimer = 0f;
             // if(side != coll.wallSide)
             //     anim.Flip(side*-1);
-            if (wallGrabTimer >= wallGrabHoldTime || (!coll.onGround && ((coll.onRightWall && moveInput == 1)||(coll.onLeftWall && moveInput == -1))))
+            if (wallGrabTimer >= wallGrabHoldTime || (!coll.onGround && ((coll.onRightWall && moveInput == 1) || (coll.onLeftWall && moveInput == -1))))
             {
                 wallGrab = true;
                 wallSlide = false;
@@ -251,7 +275,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
     
-    private void Walk(Vector2 dir)
+    private void Walk(Vector2 dir, Vector2 moveDirection)
     {
         if (!canMove)
             return;
@@ -259,30 +283,31 @@ public class PlayerMovement : MonoBehaviour
         if (wallGrab)
             return;
 
+        float currentSpeed = isCrouching ? speed * crouchSpeedMultiplier : speed;
+
         if (!wallJumped)
         {
-            // rb.linearVelocity = new Vector2(dir.x * speed, rb.linearVelocity.y);
-            
-            
             float fHorizontalVelocity = rb.linearVelocity.x;
             fHorizontalVelocity += dir.x;
-            
-            if (Mathf.Abs(dir.x) < 0.1f)
-                fHorizontalVelocity *= 0.1f * Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
+
+            if (moveDirection.x == 0)
+                fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
             else if (Mathf.Sign(dir.x) != Mathf.Sign(fHorizontalVelocity))
                 fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
             else
                 fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
-            if (Mathf.Abs(fHorizontalVelocity) < speed)
-                rb.linearVelocity = new Vector2(fHorizontalVelocity, rb.linearVelocity.y);
+
+            if (Mathf.Abs(fHorizontalVelocity) < currentSpeed)
+                rb.linearVelocity = new Vector2(moveDirection.x * Mathf.Abs(fHorizontalVelocity), rb.linearVelocity.y);
             else
-                rb.linearVelocity = new Vector2(side * speed, rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(moveDirection.x * currentSpeed, rb.linearVelocity.y);
         }
         else
         {
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, (new Vector2(dir.x * speed, rb.linearVelocity.y)), wallJumpLerp * Time.deltaTime);
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, new Vector2(dir.x * currentSpeed, rb.linearVelocity.y), wallJumpLerp * Time.deltaTime);
         }
     }
+
     
     void GroundTouch()
     {
@@ -349,7 +374,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         StopCoroutine(DisableMovement(0));
-        StartCoroutine(DisableMovement(.1f));
+        StartCoroutine(DisableMovement(.15f));
 
         Vector2 wallDir = coll.onRightWall ? Vector2.left : Vector2.right;
 

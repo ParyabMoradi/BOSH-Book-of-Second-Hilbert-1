@@ -607,7 +607,7 @@ MonoBehaviour:
   jumpForce: 20
   slideSpeed: 5
   wallJumpLerp: 10
-  dashSpeed: 40
+  dashSpeed: 70
   nudgeStrength: 0.02
   canMove: 1
   wallGrab: 0
@@ -616,10 +616,12 @@ MonoBehaviour:
   isDashing: 0
   isJumping: 0
   side: 1
+  isCrouching: 0
+  crouchSpeedMultiplier: 0.5
   fJumpPressedRememberTime: 0.2
   fGroundedRememberTime: 0.25
   fHorizontalDampingBasic: 0.5
-  fHorizontalDampingWhenStopping: 0
+  fHorizontalDampingWhenStopping: 0.5
   fHorizontalDampingWhenTurning: 0.5
   fCutJumpHeight: 0.5
 --- !u!61 &1135539381
@@ -732,8 +734,8 @@ Transform:
   m_GameObject: {fileID: 1135539378}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.45, y: 1.07, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -6.5881, y: 1.07, z: 0}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -762,12 +764,12 @@ MonoBehaviour:
   hitCeilingTopLeft: 0
   wallSide: 0
   collisionRadius: 0.1
-  ceilCollisionRadius: 0.05
+  ceilCollisionRadius: 0.02
   bottomOffset: {x: 0, y: -0.5}
-  rightOffset: {x: 0.5, y: 0}
-  leftOffset: {x: -0.5, y: 0}
-  topLeftOffset: {x: -0.45, y: 0.5}
-  topRightOffset: {x: 0.45, y: 0.5}
+  rightOffset: {x: 0.25, y: 0}
+  leftOffset: {x: -0.25, y: 0}
+  topLeftOffset: {x: -0.24, y: 0.5}
+  topRightOffset: {x: 0.24, y: 0.5}
 --- !u!50 &1135539385
 Rigidbody2D:
   serializedVersion: 5
@@ -807,11 +809,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5170b92437d59941acaf12e3aa44e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallMultiplier: 2.5
+  fallMultiplier: 10
   lowJumpMultiplier: 2
   jumpHangGravityMult: 0.25
-  jumpHangTimeThreshold: 2
-  peakJumpHangGravityMult: 0.1
+  jumpHangTimeThreshold: 1
+  peakJumpHangGravityMult: 0.2
 --- !u!1 &1174287797
 GameObject:
   m_ObjectHideFlags: 0

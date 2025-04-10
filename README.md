@@ -6,21 +6,37 @@
 12 Jun 2025: Game Trailer <br>
 
 ## Tasks
-### Shared tasks ( Everyone )
+### week 1 (10 April)
+
+**Paryab**
+- AI algorithm
+- Movement mechanics
 - Find a theme for assets and UI
 
-### Enemy mechanics ( Paryab )
-- AI algorithm
-
-### Player mechanics ( Paryab )
-- Movement mechanics
-
-### Environment / Level ( Valeria )
+**Valeria**
 (Platforms and interactables in the environment, these being crafting stations and such)
 - Finding assets and notify fred so he knows theme for UI
 - Environmental puzzles (It takes two inspired)
+- Find a theme for assets and UI
 
-### UI ( Frederick )
+**Frederick**
 - Figma sketch
 - Unity prototype
 - Rayman inspired jump-into-portal-selection of levels
+- Find a theme for assets and UI
+
+### week 2 (17 April)
+  **Paryab**
+- Camera movement
+- Configure the player movement
+- Find animations for player movement
+- Try to create some cut-scenes
+- Other types of enemies
+  
+**Valeria**
+- Design the school level
+  
+**Fredrick**
+- Continue woriking on menus
+- Implimantation in-game UI (spells, hearts, UI of enemies, etc.)
+- Implimentation of the level selection scene

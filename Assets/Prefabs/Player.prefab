@@ -194,7 +194,7 @@ MonoBehaviour:
   hitCeilingTopRight: 0
   hitCeilingTopLeft: 0
   wallSide: 0
-  collisionRadius: 0.1
+  collisionRadius: 0.04
   ceilCollisionRadius: 0.02
   bottomOffset: {x: 0, y: -0.5}
   rightOffset: {x: 0.25, y: 0}

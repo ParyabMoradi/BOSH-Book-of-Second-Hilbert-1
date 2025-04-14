@@ -36,7 +36,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void Resume() // Method to resume the game
+    public void Resume() // Method to resume the game
     {
         if (!isPaused)
         {

@@ -40,3 +40,68 @@
 - Continue woriking on menus
 - Implimantation in-game UI (spells, hearts, UI of enemies, etc.)
 - Implimentation of the level selection scene
+
+### week 3 (24 April)
+**Paryab**
+- camera movement
+- add basic animations
+- cut-scenes
+
+**Valeria**
+- level design
+- cut-scenes
+
+**Fredrick**
+- ui design
+
+### week 4 (1 May)
+level design
+add achievement system for levels
+add the book mechanism
+craftable platforms for the girl
+shop and power-ups
+**Paryab**
+
+**Valeria**
+
+**Fredrick**
+
+**prototype of first level**: test the movements, enemies, camera movement
+
+### week 5 (8 May)
+**Paryab**
+
+**Valeria**
+
+**Fredrick**
+
+### week 6 (15 May)
+Start working on multiplayer
+boy/girl abilities
+ui for connection of players
+**Paryab**
+
+**Valeria**
+
+**Fredrick**
+
+### week 7 (22 May)
+**Paryab**
+
+**Valeria**
+
+**Fredrick**
+
+### week 8 (29 May)
+**Paryab**
+
+**Valeria**
+
+**Fredrick**
+
+### week 9 (5 Jun)
+**Paryab**
+
+**Valeria**
+
+**Fredrick**

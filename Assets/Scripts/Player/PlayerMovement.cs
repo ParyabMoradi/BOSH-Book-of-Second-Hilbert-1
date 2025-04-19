@@ -6,12 +6,13 @@ using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
+	private Animator anim;
     private PlayerCollision coll;
     private Rigidbody2D rb;
     [Space]
     [Header("Stats")]
     public float speed = 10;
-    public float jumpForce = 50;
+    public float jumpForce = 15;
     public float slideSpeed = 5;
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
@@ -38,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     float fJumpPressedRemember = 0;
     [SerializeField]
     float fJumpPressedRememberTime = 0.2f;
+	private float jumpCooldownTimer = 0f;
+
     
     float fGroundedRemember = 0;
     [SerializeField]
@@ -58,8 +61,7 @@ public class PlayerMovement : MonoBehaviour
     float fCutJumpHeight = 0.5f;
 
     private float maxFallSpeed = 20;
-    
-    float wallGrabHoldTime = 0.2f;
+	public float wallGrabHoldTime = 0.1f;
     float wallGrabTimer = 0f;
     int moveInput = 0;
     int previousInput = 0;
@@ -72,10 +74,12 @@ public class PlayerMovement : MonoBehaviour
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
+		anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         float xRaw = Input.GetAxisRaw("Horizontal");
@@ -91,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.x -= 1;
         if (Input.GetKey(KeyCode.D))
             moveDirection.x += 1;
-        moveDirection = moveDirection.normalized;
 
         if (x > 0)
             moveInput = 1;
@@ -126,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
         {
             fJumpPressedRemember = fJumpPressedRememberTime;
         }
+		jumpCooldownTimer -= Time.deltaTime;
+
         
         Walk(dir,moveDirection);
         
@@ -198,11 +203,16 @@ public class PlayerMovement : MonoBehaviour
         
         
         // if (coll.onGround)
-        if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0))
+        if (Input.GetButtonDown("Jump") && coll.onWall && !coll.onGround)
+        {
+            // anim.SetTrigger("jump");
+            WallJump();
+        }else if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0) && jumpCooldownTimer <= 0f)
         {
             fJumpPressedRemember = 0;
             fGroundedRemember = 0;
             Jump(Vector2.up, false);
+ 			jumpCooldownTimer = 2*fJumpPressedRememberTime;
         }
         if (Input.GetButtonUp("Jump"))
         {
@@ -228,11 +238,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
-        if (Input.GetButtonDown("Jump") && coll.onWall && !coll.onGround)
-        {
-            // anim.SetTrigger("jump");
-            WallJump();
-        }
+        
 
         if (Input.GetButtonDown("Fire3") && !hasDashed)
         {
@@ -314,6 +320,7 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDashing = false;
         isJumping = false;
+		//anim.SetBool("isJumping",false);
 
         // side = anim.sr.flipX ? -1 : 1;
 
@@ -382,6 +389,8 @@ public class PlayerMovement : MonoBehaviour
 
         wallJumped = true;
         isJumping = true;
+		//anim.SetBool("isJumping",true);
+ 		jumpCooldownTimer = 2*fJumpPressedRememberTime;
     }
     
     private void WallSlide()
@@ -407,10 +416,11 @@ public class PlayerMovement : MonoBehaviour
         // slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         // ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
 
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+        //rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         rb.linearVelocity += dir * jumpForce;
 
         isJumping = true;
+		//anim.SetBool("isJumping",true);
 
         // particle.Play();
     }

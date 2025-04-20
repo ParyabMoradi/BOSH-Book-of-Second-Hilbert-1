@@ -70,11 +70,31 @@ public class PlayerMovement : MonoBehaviour
     Vector2 originalVelocity;
     // private bool hittedCeiling = false;
 
+private Collider2D playerCollider;
+private Vector2 originalColliderSize;
+private Vector2 originalColliderOffset;
+public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
+public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+
+
     void Start()
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+
+		playerCollider = GetComponent<Collider2D>();
+		if (playerCollider is BoxCollider2D box)
+		{
+    		originalColliderSize = box.size;
+    		originalColliderOffset = box.offset;
+		}
+		else if (playerCollider is CapsuleCollider2D capsule)
+		{
+    		originalColliderSize = capsule.size;
+    		originalColliderOffset = capsule.offset;
+		}
+
     }
 
     void Update()
@@ -104,13 +124,39 @@ public class PlayerMovement : MonoBehaviour
             moveInput = 0;
         
         if (coll.onGround && Input.GetAxisRaw("Vertical") < 0)
+{
+    if (!isCrouching)
+    {
+        isCrouching = true;
+        if (playerCollider is BoxCollider2D box)
         {
-            isCrouching = true;
+            box.size = crouchColliderSize;
+            box.offset = crouchColliderOffset;
         }
-        else
+        else if (playerCollider is CapsuleCollider2D capsule)
         {
-            isCrouching = false;
+            capsule.size = crouchColliderSize;
+            capsule.offset = crouchColliderOffset;
         }
+    }
+}
+else
+{
+    if (isCrouching)
+    {
+        isCrouching = false;
+        if (playerCollider is BoxCollider2D box)
+        {
+            box.size = originalColliderSize;
+            box.offset = originalColliderOffset;
+        }
+        else if (playerCollider is CapsuleCollider2D capsule)
+        {
+            capsule.size = originalColliderSize;
+            capsule.offset = originalColliderOffset;
+        }
+    }
+}
 
         if (isJumping && !coll.onGround)
         {
@@ -125,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
             fGroundedRemember = fGroundedRememberTime;
         }
         fJumpPressedRemember -= Time.deltaTime;
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !coll.onLedgeClimb)
         {
             fJumpPressedRemember = fJumpPressedRememberTime;
         }
@@ -207,6 +253,10 @@ public class PlayerMovement : MonoBehaviour
         {
             // anim.SetTrigger("jump");
             WallJump();
+        }else if (Input.GetButtonDown("Jump") && !coll.onWall && coll.onLedgeClimb && (moveInput == side) && !coll.onGround)
+        {
+            // anim.SetTrigger("ledgeClimb");
+            LedgeClimb();
         }else if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0) && jumpCooldownTimer <= 0f)
         {
             fJumpPressedRemember = 0;
@@ -424,6 +474,47 @@ public class PlayerMovement : MonoBehaviour
 
         // particle.Play();
     }
+
+private void LedgeClimb()
+{
+    if (!canMove || isDashing)
+        return;
+
+    StartCoroutine(PerformLedgeClimb());
+}
+
+IEnumerator PerformLedgeClimb()
+{
+    canMove = false;
+    rb.linearVelocity = Vector2.zero;
+    rb.gravityScale = 0;
+
+    // Optional: Trigger ledge climb animation
+    // anim.SetTrigger("ledgeClimb");
+	
+	Vector2 ledgeClimbHoldPosition = (Vector2)transform.position + (side==1 ? coll.ledgeClimbRightOffset+new Vector2(0.1f,0) : coll.ledgeClimbLeftOffset+new Vector2(-0.1f,0));
+    // Move to a holding point if needed before the full climb (you can skip this if not necessary)
+    Vector2 holdPosition = ledgeClimbHoldPosition; // Assume this is defined in your PlayerCollision
+    transform.position = holdPosition;
+
+    // Wait for animation timing or a short pause
+    yield return new WaitForSeconds(0.2f);
+
+    // Move the player to the top of the ledge
+    //Vector2 climbUpPosition = ledgeClimbHoldPosition; // This should be the "final" ledge top position
+    //transform.position = climbUpPosition;
+
+    //yield return new WaitForSeconds(0.2f); // Optional: match this to the length of the animation
+
+    canMove = true;
+    rb.gravityScale = 3;
+
+    // Optionally, reset any wall states
+    wallGrab = false;
+    wallSlide = false;
+    wallJumped = false;
+}
+
 
     IEnumerator DisableMovement(float time)
     {

@@ -973,6 +973,22 @@ PrefabInstance:
       propertyPath: topRightOffset.x
       value: 0.23
       objectReference: {fileID: 0}
+    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
+      propertyPath: ledgeClimbLeftOffset.x
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
+      propertyPath: ledgeClimbLeftOffset.y
+      value: 0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
+      propertyPath: ledgeClimbRightOffset.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
+      propertyPath: ledgeClimbRightOffset.y
+      value: 0.46
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

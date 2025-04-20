@@ -12,11 +12,13 @@ public class PlayerCollision : MonoBehaviour
 
     public bool onGround;
     public bool onWall;
+    public bool onLedgeClimb;
     public bool onRightWall;
     public bool onLeftWall;
     public bool hitCeilingCorner;
     public bool hitCeilingTopRight;
     public bool hitCeilingTopLeft;
+    public bool LedgeClimbRight, LedgeClimbLeft;
     public int wallSide;
 
 
@@ -28,6 +30,7 @@ public class PlayerCollision : MonoBehaviour
     public float ceilCollisionRadius = 0.05f;
     public Vector2 bottomOffset, rightOffset, leftOffset;
     public Vector2 topLeftOffset, topRightOffset;
+    public Vector2 ledgeClimbLeftOffset, ledgeClimbRightOffset;
 
     private Color debugCollisionColor = Color.red;
 
@@ -41,7 +44,7 @@ public class PlayerCollision : MonoBehaviour
     void FixedUpdate()
     {  
         onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
-        onWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer) 
+        onLedgeClimb = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer) 
                  || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
         onRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
@@ -59,6 +62,14 @@ public class PlayerCollision : MonoBehaviour
         hitCeilingCorner = hitCeilingTopLeft || hitCeilingTopRight;
         
         wallSide = onRightWall ? -1 : 1;
+
+
+        LedgeClimbRight =
+	        Physics2D.OverlapCircle((Vector2)transform.position + ledgeClimbRightOffset, collisionRadius, groundLayer);
+        LedgeClimbLeft =
+	        Physics2D.OverlapCircle((Vector2)transform.position + ledgeClimbLeftOffset, collisionRadius, groundLayer);
+
+        onWall = onLedgeClimb && (LedgeClimbLeft || LedgeClimbRight);
     }
 
     void OnDrawGizmos()
@@ -72,7 +83,8 @@ public class PlayerCollision : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + topLeftOffset, ceilCollisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + topRightOffset, ceilCollisionRadius);
-
+        Gizmos.DrawWireSphere((Vector2)transform.position + ledgeClimbRightOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + ledgeClimbLeftOffset, collisionRadius);
     }
 
 }

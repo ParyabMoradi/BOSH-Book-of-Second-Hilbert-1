@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSlide;
     public bool isDashing;
     public bool isJumping;
+private bool isHoldingLedge = false;
+private float ledgeHoldTimer = 0f;
+private const float maxLedgeHoldTime = 0.2f;
+
     [Space]
     private bool groundTouch;
     private bool hasDashed;
@@ -45,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
     float fGroundedRemember = 0;
     [SerializeField]
     float fGroundedRememberTime = 0.25f;
+
+	public float wallGrabOppositeReleaseTime = 0.2f;
+	private float oppositeInputTimer = 0f;
+
 
     [SerializeField]
     [Range(0, 1)]
@@ -70,11 +78,11 @@ public class PlayerMovement : MonoBehaviour
     Vector2 originalVelocity;
     // private bool hittedCeiling = false;
 
-private Collider2D playerCollider;
-private Vector2 originalColliderSize;
-private Vector2 originalColliderOffset;
-public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
-public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+	private Collider2D playerCollider;
+	private Vector2 originalColliderSize;
+	private Vector2 originalColliderOffset;
+	public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
+	public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
 
 
     void Start()
@@ -171,7 +179,7 @@ else
             fGroundedRemember = fGroundedRememberTime;
         }
         fJumpPressedRemember -= Time.deltaTime;
-        if (Input.GetButtonDown("Jump") && !coll.onLedgeClimb)
+        if (Input.GetButtonDown("Jump"))
         {
             fJumpPressedRemember = fJumpPressedRememberTime;
         }
@@ -180,34 +188,50 @@ else
         
         Walk(dir,moveDirection);
         
-        if (coll.onWall && moveInput == side && canMove)
-        {
-            if (previousInput == moveInput)
-                wallGrabTimer += Time.deltaTime;
-            else
-                wallGrabTimer = 0f;
-            // if(side != coll.wallSide)
-            //     anim.Flip(side*-1);
-            if (wallGrabTimer >= wallGrabHoldTime || (!coll.onGround && ((coll.onRightWall && moveInput == 1) || (coll.onLeftWall && moveInput == -1))))
-            {
-                wallGrab = true;
-                wallSlide = false;
-            }
-            previousInput = moveInput;
-        }else if (wallGrab)
-        {
-            if (!coll.onWall || !canMove || moveInput == 0 || moveInput == -coll.wallSide)
-            {
-                wallGrab = false;
-                wallSlide = false;
-                wallGrabTimer = 0f;
-                previousInput = 0;
-            }
-        }else
-        {
+        if ((coll.onWall || coll.onLedgeClimb) && canMove)
+			{
+    if (moveInput == side)
+    {
+        if (previousInput == moveInput)
+            wallGrabTimer += Time.deltaTime;
+        else
             wallGrabTimer = 0f;
-            previousInput = moveInput;
+
+        if (wallGrabTimer >= wallGrabHoldTime)
+        {
+            wallGrab = true;
+            wallSlide = false;
         }
+
+        previousInput = moveInput;
+        oppositeInputTimer = 0f;
+    }
+    else if (moveInput == -side)
+    {
+        oppositeInputTimer += Time.deltaTime;
+
+        if (oppositeInputTimer >= wallGrabOppositeReleaseTime)
+        {
+            wallGrab = false;
+            wallSlide = false;
+            wallGrabTimer = 0f;
+        }
+    }
+    else
+    {
+        //wallGrabTimer = 0f;
+        oppositeInputTimer = 0f;
+    }
+}
+else if (wallGrab)
+{
+    wallGrab = false;
+    wallSlide = false;
+    wallGrabTimer = 0f;
+    previousInput = 0;
+    oppositeInputTimer = 0f;
+}
+
 
         if (Input.GetButtonUp("Fire3") || !coll.onWall || !canMove)
         {
@@ -228,8 +252,10 @@ else
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
 
             float speedModifier = 0.5f;
-
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
+			if (Input.GetAxisRaw("Vertical") < 0)
+				rb.linearVelocity = new Vector2(rb.linearVelocity.x, -slideSpeed);
+			else if (!(!coll.onWall && coll.onLedgeClimb))
+            	rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
         }
         else
         {
@@ -244,16 +270,14 @@ else
             }
         }
 
-        if (!coll.onWall || coll.onGround)
+        if (!(coll.onWall || coll.onLedgeClimb) || coll.onGround)
             wallSlide = false;
         
-        
-        // if (coll.onGround)
-        if (Input.GetButtonDown("Jump") && coll.onWall && !coll.onGround)
+        if (Input.GetButtonDown("Jump") && (coll.onWall || (!coll.onWall && coll.onLedgeClimb && ((coll.onRightWall && moveInput != 1) || (coll.onLeftWall && moveInput != -1)))) && !coll.onGround)
         {
             // anim.SetTrigger("jump");
             WallJump();
-        }else if (Input.GetButtonDown("Jump") && !coll.onWall && coll.onLedgeClimb && (moveInput == side) && !coll.onGround)
+        }else if (Input.GetButtonDown("Jump") && !coll.onWall && coll.onLedgeClimb && ((coll.onRightWall && moveInput == 1) || (coll.onLeftWall && moveInput == -1)) && !coll.onGround)
         {
             // anim.SetTrigger("ledgeClimb");
             LedgeClimb();
@@ -480,6 +504,7 @@ private void LedgeClimb()
     if (!canMove || isDashing)
         return;
 
+	fJumpPressedRemember = 0;
     StartCoroutine(PerformLedgeClimb());
 }
 
@@ -492,7 +517,7 @@ IEnumerator PerformLedgeClimb()
     // Optional: Trigger ledge climb animation
     // anim.SetTrigger("ledgeClimb");
 	
-	Vector2 ledgeClimbHoldPosition = (Vector2)transform.position + (side==1 ? coll.ledgeClimbRightOffset+new Vector2(0.1f,0) : coll.ledgeClimbLeftOffset+new Vector2(-0.1f,0));
+	Vector2 ledgeClimbHoldPosition = (Vector2)transform.position + (side==1 ? coll.ledgeClimbRightOffset+new Vector2(0.1f,0.1f) : coll.ledgeClimbLeftOffset+new Vector2(-0.1f,0.1f));
     // Move to a holding point if needed before the full climb (you can skip this if not necessary)
     Vector2 holdPosition = ledgeClimbHoldPosition; // Assume this is defined in your PlayerCollision
     transform.position = holdPosition;

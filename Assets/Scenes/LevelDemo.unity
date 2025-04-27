@@ -258,12 +258,18 @@ MonoBehaviour:
   isDashing: 0
   isJumping: 0
   side: 1
+  isCrouching: 0
+  crouchSpeedMultiplier: 0.5
   fJumpPressedRememberTime: 0.2
   fGroundedRememberTime: 0.25
+  wallGrabOppositeReleaseTime: 0.2
   fHorizontalDampingBasic: 0.5
   fHorizontalDampingWhenStopping: 0
   fHorizontalDampingWhenTurning: 0.5
   fCutJumpHeight: 0.5
+  wallGrabHoldTime: 0.1
+  crouchColliderSize: {x: 0.5, y: 0.5}
+  crouchColliderOffset: {x: 0, y: -0.25}
 --- !u!61 &1135539381
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -397,11 +403,14 @@ MonoBehaviour:
     m_Bits: 64
   onGround: 0
   onWall: 0
+  onLedgeClimb: 0
   onRightWall: 0
   onLeftWall: 0
   hitCeilingCorner: 0
   hitCeilingTopRight: 0
   hitCeilingTopLeft: 0
+  LedgeClimbRight: 0
+  LedgeClimbLeft: 0
   wallSide: 0
   collisionRadius: 0.1
   ceilCollisionRadius: 0.05
@@ -410,6 +419,8 @@ MonoBehaviour:
   leftOffset: {x: -0.5, y: 0}
   topLeftOffset: {x: -0.45, y: 0.5}
   topRightOffset: {x: 0.45, y: 0.5}
+  ledgeClimbLeftOffset: {x: 0, y: 0}
+  ledgeClimbRightOffset: {x: 0, y: 0}
 --- !u!50 &1135539385
 Rigidbody2D:
   serializedVersion: 5

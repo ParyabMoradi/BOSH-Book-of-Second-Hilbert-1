@@ -42,5 +42,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 4052562737
+    locked: 0
+  - name: Walkthrough
+    uniqueID: 261047331
+    locked: 0
+  - name: Collision
+    uniqueID: 2635711905
+    locked: 0
+  - name: Player
+    uniqueID: 1554581009
+    locked: 0
+  - name: Decor
+    uniqueID: 2285993431
+    locked: 0
+  - name: Decor Layered
+    uniqueID: 2654391283
+    locked: 0
   m_RenderingLayers:
   - Default

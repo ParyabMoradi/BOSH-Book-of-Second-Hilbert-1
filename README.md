@@ -55,18 +55,28 @@
 - ui design
 
 ### week 4 (1 May)
-level design
-add achievement system for levels
-add the book mechanism
-craftable platforms for the girl
-shop and power-ups
+
 **Paryab**
-
+- add the book mechanism
+- craftable platforms for the girl
+- cut-scense
+- implementing the abilities
+- level design
+  
 **Valeria**
-
+- add achievement system for levels
+- cut-scenes
+- R&D about networking
+- level design
+  
 **Fredrick**
+- level selection scene for the shop and school level
+- shop and power-ups
+- implementing the power-ups
+- setting button implitation
+- R&D about networking
 
-**prototype of first level**: test the movements, enemies, camera movement
+**prototype of first level**: test the movements, enemies, camera movement for first level
 
 ### week 5 (8 May)
 **Paryab**

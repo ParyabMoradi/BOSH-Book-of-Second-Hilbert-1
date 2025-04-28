@@ -10,11 +10,18 @@ public class PauseMenu : MonoBehaviour
     // Reference to the pause menu UI GameObject
     public GameObject pauseMenuUI;
 
+    // Reference to the runtime UI GameObject
+    public GameObject runtimeUI;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // Initialization logic can go here if needed
         pauseMenuUI.SetActive(false); // Ensure the pause menu is not visible at the start
+        if (runtimeUI != null)
+        {
+            runtimeUI.SetActive(true); // Ensure the runtime UI is visible at the start
+        }
         Debug.Log("PauseMenu initialized. isPaused: " + isPaused);
     }
 
@@ -45,6 +52,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         pauseMenuUI.SetActive(false); // Deactivate the pause menu UI
+        if (runtimeUI != null)
+        {
+            runtimeUI.SetActive(true); // Show the runtime UI
+        }
         Time.timeScale = 1f; // Set the time scale to 1 (normal speed)
         isPaused = false; // Update the isPaused variable to false
         Debug.Log("Game resumed. isPaused: " + isPaused);
@@ -59,6 +70,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         pauseMenuUI.SetActive(true); // Activate the pause menu UI
+        if (runtimeUI != null)
+        {
+            runtimeUI.SetActive(false); // Hide the runtime UI
+        }
         Time.timeScale = 0f; // Set the time scale to 0 (pause the game)
         isPaused = true; // Update the isPaused variable to true
         Debug.Log("Game paused. isPaused: " + isPaused);

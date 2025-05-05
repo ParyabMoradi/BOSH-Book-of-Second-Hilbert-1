@@ -159,7 +159,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sawtable-30x30-Sheet_0: -2252922383543506531
+      sawtable-30x30-Sheet_1: -3996663976740614693
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

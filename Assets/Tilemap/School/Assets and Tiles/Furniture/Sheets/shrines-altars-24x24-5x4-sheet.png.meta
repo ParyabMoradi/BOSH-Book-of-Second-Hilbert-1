@@ -284,7 +284,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      shrines-altars-24x24-5x4-sheet_0: -3734923852903421564
+      shrines-altars-24x24-5x4-sheet_1: 2227064486370978367
+      shrines-altars-24x24-5x4-sheet_2: 4048428589949655275
+      shrines-altars-24x24-5x4-sheet_3: -2822389278017009888
+      shrines-altars-24x24-5x4-sheet_4: -955900494150633390
+      shrines-altars-24x24-5x4-sheet_5: -713729974047953661
+      shrines-altars-24x24-5x4-sheet_6: 7238260420482181483
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

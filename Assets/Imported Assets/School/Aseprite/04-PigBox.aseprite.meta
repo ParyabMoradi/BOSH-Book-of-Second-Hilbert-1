@@ -651,6 +651,11 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
+    uuid:
+      value0: 0
+      value1: 0
+      value2: 0
+      value3: 0
     guid: -1834817256
     name: 04-PigBox
     layerFlags: 0

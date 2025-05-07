@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 3840455120980995071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5881, y: 1.07, z: 0}
+  m_LocalPosition: {x: -6.645, y: 0.824, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 20
+  jumpForce: 15
   slideSpeed: 5
   wallJumpLerp: 10
   dashSpeed: 70
@@ -168,10 +168,14 @@ MonoBehaviour:
   crouchSpeedMultiplier: 0.5
   fJumpPressedRememberTime: 0.2
   fGroundedRememberTime: 0.25
+  wallGrabOppositeReleaseTime: 0.2
   fHorizontalDampingBasic: 0.5
   fHorizontalDampingWhenStopping: 0.5
   fHorizontalDampingWhenTurning: 0.5
   fCutJumpHeight: 0.5
+  wallGrabHoldTime: 0.1
+  crouchColliderSize: {x: 0.5, y: 0.5}
+  crouchColliderOffset: {x: 0, y: -0.25}
 --- !u!114 &9120674907921084677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,19 +193,25 @@ MonoBehaviour:
     m_Bits: 64
   onGround: 0
   onWall: 0
+  onLedgeClimb: 0
   onRightWall: 0
   onLeftWall: 0
   hitCeilingCorner: 0
   hitCeilingTopRight: 0
   hitCeilingTopLeft: 0
+  LedgeClimbRight: 0
+  LedgeClimbLeft: 0
   wallSide: 0
   collisionRadius: 0.04
+  groundBoxSize: {x: 0.5, y: 0.1}
   ceilCollisionRadius: 0.02
   bottomOffset: {x: 0, y: -0.5}
   rightOffset: {x: 0.25, y: 0}
   leftOffset: {x: -0.25, y: 0}
-  topLeftOffset: {x: -0.24, y: 0.5}
-  topRightOffset: {x: 0.24, y: 0.5}
+  topLeftOffset: {x: -0.23, y: 0.5}
+  topRightOffset: {x: 0.23, y: 0.5}
+  ledgeClimbLeftOffset: {x: -0.25, y: 0.46}
+  ledgeClimbRightOffset: {x: 0.25, y: 0.46}
 --- !u!50 &7911369207453300891
 Rigidbody2D:
   serializedVersion: 5
@@ -254,7 +264,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3840455120980995071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c3e0801944408964ca1682d23f4d92a1, type: 2}
   m_CullingMode: 0

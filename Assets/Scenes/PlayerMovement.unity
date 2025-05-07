@@ -904,41 +904,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 18819902621181566, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 18819902621181566, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 18819902621181566, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 18819902621181566, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3840455120980995071, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4076148574475427954, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: jumpForce
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4076148574475427954, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: wallGrabHoldTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4392256176513687200, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4548275799154190092, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4548275799154190092, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -979,34 +947,6 @@ PrefabInstance:
     - target: {fileID: 4548275799154190092, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4674996847924858058, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: topLeftOffset.x
-      value: -0.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: topRightOffset.x
-      value: 0.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: ledgeClimbLeftOffset.x
-      value: -0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: ledgeClimbLeftOffset.y
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: ledgeClimbRightOffset.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120674907921084677, guid: 1ca4a2054137754418ed0b96137a607e, type: 3}
-      propertyPath: ledgeClimbRightOffset.y
-      value: 0.46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

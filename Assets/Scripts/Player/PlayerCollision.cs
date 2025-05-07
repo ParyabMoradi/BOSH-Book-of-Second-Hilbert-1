@@ -27,6 +27,7 @@ public class PlayerCollision : MonoBehaviour
     [Header("Collision")]
 
     public float collisionRadius = 0.25f;
+    public Vector2 groundBoxSize = new Vector2(0.45f, 0.1f);
     public float ceilCollisionRadius = 0.05f;
     public Vector2 bottomOffset, rightOffset, leftOffset;
     public Vector2 topLeftOffset, topRightOffset;
@@ -43,7 +44,9 @@ public class PlayerCollision : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {  
-        onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
+
+        // onGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, collisionRadius, groundLayer);
+        onGround = Physics2D.OverlapBox((Vector2)transform.position + bottomOffset, groundBoxSize, 0f, groundLayer);
         onLedgeClimb = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer) 
                  || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
 
@@ -78,7 +81,8 @@ public class PlayerCollision : MonoBehaviour
 
         var positions = new Vector2[] { bottomOffset, rightOffset, leftOffset };
 
-        Gizmos.DrawWireSphere((Vector2)transform.position  + bottomOffset, collisionRadius);
+        Gizmos.DrawWireCube((Vector2)transform.position + bottomOffset, groundBoxSize);
+        // Gizmos.DrawWireSphere((Vector2)transform.position  + bottomOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + topLeftOffset, ceilCollisionRadius);

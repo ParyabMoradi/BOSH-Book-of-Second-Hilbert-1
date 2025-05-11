@@ -7,6 +7,7 @@ public class EnemyClickSequence : MonoBehaviour
     private int currentIndex = 0;
     [SerializeField] private int enemyClickSequenceLength = 1;
     [SerializeField] private float timeoutDuration = 2.0f;
+    [SerializeField] private int enemySeqRepeatAllow = 3;
 
     private float timer = 0f;
     private bool isTimerActive = false;
@@ -23,7 +24,7 @@ public class EnemyClickSequence : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); 
-        clickSequence = ClickSequenceGenerator.GenerateSequence(enemyClickSequenceLength);
+        clickSequence = ClickSequenceGenerator.GenerateSequence(enemyClickSequenceLength,enemySeqRepeatAllow);
         assignedColor = colorOptions[Random.Range(0, colorOptions.Length)];
         spriteRenderer.color = assignedColor;
 

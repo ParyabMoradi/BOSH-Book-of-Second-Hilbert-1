@@ -155,7 +155,7 @@ MonoBehaviour:
   jumpForce: 15
   slideSpeed: 5
   wallJumpLerp: 10
-  dashSpeed: 70
+  dashSpeed: 55
   nudgeStrength: 0.02
   canMove: 1
   wallGrab: 0

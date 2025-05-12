@@ -37,7 +37,7 @@ public class BulletChase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             // Do something when hitting the player
-            Debug.Log("Bullet hit the player!");
+            // Debug.Log("Bullet hit the player!");
 
             // Example: reduce health (you can call a method on the player's script)
             // collision.GetComponent<PlayerHealth>()?.TakeDamage(1);

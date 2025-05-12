@@ -11,7 +11,7 @@ public class ActivatablePlatform : MonoBehaviour
     [Header("Colliders")]
     [SerializeField] private BoxCollider2D mouseCollider;
     [SerializeField] private BoxCollider2D platformCollider;
-    private int[] clickSequence;
+    public int[] clickSequence;
     private int currentIndex = 0;
     private float timer;
     private bool isTimerActive = false;

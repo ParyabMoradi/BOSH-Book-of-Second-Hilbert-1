@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 90ca89c34a6da4d9e82de3f77c393783
+guid: ed543e13b503f4c85a719713d12bee23
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 336861364370560697
-    second: city background_0
+      213: -4943874155388325229
+    second: ChatGPT Image May 12, 2025, 01_39_09 PM_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,12 +37,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: city background_0
+      name: ChatGPT Image May 12, 2025, 01_39_09 PM_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1024
+        width: 1536
         height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9b65cd940a5cca400800000000000000
-      internalID: 336861364370560697
+      spriteID: 39238d146a4d36bb0800000000000000
+      internalID: -4943874155388325229
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      city background_0: 336861364370560697
+      ChatGPT Image May 12, 2025, 01_39_09 PM_0: -4943874155388325229
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

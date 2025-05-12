@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyClickSequence : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    private int[] clickSequence;
+    public int[] clickSequence;
     private int currentIndex = 0;
     [SerializeField] private int enemyClickSequenceLength = 1;
     [SerializeField] private float timeoutDuration = 2.0f;
@@ -25,6 +25,9 @@ public class EnemyClickSequence : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); 
         clickSequence = ClickSequenceGenerator.GenerateSequence(enemyClickSequenceLength,enemySeqRepeatAllow);
+
+        ClickSequenceHolder.Instance.SetClickSequence(clickSequence);
+        
         assignedColor = colorOptions[Random.Range(0, colorOptions.Length)];
         spriteRenderer.color = assignedColor;
 
@@ -74,6 +77,7 @@ public class EnemyClickSequence : MonoBehaviour
             {
                 spriteRenderer.color = Color.black;
                 Debug.Log("Sequence Completed! Enemy changed color.");
+                ClickSequenceHolder.Instance.PopClickSequence(clickSequence);
                 ResetSequence();
                 AudioManager.Instance.PlaySFX(CoinEnemyHitsSFX);
             }

@@ -68,6 +68,9 @@ private const float maxLedgeHoldTime = 0.2f;
     [Range(0, 1)]
     float fCutJumpHeight = 0.5f;
 
+    [SerializeField] 
+    private PlayerSound playerSound;
+
     private float maxFallSpeed = 20;
 	public float wallGrabHoldTime = 0.1f;
     float wallGrabTimer = 0f;
@@ -285,6 +288,9 @@ else if (wallGrab)
         {
             fJumpPressedRemember = 0;
             fGroundedRemember = 0;
+
+            playerSound.PlayJumpSound();
+
             Jump(Vector2.up, false);
  			jumpCooldownTimer = 2*fJumpPressedRememberTime;
         }

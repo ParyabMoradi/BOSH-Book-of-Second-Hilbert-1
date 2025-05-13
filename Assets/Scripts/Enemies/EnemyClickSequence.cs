@@ -1,12 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyClickSequence : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+    [SerializeField] private Image timerCircleUI;
     public int[] clickSequence;
     private int currentIndex = 0;
     [SerializeField] private int enemyClickSequenceLength = 1;
-    [SerializeField] private float timeoutDuration = 2.0f;
+    [SerializeField] private float timeoutDuration = 5.0f;
     [SerializeField] private int enemySeqRepeatAllow = 3;
 
     private float timer = 0f;
@@ -36,10 +38,14 @@ public class EnemyClickSequence : MonoBehaviour
 
     void Update()
     {
-        // If the timer is active, update it
         if (isTimerActive)
         {
             timer -= Time.deltaTime;
+
+            // Update the UI circle
+            if (timerCircleUI != null)
+                timerCircleUI.fillAmount = timer / timeoutDuration;
+
             if (timer <= 0)
             {
                 ResetSequence();
@@ -104,11 +110,17 @@ public class EnemyClickSequence : MonoBehaviour
     {
         timer = timeoutDuration;
         isTimerActive = true;
+
+        if (timerCircleUI != null)
+            timerCircleUI.fillAmount = 1f;
     }
 
     void ResetSequence()
     {
         currentIndex = 0;
         isTimerActive = false;
+
+        if (timerCircleUI != null)
+            timerCircleUI.fillAmount = 1f;
     }
 }

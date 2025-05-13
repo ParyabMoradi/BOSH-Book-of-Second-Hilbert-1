@@ -7,6 +7,9 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject JoinPanel;
     public TMP_InputField codeInputField;
+    public LobbyManagerNetwork lobbyNetwork;
+
+
     public void GoToScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -21,14 +24,14 @@ public class MainMenu : MonoBehaviour
     public void HostLobby()
     {
         // Logic to host a lobby
-        Debug.Log("Hosting a lobby...");
+        PlayerPrefs.SetInt("isHost", 1); // Save flag to use after scene loads
         SceneManager.LoadScene("LevelSelect");
     }
 
     public void JoinLobby()
     {
-        LobbyManager.isHost = false;
-        LobbyManager.lobbyCode = codeInputField.text.ToUpper();
+        PlayerPrefs.SetInt("isHost", 0);
+        PlayerPrefs.SetString("joinCode", codeInputField.text.ToUpper());
         SceneManager.LoadScene("LevelSelect");
     }
 

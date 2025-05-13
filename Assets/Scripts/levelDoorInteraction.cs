@@ -38,8 +38,15 @@ public class LevelDoorInteraction2D : MonoBehaviour
 
     void InteractWithDoor()
     {
+        if (!LobbyManagerNetwork.IsHost)
+        {
+            Debug.Log("You are not the host. Cannot interact with door.");
+            return;
+        }
+
         Debug.Log("Interacted with: " + currentDoor.name);
 
+        Debug.Log("Host started level " + currentDoor.name);
         // Load the scene
         SceneManager.LoadScene(currentDoor.name);
 

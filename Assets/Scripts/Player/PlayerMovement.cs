@@ -289,7 +289,7 @@ else if (wallGrab)
             fJumpPressedRemember = 0;
             fGroundedRemember = 0;
 
-            playerSound.PlayJumpSound();
+        
 
             Jump(Vector2.up, false);
  			jumpCooldownTimer = 2*fJumpPressedRememberTime;

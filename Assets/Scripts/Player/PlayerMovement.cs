@@ -6,7 +6,10 @@ using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
-	private Animator anim;
+    // Alteruna online configuration
+    private Alteruna.Avatar _avatar;
+
+    private Animator anim;
     private PlayerCollision coll;
     private Rigidbody2D rb;
     [Space]
@@ -25,33 +28,33 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSlide;
     public bool isDashing;
     public bool isJumping;
-private bool isHoldingLedge = false;
-private float ledgeHoldTimer = 0f;
-private const float maxLedgeHoldTime = 0.2f;
+    private bool isHoldingLedge = false;
+    private float ledgeHoldTimer = 0f;
+    private const float maxLedgeHoldTime = 0.2f;
 
     [Space]
     private bool groundTouch;
     private bool hasDashed;
     public int side = 1;
-    
+
     [Header("Crouch Settings")]
     public bool isCrouching = false;
     public float crouchSpeedMultiplier = 0.5f;
 
-    
+
     [Space]
     float fJumpPressedRemember = 0;
     [SerializeField]
     float fJumpPressedRememberTime = 0.2f;
-	private float jumpCooldownTimer = 0f;
+    private float jumpCooldownTimer = 0f;
 
-    
+
     float fGroundedRemember = 0;
     [SerializeField]
     float fGroundedRememberTime = 0.25f;
 
-	public float wallGrabOppositeReleaseTime = 0.2f;
-	private float oppositeInputTimer = 0f;
+    public float wallGrabOppositeReleaseTime = 0.2f;
+    private float oppositeInputTimer = 0f;
 
 
     [SerializeField]
@@ -69,51 +72,65 @@ private const float maxLedgeHoldTime = 0.2f;
     float fCutJumpHeight = 0.5f;
 
     private float maxFallSpeed = 20;
-	public float wallGrabHoldTime = 0.1f;
+    public float wallGrabHoldTime = 0.1f;
     float wallGrabTimer = 0f;
     int moveInput = 0;
     int previousInput = 0;
     bool isHoldingToWall = false;
-    
+
     Vector2 originalVelocity;
     // private bool hittedCeiling = false;
 
-	private Collider2D playerCollider;
-	private Vector2 originalColliderSize;
-	private Vector2 originalColliderOffset;
-	public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
-	public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+    private Collider2D playerCollider;
+    private Vector2 originalColliderSize;
+    private Vector2 originalColliderOffset;
+    public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
+    public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
 
 
     void Start()
     {
+        _avatar = GetComponent<Alteruna.Avatar>();
+
+        if (!_avatar.IsMe)
+        {
+            enabled = false;
+            return;
+        }
+
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-		anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
 
-		playerCollider = GetComponent<Collider2D>();
-		if (playerCollider is BoxCollider2D box)
-		{
-    		originalColliderSize = box.size;
-    		originalColliderOffset = box.offset;
-		}
-		else if (playerCollider is CapsuleCollider2D capsule)
-		{
-    		originalColliderSize = capsule.size;
-    		originalColliderOffset = capsule.offset;
-		}
+        playerCollider = GetComponent<Collider2D>();
+        if (playerCollider is BoxCollider2D box)
+        {
+            originalColliderSize = box.size;
+            originalColliderOffset = box.offset;
+        }
+        else if (playerCollider is CapsuleCollider2D capsule)
+        {
+            originalColliderSize = capsule.size;
+            originalColliderOffset = capsule.offset;
+        }
 
     }
 
     void Update()
     {
 
+        if (!_avatar.IsMe)
+        {
+            enabled = false;
+            return;
+        }
+
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         float xRaw = Input.GetAxisRaw("Horizontal");
         float yRaw = Input.GetAxisRaw("Vertical");
         Vector2 dir = new Vector2(x, y);
-        
+
         Vector2 moveDirection = Vector2.zero;
         if (Input.GetKey(KeyCode.W))
             moveDirection.y += 1;
@@ -130,41 +147,41 @@ private const float maxLedgeHoldTime = 0.2f;
             moveInput = -1;
         else
             moveInput = 0;
-        
+
         if (coll.onGround && Input.GetAxisRaw("Vertical") < 0)
-{
-    if (!isCrouching)
-    {
-        isCrouching = true;
-        if (playerCollider is BoxCollider2D box)
         {
-            box.size = crouchColliderSize;
-            box.offset = crouchColliderOffset;
+            if (!isCrouching)
+            {
+                isCrouching = true;
+                if (playerCollider is BoxCollider2D box)
+                {
+                    box.size = crouchColliderSize;
+                    box.offset = crouchColliderOffset;
+                }
+                else if (playerCollider is CapsuleCollider2D capsule)
+                {
+                    capsule.size = crouchColliderSize;
+                    capsule.offset = crouchColliderOffset;
+                }
+            }
         }
-        else if (playerCollider is CapsuleCollider2D capsule)
+        else
         {
-            capsule.size = crouchColliderSize;
-            capsule.offset = crouchColliderOffset;
+            if (isCrouching)
+            {
+                isCrouching = false;
+                if (playerCollider is BoxCollider2D box)
+                {
+                    box.size = originalColliderSize;
+                    box.offset = originalColliderOffset;
+                }
+                else if (playerCollider is CapsuleCollider2D capsule)
+                {
+                    capsule.size = originalColliderSize;
+                    capsule.offset = originalColliderOffset;
+                }
+            }
         }
-    }
-}
-else
-{
-    if (isCrouching)
-    {
-        isCrouching = false;
-        if (playerCollider is BoxCollider2D box)
-        {
-            box.size = originalColliderSize;
-            box.offset = originalColliderOffset;
-        }
-        else if (playerCollider is CapsuleCollider2D capsule)
-        {
-            capsule.size = originalColliderSize;
-            capsule.offset = originalColliderOffset;
-        }
-    }
-}
 
         if (isJumping && !coll.onGround)
         {
@@ -183,54 +200,54 @@ else
         {
             fJumpPressedRemember = fJumpPressedRememberTime;
         }
-		jumpCooldownTimer -= Time.deltaTime;
+        jumpCooldownTimer -= Time.deltaTime;
 
-        
-        Walk(dir,moveDirection);
-        
+
+        Walk(dir, moveDirection);
+
         if ((coll.onWall || coll.onLedgeClimb) && canMove)
-			{
-    if (moveInput == side)
-    {
-        if (previousInput == moveInput)
-            wallGrabTimer += Time.deltaTime;
-        else
-            wallGrabTimer = 0f;
-
-        if (wallGrabTimer >= wallGrabHoldTime)
         {
-            wallGrab = true;
-            wallSlide = false;
+            if (moveInput == side)
+            {
+                if (previousInput == moveInput)
+                    wallGrabTimer += Time.deltaTime;
+                else
+                    wallGrabTimer = 0f;
+
+                if (wallGrabTimer >= wallGrabHoldTime)
+                {
+                    wallGrab = true;
+                    wallSlide = false;
+                }
+
+                previousInput = moveInput;
+                oppositeInputTimer = 0f;
+            }
+            else if (moveInput == -side)
+            {
+                oppositeInputTimer += Time.deltaTime;
+
+                if (oppositeInputTimer >= wallGrabOppositeReleaseTime)
+                {
+                    wallGrab = false;
+                    wallSlide = false;
+                    wallGrabTimer = 0f;
+                }
+            }
+            else
+            {
+                //wallGrabTimer = 0f;
+                oppositeInputTimer = 0f;
+            }
         }
-
-        previousInput = moveInput;
-        oppositeInputTimer = 0f;
-    }
-    else if (moveInput == -side)
-    {
-        oppositeInputTimer += Time.deltaTime;
-
-        if (oppositeInputTimer >= wallGrabOppositeReleaseTime)
+        else if (wallGrab)
         {
             wallGrab = false;
             wallSlide = false;
             wallGrabTimer = 0f;
+            previousInput = 0;
+            oppositeInputTimer = 0f;
         }
-    }
-    else
-    {
-        //wallGrabTimer = 0f;
-        oppositeInputTimer = 0f;
-    }
-}
-else if (wallGrab)
-{
-    wallGrab = false;
-    wallSlide = false;
-    wallGrabTimer = 0f;
-    previousInput = 0;
-    oppositeInputTimer = 0f;
-}
 
 
         if (Input.GetButtonUp("Fire3") || !coll.onWall || !canMove)
@@ -244,24 +261,24 @@ else if (wallGrab)
             wallJumped = false;
             GetComponent<PlayerBetterJumping>().enabled = true;
         }
-        
+
         if (wallGrab && !isDashing)
         {
             rb.gravityScale = 0;
-            if(x > .2f || x < -.2f)
+            if (x > .2f || x < -.2f)
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
 
             float speedModifier = 0.5f;
-			if (Input.GetAxisRaw("Vertical") < 0)
-				rb.linearVelocity = new Vector2(rb.linearVelocity.x, -slideSpeed);
-			else if (!(!coll.onWall && coll.onLedgeClimb))
-            	rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
+            if (Input.GetAxisRaw("Vertical") < 0)
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, -slideSpeed);
+            else if (!(!coll.onWall && coll.onLedgeClimb))
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
         }
         else
         {
             rb.gravityScale = 3;
         }
-        if(coll.onWall && !coll.onGround)
+        if (coll.onWall && !coll.onGround)
         {
             if (x != 0 && !wallGrab)
             {
@@ -272,21 +289,23 @@ else if (wallGrab)
 
         if (!(coll.onWall || coll.onLedgeClimb) || coll.onGround)
             wallSlide = false;
-        
+
         if (Input.GetButtonDown("Jump") && (coll.onWall || (!coll.onWall && coll.onLedgeClimb && ((coll.onRightWall && moveInput != 1) || (coll.onLeftWall && moveInput != -1)))) && !coll.onGround)
         {
             // anim.SetTrigger("jump");
             WallJump();
-        }else if (Input.GetButtonDown("Jump") && !coll.onWall && coll.onLedgeClimb && ((coll.onRightWall && moveInput == 1) || (coll.onLeftWall && moveInput == -1)) && !coll.onGround)
+        }
+        else if (Input.GetButtonDown("Jump") && !coll.onWall && coll.onLedgeClimb && ((coll.onRightWall && moveInput == 1) || (coll.onLeftWall && moveInput == -1)) && !coll.onGround)
         {
             // anim.SetTrigger("ledgeClimb");
             LedgeClimb();
-        }else if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0) && jumpCooldownTimer <= 0f)
+        }
+        else if ((fJumpPressedRemember > 0) && (fGroundedRemember > 0) && jumpCooldownTimer <= 0f)
         {
             fJumpPressedRemember = 0;
             fGroundedRemember = 0;
             Jump(Vector2.up, false);
- 			jumpCooldownTimer = 2*fJumpPressedRememberTime;
+            jumpCooldownTimer = 2 * fJumpPressedRememberTime;
         }
         if (Input.GetButtonUp("Jump"))
         {
@@ -295,7 +314,7 @@ else if (wallGrab)
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * fCutJumpHeight);
             }
         }
-        
+
         if (coll.hitCeilingCorner && !(coll.hitCeilingTopLeft && coll.hitCeilingTopRight) && isJumping)
         {
             // Debug.Log(originalVelocity);
@@ -311,12 +330,12 @@ else if (wallGrab)
             rb.linearVelocity = originalVelocity;
         }
 
-        
-        
+
+
 
         if (Input.GetButtonDown("Fire3") && !hasDashed)
         {
-            if(xRaw != 0 || yRaw != 0)
+            if (xRaw != 0 || yRaw != 0)
                 Dash(xRaw, yRaw);
         }
 
@@ -331,7 +350,7 @@ else if (wallGrab)
             groundTouch = true;
         }
 
-        if(!coll.onGround && groundTouch)
+        if (!coll.onGround && groundTouch)
         {
             groundTouch = false;
         }
@@ -341,7 +360,7 @@ else if (wallGrab)
         if (wallGrab || wallSlide || !canMove)
             return;
 
-        if(x > 0)
+        if (x > 0)
         {
             side = 1;
             // anim.Flip(side);
@@ -354,7 +373,7 @@ else if (wallGrab)
 
 
     }
-    
+
     private void Walk(Vector2 dir, Vector2 moveDirection)
     {
         if (!canMove)
@@ -388,19 +407,19 @@ else if (wallGrab)
         }
     }
 
-    
+
     void GroundTouch()
     {
         hasDashed = false;
         isDashing = false;
         isJumping = false;
-		//anim.SetBool("isJumping",false);
+        //anim.SetBool("isJumping",false);
 
         // side = anim.sr.flipX ? -1 : 1;
 
         // jumpParticle.Play();
     }
-    
+
     private void Dash(float x, float y)
     {
         Camera.main.transform.DOComplete();
@@ -417,7 +436,7 @@ else if (wallGrab)
         rb.linearVelocity += dir.normalized * dashSpeed;
         StartCoroutine(DashWait());
     }
-    
+
     IEnumerator DashWait()
     {
         // FindObjectOfType<GhostTrail>().ShowGhost();
@@ -463,10 +482,10 @@ else if (wallGrab)
 
         wallJumped = true;
         isJumping = true;
-		//anim.SetBool("isJumping",true);
- 		jumpCooldownTimer = 2*fJumpPressedRememberTime;
+        //anim.SetBool("isJumping",true);
+        jumpCooldownTimer = 2 * fJumpPressedRememberTime;
     }
-    
+
     private void WallSlide()
     {
         // if(coll.wallSide != side)
@@ -476,7 +495,7 @@ else if (wallGrab)
             return;
 
         bool pushingWall = false;
-        if((rb.linearVelocity.x > 0 && coll.onRightWall) || (rb.linearVelocity.x < 0 && coll.onLeftWall))
+        if ((rb.linearVelocity.x > 0 && coll.onRightWall) || (rb.linearVelocity.x < 0 && coll.onLeftWall))
         {
             pushingWall = true;
         }
@@ -484,7 +503,7 @@ else if (wallGrab)
 
         rb.linearVelocity = new Vector2(push, -slideSpeed);
     }
-    
+
     private void Jump(Vector2 dir, bool wall)
     {
         // slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
@@ -494,51 +513,51 @@ else if (wallGrab)
         rb.linearVelocity += dir * jumpForce;
 
         isJumping = true;
-		//anim.SetBool("isJumping",true);
+        //anim.SetBool("isJumping",true);
 
         // particle.Play();
     }
 
-private void LedgeClimb()
-{
-    if (!canMove || isDashing)
-        return;
+    private void LedgeClimb()
+    {
+        if (!canMove || isDashing)
+            return;
 
-	fJumpPressedRemember = 0;
-    StartCoroutine(PerformLedgeClimb());
-}
+        fJumpPressedRemember = 0;
+        StartCoroutine(PerformLedgeClimb());
+    }
 
-IEnumerator PerformLedgeClimb()
-{
-    canMove = false;
-    rb.linearVelocity = Vector2.zero;
-    rb.gravityScale = 0;
+    IEnumerator PerformLedgeClimb()
+    {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 0;
 
-    // Optional: Trigger ledge climb animation
-    // anim.SetTrigger("ledgeClimb");
-	
-	Vector2 ledgeClimbHoldPosition = (Vector2)transform.position + (side==1 ? coll.ledgeClimbRightOffset+new Vector2(0.1f,0.1f) : coll.ledgeClimbLeftOffset+new Vector2(-0.1f,0.1f));
-    // Move to a holding point if needed before the full climb (you can skip this if not necessary)
-    Vector2 holdPosition = ledgeClimbHoldPosition; // Assume this is defined in your PlayerCollision
-    transform.position = holdPosition;
+        // Optional: Trigger ledge climb animation
+        // anim.SetTrigger("ledgeClimb");
 
-    // Wait for animation timing or a short pause
-    yield return new WaitForSeconds(0.2f);
+        Vector2 ledgeClimbHoldPosition = (Vector2)transform.position + (side == 1 ? coll.ledgeClimbRightOffset + new Vector2(0.1f, 0.1f) : coll.ledgeClimbLeftOffset + new Vector2(-0.1f, 0.1f));
+        // Move to a holding point if needed before the full climb (you can skip this if not necessary)
+        Vector2 holdPosition = ledgeClimbHoldPosition; // Assume this is defined in your PlayerCollision
+        transform.position = holdPosition;
 
-    // Move the player to the top of the ledge
-    //Vector2 climbUpPosition = ledgeClimbHoldPosition; // This should be the "final" ledge top position
-    //transform.position = climbUpPosition;
+        // Wait for animation timing or a short pause
+        yield return new WaitForSeconds(0.2f);
 
-    //yield return new WaitForSeconds(0.2f); // Optional: match this to the length of the animation
+        // Move the player to the top of the ledge
+        //Vector2 climbUpPosition = ledgeClimbHoldPosition; // This should be the "final" ledge top position
+        //transform.position = climbUpPosition;
 
-    canMove = true;
-    rb.gravityScale = 3;
+        //yield return new WaitForSeconds(0.2f); // Optional: match this to the length of the animation
 
-    // Optionally, reset any wall states
-    wallGrab = false;
-    wallSlide = false;
-    wallJumped = false;
-}
+        canMove = true;
+        rb.gravityScale = 3;
+
+        // Optionally, reset any wall states
+        wallGrab = false;
+        wallSlide = false;
+        wallJumped = false;
+    }
 
 
     IEnumerator DisableMovement(float time)

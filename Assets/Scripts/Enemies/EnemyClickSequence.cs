@@ -73,6 +73,7 @@ public class EnemyClickSequence : MonoBehaviour
         {
             currentIndex++;
             StartCoroutine(AnimateClickTransition());
+            ResetTimer();
 
             if (currentIndex >= clickSequence.Length)
             {

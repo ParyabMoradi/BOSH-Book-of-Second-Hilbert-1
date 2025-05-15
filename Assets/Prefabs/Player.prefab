@@ -8,6 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 6267906215341446019}
   - component: {fileID: 4271346896765515593}
   - component: {fileID: 611772742574195030}
@@ -110,6 +111,18 @@ GameObject:
   - component: {fileID: 5918087787769043598}
   - component: {fileID: 3920689919504787068}
   - component: {fileID: 6835084847170007371}
+=======
+  - component: {fileID: 4548275799154190092}
+  - component: {fileID: 18819902621181566}
+  - component: {fileID: 4674996847924858058}
+  - component: {fileID: 4076148574475427954}
+  - component: {fileID: 9120674907921084677}
+  - component: {fileID: 7911369207453300891}
+  - component: {fileID: 2769487348133434240}
+  - component: {fileID: 4392256176513687200}
+  - component: {fileID: -9133012854827549484}
+  - component: {fileID: -6688278582617068262}
+>>>>>>> main
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -400,12 +413,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+<<<<<<< HEAD
 --- !u!114 &6835084847170007371
+=======
+--- !u!114 &-9133012854827549484
+>>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 5298380440747929139}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -446,3 +464,37 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+=======
+  m_GameObject: {fileID: 3840455120980995071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1095846721
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &-6688278582617068262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840455120980995071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20bacfb1a5b8dbe4384798a67c169080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+>>>>>>> main

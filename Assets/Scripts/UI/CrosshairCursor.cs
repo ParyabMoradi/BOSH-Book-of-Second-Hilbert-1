@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class CrosshairCursor : MonoBehaviour
+public class CrosshairCursor : NetworkBehaviour
 {
     public Color defaultColor = Color.white;
     public Color hoverColor = Color.red;
@@ -10,25 +11,32 @@ public class CrosshairCursor : MonoBehaviour
 
     void Start()
     {
+        if (!IsOwner)
+        {
+            gameObject.SetActive(false); // Disable this crosshair for non-owners
+            return;
+        }
+
         Cursor.visible = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer not found on CrosshairCursor GameObject.");
+        }
     }
 
     void Update()
     {
+        if (!IsOwner || spriteRenderer == null) return;
+
+        if (Camera.main == null) return;
+
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = mousePosition;
 
-        // Check if the cursor is over an enemy using 2D raycast
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 0f, enemyLayer);
 
-        if (hit.collider != null)
-        {
-            spriteRenderer.color = hoverColor;
-        }
-        else
-        {
-            spriteRenderer.color = defaultColor;
-        }
+        spriteRenderer.color = hit.collider != null ? hoverColor : defaultColor;
     }
 }

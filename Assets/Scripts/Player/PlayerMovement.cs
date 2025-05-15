@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class PlayerMovement : MonoBehaviour
+using Unity.Netcode;
+
+public class PlayerMovement : NetworkBehaviour
 {
 	private Animator anim;
     private PlayerCollision coll;
     private Rigidbody2D rb;
+
     [Space]
     [Header("Stats")]
     public float speed = 10;
@@ -17,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
     public float nudgeStrength = 0.05f;
+
     [Space]
     [Header("Booleans")]
     public bool canMove = true;
@@ -25,71 +29,87 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSlide;
     public bool isDashing;
     public bool isJumping;
-private bool isHoldingLedge = false;
-private float ledgeHoldTimer = 0f;
-private const float maxLedgeHoldTime = 0.2f;
+    private bool isHoldingLedge = false;
+    private float ledgeHoldTimer = 0f;
+    private const float maxLedgeHoldTime = 0.2f;
 
     [Space]
     private bool groundTouch;
     private bool hasDashed;
     public int side = 1;
-    
+
     [Header("Crouch Settings")]
     public bool isCrouching = false;
     public float crouchSpeedMultiplier = 0.5f;
 
-    
     [Space]
     float fJumpPressedRemember = 0;
-    [SerializeField]
-    float fJumpPressedRememberTime = 0.2f;
-	private float jumpCooldownTimer = 0f;
+    [SerializeField] float fJumpPressedRememberTime = 0.2f;
+    private float jumpCooldownTimer = 0f;
 
-    
     float fGroundedRemember = 0;
-    [SerializeField]
-    float fGroundedRememberTime = 0.25f;
+    [SerializeField] float fGroundedRememberTime = 0.25f;
 
-	public float wallGrabOppositeReleaseTime = 0.2f;
-	private float oppositeInputTimer = 0f;
+    public float wallGrabOppositeReleaseTime = 0.2f;
+    private float oppositeInputTimer = 0f;
 
+    [SerializeField][Range(0, 1)] float fHorizontalDampingBasic = 0.5f;
+    [SerializeField][Range(0, 1)] float fHorizontalDampingWhenStopping = 0.5f;
+    [SerializeField][Range(0, 1)] float fHorizontalDampingWhenTurning = 0.5f;
+    [SerializeField][Range(0, 1)] float fCutJumpHeight = 0.5f;
 
-    [SerializeField]
-    [Range(0, 1)]
-    float fHorizontalDampingBasic = 0.5f;
-    [SerializeField]
-    [Range(0, 1)]
-    float fHorizontalDampingWhenStopping = 0.5f;
-    [SerializeField]
-    [Range(0, 1)]
-    float fHorizontalDampingWhenTurning = 0.5f;
-
-    [SerializeField]
-    [Range(0, 1)]
-    float fCutJumpHeight = 0.5f;
-
-    [SerializeField] 
-    private PlayerSound playerSound;
+    [SerializeField] private PlayerSound playerSound;
 
     private float maxFallSpeed = 20;
-	public float wallGrabHoldTime = 0.1f;
+    public float wallGrabHoldTime = 0.1f;
     float wallGrabTimer = 0f;
     int moveInput = 0;
     int previousInput = 0;
     bool isHoldingToWall = false;
-    
-    Vector2 originalVelocity;
-    // private bool hittedCeiling = false;
 
-	private Collider2D playerCollider;
-	private Vector2 originalColliderSize;
-	private Vector2 originalColliderOffset;
-	public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
-	public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+    Vector2 originalVelocity;
+
+    private Collider2D playerCollider;
+    private Vector2 originalColliderSize;
+    private Vector2 originalColliderOffset;
+    public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
+    public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+
+    private Camera playerCamera;
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            Camera cam = GetComponentInChildren<Camera>();
+            if (cam != null)
+                cam.gameObject.SetActive(false);
+            return;
+        }
+
+        playerCamera = GetComponentInChildren<Camera>();
+        if (playerCamera != null)
+        {
+            playerCamera.tag = "MainCamera";
+            playerCamera.gameObject.SetActive(true);
+
+            CameraFollow follow = playerCamera.GetComponent<CameraFollow>();
+            if (follow != null)
+            {
+                follow.target = this.transform;
+            }
+
+            AudioListener listener = playerCamera.GetComponent<AudioListener>();
+            if (listener != null)
+                listener.enabled = true;
+        }
+    }
 
 
     void Start()
     {
+    
+
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
@@ -559,5 +579,5 @@ IEnumerator PerformLedgeClimb()
         rb.linearDamping = x;
     }
 
-
 }
+

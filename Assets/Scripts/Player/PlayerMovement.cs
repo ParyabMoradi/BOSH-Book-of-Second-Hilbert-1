@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-using Unity.Netcode;
-
-public class PlayerMovement : NetworkBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 	private Animator anim;
     private PlayerCollision coll;
     private Rigidbody2D rb;
-
+    private SpriteRenderer spriteRenderer;
     [Space]
     [Header("Stats")]
     public float speed = 10;
@@ -20,7 +18,6 @@ public class PlayerMovement : NetworkBehaviour
     public float wallJumpLerp = 10;
     public float dashSpeed = 20;
     public float nudgeStrength = 0.05f;
-
     [Space]
     [Header("Booleans")]
     public bool canMove = true;
@@ -29,90 +26,73 @@ public class PlayerMovement : NetworkBehaviour
     public bool wallSlide;
     public bool isDashing;
     public bool isJumping;
-    private bool isHoldingLedge = false;
-    private float ledgeHoldTimer = 0f;
-    private const float maxLedgeHoldTime = 0.2f;
+private bool isHoldingLedge = false;
+private float ledgeHoldTimer = 0f;
+private const float maxLedgeHoldTime = 0.2f;
 
     [Space]
     private bool groundTouch;
     private bool hasDashed;
     public int side = 1;
-
+    
     [Header("Crouch Settings")]
     public bool isCrouching = false;
     public float crouchSpeedMultiplier = 0.5f;
 
+    
     [Space]
     float fJumpPressedRemember = 0;
-    [SerializeField] float fJumpPressedRememberTime = 0.2f;
-    private float jumpCooldownTimer = 0f;
+    [SerializeField]
+    float fJumpPressedRememberTime = 0.2f;
+	private float jumpCooldownTimer = 0f;
 
+    
     float fGroundedRemember = 0;
-    [SerializeField] float fGroundedRememberTime = 0.25f;
+    [SerializeField]
+    float fGroundedRememberTime = 0.25f;
 
-    public float wallGrabOppositeReleaseTime = 0.2f;
-    private float oppositeInputTimer = 0f;
+	public float wallGrabOppositeReleaseTime = 0.2f;
+	private float oppositeInputTimer = 0f;
 
-    [SerializeField][Range(0, 1)] float fHorizontalDampingBasic = 0.5f;
-    [SerializeField][Range(0, 1)] float fHorizontalDampingWhenStopping = 0.5f;
-    [SerializeField][Range(0, 1)] float fHorizontalDampingWhenTurning = 0.5f;
-    [SerializeField][Range(0, 1)] float fCutJumpHeight = 0.5f;
 
-    [SerializeField] private PlayerSound playerSound;
+    [SerializeField]
+    [Range(0, 1)]
+    float fHorizontalDampingBasic = 0.5f;
+    [SerializeField]
+    [Range(0, 1)]
+    float fHorizontalDampingWhenStopping = 0.5f;
+    [SerializeField]
+    [Range(0, 1)]
+    float fHorizontalDampingWhenTurning = 0.5f;
+
+    [SerializeField]
+    [Range(0, 1)]
+    float fCutJumpHeight = 0.5f;
 
     private float maxFallSpeed = 20;
-    public float wallGrabHoldTime = 0.1f;
+	public float wallGrabHoldTime = 0.1f;
     float wallGrabTimer = 0f;
     int moveInput = 0;
     int previousInput = 0;
     bool isHoldingToWall = false;
-
+    
     Vector2 originalVelocity;
+    // private bool hittedCeiling = false;
 
-    private Collider2D playerCollider;
-    private Vector2 originalColliderSize;
-    private Vector2 originalColliderOffset;
-    public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
-    public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
-
-    private Camera playerCamera;
-
-    public override void OnNetworkSpawn()
-    {
-        if (!IsOwner)
-        {
-            Camera cam = GetComponentInChildren<Camera>();
-            if (cam != null)
-                cam.gameObject.SetActive(false);
-            return;
-        }
-
-        playerCamera = GetComponentInChildren<Camera>();
-        if (playerCamera != null)
-        {
-            playerCamera.tag = "MainCamera";
-            playerCamera.gameObject.SetActive(true);
-
-            CameraFollow follow = playerCamera.GetComponent<CameraFollow>();
-            if (follow != null)
-            {
-                follow.target = this.transform;
-            }
-
-            AudioListener listener = playerCamera.GetComponent<AudioListener>();
-            if (listener != null)
-                listener.enabled = true;
-        }
-    }
+	private Collider2D playerCollider;
+	private Vector2 originalColliderSize;
+	private Vector2 originalColliderOffset;
+	public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
+	public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
 
 
     void Start()
     {
-    
-
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-		anim = GetComponent<Animator>();
+        // anim = GetComponentsInChildren<Animator>()[0];
+        anim = GetComponentsInChildren<Animator>()[0];
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
 		playerCollider = GetComponent<Collider2D>();
 		if (playerCollider is BoxCollider2D box)
@@ -130,7 +110,13 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-
+        
+        spriteRenderer.flipX = side == -1;
+        anim.SetFloat("v_y",rb.linearVelocityY);
+        anim.SetFloat("v_x",MathF.Abs(rb.linearVelocityX));
+        anim.SetBool("wallGrab",wallGrab);
+        anim.SetBool("onGround", coll.onGround);
+        
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         float xRaw = Input.GetAxisRaw("Horizontal");
@@ -267,8 +253,9 @@ else if (wallGrab)
             wallJumped = false;
             GetComponent<PlayerBetterJumping>().enabled = true;
         }
-        
-        if (wallGrab && !isDashing)
+
+        anim.speed = 1;
+        if ((wallGrab || coll.onLedgeClimb) && !isDashing)
         {
             rb.gravityScale = 0;
             if(x > .2f || x < -.2f)
@@ -279,6 +266,13 @@ else if (wallGrab)
 				rb.linearVelocity = new Vector2(rb.linearVelocity.x, -slideSpeed);
 			else if (!(!coll.onWall && coll.onLedgeClimb))
             	rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
+            if (!coll.onWall && coll.onLedgeClimb && !coll.onGround)
+            {
+                anim.speed = 0;
+            }
+            else
+                anim.speed = Mathf.Abs(rb.linearVelocityY)/slideSpeed;
+                
         }
         else
         {
@@ -291,6 +285,17 @@ else if (wallGrab)
                 wallSlide = true;
                 WallSlide();
             }
+        }
+        
+        if (coll.onGround && !groundTouch)
+        {
+            GroundTouch();
+            groundTouch = true;
+        }
+
+        if(!coll.onGround && groundTouch)
+        {
+            groundTouch = false;
         }
 
         if (!(coll.onWall || coll.onLedgeClimb) || coll.onGround)
@@ -308,9 +313,6 @@ else if (wallGrab)
         {
             fJumpPressedRemember = 0;
             fGroundedRemember = 0;
-
-        
-
             Jump(Vector2.up, false);
  			jumpCooldownTimer = 2*fJumpPressedRememberTime;
         }
@@ -351,16 +353,7 @@ else if (wallGrab)
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed));
         }
 
-        if (coll.onGround && !groundTouch)
-        {
-            GroundTouch();
-            groundTouch = true;
-        }
-
-        if(!coll.onGround && groundTouch)
-        {
-            groundTouch = false;
-        }
+        
 
         // WallParticle(y);
 
@@ -420,7 +413,7 @@ else if (wallGrab)
         hasDashed = false;
         isDashing = false;
         isJumping = false;
-		//anim.SetBool("isJumping",false);
+		anim.SetBool("isJumping",false);
 
         // side = anim.sr.flipX ? -1 : 1;
 
@@ -474,6 +467,7 @@ else if (wallGrab)
 
     private void WallJump()
     {
+		anim.SetBool("isJumping",true);
         if ((side == 1 && coll.onRightWall) || side == -1 && !coll.onRightWall)
         {
             side *= -1;
@@ -489,7 +483,6 @@ else if (wallGrab)
 
         wallJumped = true;
         isJumping = true;
-		//anim.SetBool("isJumping",true);
  		jumpCooldownTimer = 2*fJumpPressedRememberTime;
     }
     
@@ -516,11 +509,12 @@ else if (wallGrab)
         // slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         // ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
 
+		anim.SetBool("isJumping",true);
+        
         //rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         rb.linearVelocity += dir * jumpForce;
 
         isJumping = true;
-		//anim.SetBool("isJumping",true);
 
         // particle.Play();
     }
@@ -579,5 +573,5 @@ IEnumerator PerformLedgeClimb()
         rb.linearDamping = x;
     }
 
-}
 
+}

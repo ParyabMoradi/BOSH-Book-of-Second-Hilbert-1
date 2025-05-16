@@ -41,15 +41,26 @@ public class RelayManager : MonoBehaviour
     }
 
     private async Task<string> StartHostWithRelay(int maxConnections = 3)
+
     {
-        Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
+        try
+        {
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
+            var relayServerData = new RelayServerData(allocation, "udp");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
-        var relayServerData = new RelayServerData(allocation, "udp");
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+            string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            bool started = NetworkManager.Singleton.StartHost();
+            return started ? joinCode : null;
+        }
+        catch
+        {
+            Debug.LogError("Creating allocation failed");
+            throw;
+        }
 
-        string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-        bool started = NetworkManager.Singleton.StartHost();
-        return started ? joinCode : null;
+
+        
     }
 
     private async Task<bool> StartClientWithRelay(string joinCode)

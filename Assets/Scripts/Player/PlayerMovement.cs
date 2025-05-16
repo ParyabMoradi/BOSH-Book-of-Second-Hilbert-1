@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 	private Animator anim;
     private PlayerCollision coll;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
     [Space]
     [Header("Stats")]
     public float speed = 10;
@@ -89,7 +90,8 @@ private const float maxLedgeHoldTime = 0.2f;
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-		anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
 		playerCollider = GetComponent<Collider2D>();
 		if (playerCollider is BoxCollider2D box)
@@ -107,7 +109,13 @@ private const float maxLedgeHoldTime = 0.2f;
 
     void Update()
     {
-
+        
+        spriteRenderer.flipX = side == -1;
+        anim.SetFloat("v_y",rb.linearVelocityY);
+        anim.SetFloat("v_x",MathF.Abs(rb.linearVelocityX));
+        anim.SetBool("wallGrab",wallGrab);
+        anim.SetBool("onGround", coll.onGround);
+        
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         float xRaw = Input.GetAxisRaw("Horizontal");
@@ -244,8 +252,9 @@ else if (wallGrab)
             wallJumped = false;
             GetComponent<PlayerBetterJumping>().enabled = true;
         }
-        
-        if (wallGrab && !isDashing)
+
+        anim.speed = 1;
+        if ((wallGrab || coll.onLedgeClimb) && !isDashing)
         {
             rb.gravityScale = 0;
             if(x > .2f || x < -.2f)
@@ -256,6 +265,13 @@ else if (wallGrab)
 				rb.linearVelocity = new Vector2(rb.linearVelocity.x, -slideSpeed);
 			else if (!(!coll.onWall && coll.onLedgeClimb))
             	rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Abs(x) * (speed * speedModifier));
+            if (!coll.onWall && coll.onLedgeClimb && !coll.onGround)
+            {
+                anim.speed = 0;
+            }
+            else
+                anim.speed = Mathf.Abs(rb.linearVelocityY)/slideSpeed;
+                
         }
         else
         {
@@ -268,6 +284,17 @@ else if (wallGrab)
                 wallSlide = true;
                 WallSlide();
             }
+        }
+        
+        if (coll.onGround && !groundTouch)
+        {
+            GroundTouch();
+            groundTouch = true;
+        }
+
+        if(!coll.onGround && groundTouch)
+        {
+            groundTouch = false;
         }
 
         if (!(coll.onWall || coll.onLedgeClimb) || coll.onGround)
@@ -325,16 +352,7 @@ else if (wallGrab)
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed));
         }
 
-        if (coll.onGround && !groundTouch)
-        {
-            GroundTouch();
-            groundTouch = true;
-        }
-
-        if(!coll.onGround && groundTouch)
-        {
-            groundTouch = false;
-        }
+        
 
         // WallParticle(y);
 
@@ -394,7 +412,7 @@ else if (wallGrab)
         hasDashed = false;
         isDashing = false;
         isJumping = false;
-		//anim.SetBool("isJumping",false);
+		anim.SetBool("isJumping",false);
 
         // side = anim.sr.flipX ? -1 : 1;
 
@@ -448,6 +466,7 @@ else if (wallGrab)
 
     private void WallJump()
     {
+		anim.SetBool("isJumping",true);
         if ((side == 1 && coll.onRightWall) || side == -1 && !coll.onRightWall)
         {
             side *= -1;
@@ -463,7 +482,6 @@ else if (wallGrab)
 
         wallJumped = true;
         isJumping = true;
-		//anim.SetBool("isJumping",true);
  		jumpCooldownTimer = 2*fJumpPressedRememberTime;
     }
     
@@ -490,11 +508,12 @@ else if (wallGrab)
         // slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
         // ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
 
+		anim.SetBool("isJumping",true);
+        
         //rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         rb.linearVelocity += dir * jumpForce;
 
         isJumping = true;
-		//anim.SetBool("isJumping",true);
 
         // particle.Play();
     }

@@ -12,9 +12,11 @@ public class PlayerController : NetworkBehaviour
 
     public GameObject boyModel;
     public GameObject girlModel;
-    public Animator animator;
-    public RuntimeAnimatorController boyController;
-    public RuntimeAnimatorController girlController;
+    // public Animator animator;
+    // public RuntimeAnimatorController boyController;
+    // public RuntimeAnimatorController girlController;
+
+
 
     private bool positionSet = false;
 
@@ -79,10 +81,10 @@ public class PlayerController : NetworkBehaviour
         boyModel.SetActive(r == CharacterType.Boy);
         girlModel.SetActive(r == CharacterType.Girl);
 
-        if (animator != null)
-        {
-            animator.runtimeAnimatorController = r == CharacterType.Boy ? boyController : girlController;
-        }
+        // if (animator != null)
+        // {
+        //     animator.runtimeAnimatorController = r == CharacterType.Boy ? boyController : girlController;
+        // }
 
         Debug.Log($"[CLIENT {OwnerClientId}] Role applied: {r}");
     }

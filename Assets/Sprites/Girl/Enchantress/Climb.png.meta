@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: ce98745baa8b8094bb76c89939fe4711
+guid: dd17be16418236f41a939884ec6ee5c2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -837275676153275556
-    second: Attack_2_0
+      213: 7534934852089752246
+    second: Climb_0
   - first:
-      213: -8404040051688745268
-    second: Attack_2_1
+      213: 6714499952825786704
+    second: Climb_1
   - first:
-      213: -3526194569594660169
-    second: Attack_2_2
+      213: 712421738393795653
+    second: Climb_2
   - first:
-      213: 950650993592285724
-    second: Attack_2_3
+      213: -479793576682234975
+    second: Climb_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -187,7 +187,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Attack_2_0
+      name: Climb_0
       rect:
         serializedVersion: 2
         x: 0
@@ -200,16 +200,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c5b1fc765366164f0800000000000000
-      internalID: -837275676153275556
+      spriteID: 5849ccd7e8cbdd44895cedebfc5750ae
+      internalID: -1433981040
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_2_1
+      name: Climb_1
       rect:
         serializedVersion: 2
         x: 128
@@ -222,16 +222,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cc6dfe8791ade5b80800000000000000
-      internalID: -8404040051688745268
+      spriteID: e72c9843df008654b816b30779647608
+      internalID: 1381103187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_2_2
+      name: Climb_2
       rect:
         serializedVersion: 2
         x: 256
@@ -244,10 +244,32 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 7ba1666b8b0701fc0800000000000000
-      internalID: -3526194569594660169
+      spriteID: b41f2b5cde16a274a9c8c45ac962a01c
+      internalID: -1065126468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Climb_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cefc4eed4af3554898709bd3c4b774b
+      internalID: -827458505
       vertices: []
       indices: 
       edges: []
@@ -256,7 +278,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5c9a1046ae75cdc48a8d709cf6a3ae76
+    spriteID: 959a966c86d91114dabbd7c777c2dda1
     internalID: 0
     vertices: []
     indices: 
@@ -266,9 +288,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Attack_2_0: -837275676153275556
-      Attack_2_1: -8404040051688745268
-      Attack_2_2: -3526194569594660169
+      Climb_0: -1433981040
+      Climb_1: 1381103187
+      Climb_2: -1065126468
+      Climb_3: -827458505
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

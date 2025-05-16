@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 11398
+  controlID: 29848
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 11338
+  controlID: 31723
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 11339
+  controlID: 31724
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -244,9 +244,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 92cb0000
+      m_SelectedIDs: 70090100
       m_LastClickedID: 0
-      m_ExpandedIDs: defaffffe0faffff
+      m_ExpandedIDs: e0faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -919,9 +919,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -6.1031113, y: -1.9214393, z: -0.0057152375}
+    m_Target: {x: -8.825068, y: -2.8734806, z: -0.018130137}
     speed: 2
-    m_Value: {x: -6.1031113, y: -1.9214393, z: -0.0057152375}
+    m_Value: {x: -8.825068, y: -2.8734806, z: -0.018130137}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -971,9 +971,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1.1305394
+    m_Target: 2.3720262
     speed: 2
-    m_Value: 1.1305394
+    m_Value: 2.3720262
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1045,16 +1045,33 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_ViewTransforms:
     m_KeySerializationHelper:
+    - {fileID: 689596779561613156, guid: 27e56f7a15acb3b46a8e11ed00b7a8a0, type: 2}
     - {fileID: 689596779561613156, guid: c3e0801944408964ca1682d23f4d92a1, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.72191054
+    - e00: 0.73070174
       e01: 0
       e02: 0
-      e03: 111.80231
+      e03: 153.83334
       e10: 0
-      e11: 0.72191054
+      e11: 0.73070174
       e12: 0
-      e13: 94.43384
+      e13: 146.85965
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.73070174
+      e01: 0
+      e02: 0
+      e03: 153.83334
+      e10: 0
+      e11: 0.73070174
+      e12: 0
+      e13: 146.85965
       e20: 0
       e21: 0
       e22: 1
@@ -1064,9 +1081,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: c3e0801944408964ca1682d23f4d92a1, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: 27e56f7a15acb3b46a8e11ed00b7a8a0, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 689596779561613156, guid: c3e0801944408964ca1682d23f4d92a1, type: 2}
+  - m_Target: {fileID: 689596779561613156, guid: 27e56f7a15acb3b46a8e11ed00b7a8a0, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -1153,7 +1170,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Sprites/Boy/Swordsman
+    - Assets/Sprites/Girl/Enchantress
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1163,16 +1180,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Sprites/Boy/Swordsman
+  - Assets/Sprites/Girl/Enchantress
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Paryab\Desktop\OGD_BOSH1\BOSH-Book-of-Second-Hilbert-1
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 564}
-    m_SelectedIDs: 68dd0000
-    m_LastClickedID: 56680
-    m_ExpandedIDs: 000000004ace00004cce00004ece000050ce000052ce000054ce000056ce000058ce00005ace00005cce00005ece000060ce000062ce000064ce000066ce000068ce00006ace00006cce00005edd000000ca9a3b
+    scrollPos: {x: 0, y: 660}
+    m_SelectedIDs: 9c070100
+    m_LastClickedID: 67484
+    m_ExpandedIDs: 000000004ace00004cce00004ece000050ce000052ce000054ce000056ce000058ce00005ace00005cce00005ece000060ce000062ce000064ce000066ce000068ce00006ace00006cce00005edd000072dd000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1227,9 +1244,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 92cb0000
-    m_LastClickedInstanceID: 52114
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 70090100
+    m_LastClickedInstanceID: 67952
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000846500001a8b0000eaa60000a0b10000de590100d2a3000000000000a4ab0000c60301008ccb0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1255,7 +1272,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 7.5}
+    m_ScrollPosition: {x: 0, y: 6}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
@@ -1319,7 +1336,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 11399
+  controlID: 29849
   draggingID: 0
 --- !u!114 &14
 MonoBehaviour:
@@ -1387,7 +1404,7 @@ MonoBehaviour:
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
   m_PreviewResizer:
-    m_CachedPref: -151
+    m_CachedPref: 151
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1

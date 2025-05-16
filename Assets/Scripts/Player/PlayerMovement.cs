@@ -90,7 +90,8 @@ private const float maxLedgeHoldTime = 0.2f;
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<Animator>();
+        // anim = GetComponentsInChildren<Animator>()[0];
+        anim = GetComponentsInChildren<Animator>()[0];
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
 		playerCollider = GetComponent<Collider2D>();

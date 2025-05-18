@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
-	private Animator anim;
+    private Animator anim;
     private PlayerCollision coll;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -26,33 +27,33 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSlide;
     public bool isDashing;
     public bool isJumping;
-private bool isHoldingLedge = false;
-private float ledgeHoldTimer = 0f;
-private const float maxLedgeHoldTime = 0.2f;
+    private bool isHoldingLedge = false;
+    private float ledgeHoldTimer = 0f;
+    private const float maxLedgeHoldTime = 0.2f;
 
     [Space]
     private bool groundTouch;
     private bool hasDashed;
     public int side = 1;
-    
+
     [Header("Crouch Settings")]
     public bool isCrouching = false;
     public float crouchSpeedMultiplier = 0.5f;
 
-    
+
     [Space]
     float fJumpPressedRemember = 0;
     [SerializeField]
     float fJumpPressedRememberTime = 0.2f;
-	private float jumpCooldownTimer = 0f;
+    private float jumpCooldownTimer = 0f;
 
-    
+
     float fGroundedRemember = 0;
     [SerializeField]
     float fGroundedRememberTime = 0.25f;
 
-	public float wallGrabOppositeReleaseTime = 0.2f;
-	private float oppositeInputTimer = 0f;
+    public float wallGrabOppositeReleaseTime = 0.2f;
+    private float oppositeInputTimer = 0f;
 
 
     [SerializeField]
@@ -70,21 +71,30 @@ private const float maxLedgeHoldTime = 0.2f;
     float fCutJumpHeight = 0.5f;
 
     private float maxFallSpeed = 20;
-	public float wallGrabHoldTime = 0.1f;
+    public float wallGrabHoldTime = 0.1f;
     float wallGrabTimer = 0f;
     int moveInput = 0;
     int previousInput = 0;
     bool isHoldingToWall = false;
-    
+
     Vector2 originalVelocity;
     // private bool hittedCeiling = false;
 
-	private Collider2D playerCollider;
-	private Vector2 originalColliderSize;
-	private Vector2 originalColliderOffset;
-	public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
-	public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+    private Collider2D playerCollider;
+    private Vector2 originalColliderSize;
+    private Vector2 originalColliderOffset;
+    public Vector2 crouchColliderSize = new Vector2(0.5f, 0.5f);
+    public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
 
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            enabled = false;
+            return;
+        }
+        
+    }
 
     void Start()
     {

@@ -12,11 +12,10 @@ public class PlayerController : NetworkBehaviour
 
     public GameObject boyModel;
     public GameObject girlModel;
-    // public Animator animator;
-    // public RuntimeAnimatorController boyController;
-    // public RuntimeAnimatorController girlController;
-
-
+    public Animator anim;
+    public SpriteRenderer spriteRenderer;
+    public RuntimeAnimatorController boyController;
+    public RuntimeAnimatorController girlController;
 
     private bool positionSet = false;
 
@@ -71,21 +70,22 @@ public class PlayerController : NetworkBehaviour
     }
 
     private void ApplyRole(CharacterType r)
-    {
-        if (boyModel == null || girlModel == null)
-        {
-            Debug.LogError("PlayerController: boyModel or girlModel not assigned.");
-            return;
-        }
+{
+    // Always disable both first
+    boyModel.SetActive(false);
+    girlModel.SetActive(false);
 
-        boyModel.SetActive(r == CharacterType.Boy);
-        girlModel.SetActive(r == CharacterType.Girl);
+    // Then enable the correct one
+    GameObject activeModel = r == CharacterType.Boy ? boyModel : girlModel;
+    activeModel.SetActive(true);
 
-        // if (animator != null)
-        // {
-        //     animator.runtimeAnimatorController = r == CharacterType.Boy ? boyController : girlController;
-        // }
+    anim = activeModel.GetComponent<Animator>();
+    spriteRenderer = activeModel.GetComponent<SpriteRenderer>();
 
-        Debug.Log($"[CLIENT {OwnerClientId}] Role applied: {r}");
-    }
+    if (anim == null || spriteRenderer == null)
+        Debug.LogError("Missing Animator or SpriteRenderer on model!");
+
+    Debug.Log($"[CLIENT {OwnerClientId}] Role applied: {r}");
+}
+
 }

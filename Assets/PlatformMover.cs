@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlatformMover : MonoBehaviour
+public class PlatformMover : NetworkBehaviour
 {
     [Tooltip("Points in world space the platform will move between.")]
     public Vector3[] pathPoints;
@@ -12,7 +13,7 @@ public class PlatformMover : MonoBehaviour
 
     void Start()
     {
-        if (pathPoints != null && pathPoints.Length > 0)
+        if (IsServer && pathPoints != null && pathPoints.Length > 0)
         {
             transform.position = pathPoints[0];
         }
@@ -20,6 +21,8 @@ public class PlatformMover : MonoBehaviour
 
     void Update()
     {
+        if (!IsServer) return; // Prevent clients from moving it
+
         if (pathPoints == null || pathPoints.Length < 2)
             return;
 

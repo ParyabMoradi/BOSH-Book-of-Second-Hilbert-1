@@ -12,10 +12,12 @@ public class PlayerController : NetworkBehaviour
 
     public GameObject boyModel;
     public GameObject girlModel;
-    public Animator anim;
-    public SpriteRenderer spriteRenderer;
-    public RuntimeAnimatorController boyController;
-    public RuntimeAnimatorController girlController;
+    
+    
+    public Animator boyAnimator;
+    public Animator girlAnimator;
+
+    private Animator anim;
 
     private bool positionSet = false;
 
@@ -70,22 +72,24 @@ public class PlayerController : NetworkBehaviour
     }
 
     private void ApplyRole(CharacterType r)
-{
-    // Always disable both first
-    boyModel.SetActive(false);
-    girlModel.SetActive(false);
+    {
+        boyModel.SetActive(false);
+        girlModel.SetActive(false);
 
-    // Then enable the correct one
-    GameObject activeModel = r == CharacterType.Boy ? boyModel : girlModel;
-    activeModel.SetActive(true);
+        if (r == CharacterType.Boy)
+        {
+            boyModel.SetActive(true);
+            anim = boyAnimator;
+        }
+        else
+        {
+            girlModel.SetActive(true);
+            anim = girlAnimator;
+        }
 
-    anim = activeModel.GetComponent<Animator>();
-    spriteRenderer = activeModel.GetComponent<SpriteRenderer>();
+        Debug.Log($"[CLIENT {OwnerClientId}] Role applied: {r}");
+    }
 
-    if (anim == null || spriteRenderer == null)
-        Debug.LogError("Missing Animator or SpriteRenderer on model!");
 
-    Debug.Log($"[CLIENT {OwnerClientId}] Role applied: {r}");
-}
 
 }

@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7938177789072831560}
   - component: {fileID: 431198340419463905}
+  - component: {fileID: 5508389454865037098}
   - component: {fileID: 1905343670462296651}
   - component: {fileID: 8517464109194844159}
   - component: {fileID: 4958190628510734627}
   - component: {fileID: 3678471353675217605}
-  - component: {fileID: 5508389454865037098}
   - component: {fileID: 1303418839960516818}
   - component: {fileID: -1695990655081597070}
   - component: {fileID: -75684367827776813}
@@ -88,6 +88,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5508389454865037098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861279347574551737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3400251401
+  InScenePlacedSourceGlobalObjectIdHash: 1095846721
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &1905343670462296651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832204e75c2ed624dafe9876b74a24d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  anims: []
   speed: 10
   jumpForce: 15
   slideSpeed: 5
@@ -205,31 +232,6 @@ MonoBehaviour:
   jumpHangGravityMult: 0.25
   jumpHangTimeThreshold: 1
   peakJumpHangGravityMult: 0.2
---- !u!114 &5508389454865037098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861279347574551737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3400251401
-  InScenePlacedSourceGlobalObjectIdHash: 1095846721
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &1303418839960516818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +262,8 @@ MonoBehaviour:
     m_InternalValue: 0
   boyModel: {fileID: 3750888205191897343}
   girlModel: {fileID: 7277319066776858950}
+  boyAnimator: {fileID: 4146986003323676904}
+  girlAnimator: {fileID: 8811531250825591337}
 --- !u!114 &-75684367827776813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +388,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1498544992, guid: a25c0e9cb92056f478c103afe3549fa3, type: 3}
+  m_Sprite: {fileID: 1498544992, guid: df1d1ba663ce047348cbd5ba1db74767, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -405,7 +409,7 @@ Animator:
   m_GameObject: {fileID: 3750888205191897343}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c3e0801944408964ca1682d23f4d92a1, type: 2}
+  m_Controller: {fileID: 9100000, guid: f763c6ed3f4f5471cb6ff1fbea401adb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -510,7 +514,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4723107735738678597, guid: a11c6d50f81d1494483a35b257f7caa7, type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: 7a4bba003fe604cf7bffaad906da495c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -531,7 +535,7 @@ Animator:
   m_GameObject: {fileID: 7277319066776858950}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 27e56f7a15acb3b46a8e11ed00b7a8a0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 454a2269c445846739a1d075528358c7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

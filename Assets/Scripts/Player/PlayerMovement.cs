@@ -7,9 +7,14 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    [SerializeField]
+    private Animator[] anims;
     private Animator anim;
+
+
     private PlayerCollision coll;
     private Rigidbody2D rb;
+    private SpriteRenderer[] sprites;
     private SpriteRenderer spriteRenderer;
     [Space]
     [Header("Stats")]
@@ -88,8 +93,32 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+
+        anims = GetComponentsInChildren<Animator>();
+        sprites = GetComponentsInChildren<SpriteRenderer>();
+        CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
+        Debug.Log(role);
+
+        if (role == CharacterType.Boy)
+        {
+            anim = anims[0];
+            anims[1].enabled = false;
+            spriteRenderer = sprites[0];
+            sprites[1].enabled = false;
+        }
+        else
+        {
+
+            anim = anims[1];
+            anims[0].enabled = false;
+            spriteRenderer = sprites[1];
+            sprites[0].enabled = false;
+        }
+        
+
         if (!IsOwner)
         {
+
             enabled = false;
             return;
         }
@@ -100,9 +129,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-        // anim = GetComponentsInChildren<Animator>()[0];
-        anim = GetComponentsInChildren<Animator>()[0];
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        
 
 		playerCollider = GetComponent<Collider2D>();
 		if (playerCollider is BoxCollider2D box)
@@ -432,8 +459,8 @@ else if (wallGrab)
     
     private void Dash(float x, float y)
     {
-        Camera.main.transform.DOComplete();
-        Camera.main.transform.DOShakePosition(.2f, .5f, 14, 90, false, true);
+        // Camera.main.transform.DOComplete();
+        // Camera.main.transform.DOShakePosition(.2f, .5f, 14, 90, false, true);
         // FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
 
         hasDashed = true;

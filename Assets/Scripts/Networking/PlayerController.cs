@@ -1,9 +1,15 @@
 using Unity.Netcode;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 
 public class PlayerController : NetworkBehaviour
 {
+    public static List<PlayerController> AllPlayers = new List<PlayerController>();
+
+
     public NetworkVariable<CharacterType> role = new NetworkVariable<CharacterType>(
         CharacterType.Unassigned,
         NetworkVariableReadPermission.Everyone,
@@ -12,8 +18,8 @@ public class PlayerController : NetworkBehaviour
 
     public GameObject boyModel;
     public GameObject girlModel;
-    
-    
+
+
     public Animator boyAnimator;
     public Animator girlAnimator;
 
@@ -25,6 +31,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (IsServer)
         {
+            AllPlayers.Add(this);
             role.Value = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
         }
 
@@ -34,6 +41,14 @@ public class PlayerController : NetworkBehaviour
         };
 
         ApplyRole(role.Value);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsServer)
+        {
+            AllPlayers.Remove(this);
+        }
     }
 
     private void Start()

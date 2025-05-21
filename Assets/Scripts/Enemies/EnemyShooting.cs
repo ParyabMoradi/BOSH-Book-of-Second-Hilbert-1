@@ -46,10 +46,9 @@ public class EnemyShooting : NetworkBehaviour
 
     private Transform GetRandomPlayer()
     {
-        var players = NetworkManager.Singleton.ConnectedClientsList;
-        if (players.Count == 0) return null;
+        if (PlayerController.AllPlayers.Count == 0) return null;
 
-        var randomClient = players[Random.Range(0, players.Count)];
-        return randomClient.PlayerObject.transform;
+        int index = Random.Range(0, PlayerController.AllPlayers.Count);
+        return PlayerController.AllPlayers[index].transform;
     }
 }

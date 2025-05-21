@@ -1,7 +1,13 @@
 using UnityEngine;
 using DG.Tweening;
+using Unity.Netcode;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System;
 
-public class EnemyPathMover : MonoBehaviour
+
+public class EnemyPathMover : NetworkBehaviour
 {
     [Header("Path Settings")]
     public Vector2[] pathPositions; // Array of 2D positions for the path (Vector2)
@@ -11,6 +17,9 @@ public class EnemyPathMover : MonoBehaviour
     public Ease easeType = Ease.Linear;
     public bool lookForward = false;
 
+    public EnemySpawner enemySpawner;
+    [SerializeField]
+    private Transform enemyPrefab;
     private void Start()
     {
         if (pathPositions.Length < 2)
@@ -22,6 +31,18 @@ public class EnemyPathMover : MonoBehaviour
         // Start looping movement along the path
         MoveAlongPath();
     }
+    
+    public override void OnNetworkSpawn()
+    {
+        // Only the server should handle the path movement
+        if (!IsServer)
+        {
+            enabled = false;
+            return;
+        }
+    }
+
+    
 
     // Method to start moving along the path
     private void MoveAlongPath()

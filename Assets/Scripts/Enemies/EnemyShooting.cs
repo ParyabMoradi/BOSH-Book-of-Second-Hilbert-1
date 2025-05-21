@@ -1,31 +1,23 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 
 public class EnemyShooting : NetworkBehaviour
 {
-    public GameObject bulletPrefab;    // The bullet prefab to spawn
-    public float shootInterval = 2f;   // Time interval between shots
-    public float bulletSpeed = 10f;    // Speed at which the bullet moves
+    public GameObject bulletPrefab;     // The bullet prefab to spawn
+    public float shootInterval = 2f;    // Time interval between shots
+    public float bulletSpeed = 10f;     // Speed of the bullet
 
-    private Transform shootPoint;      // The point from where bullets are spawned
+    private Transform shootPoint;
 
     private void Start()
     {
-        // Use the center of the enemy (this transform) as shootPoint
         shootPoint = transform;
 
-        // Start shooting repeatedly
-        StartCoroutine(ShootBullets());
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        if (!IsServer)
+        if (IsServer)
         {
-            enabled = false;
-            return;
+            StartCoroutine(ShootBullets());
         }
     }
 
@@ -33,29 +25,31 @@ public class EnemyShooting : NetworkBehaviour
     {
         while (true)
         {
-            // Spawn the bullet as a networked object
-            GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+            Transform target = GetRandomPlayer();
+            if (target != null)
+            {
+                GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
+                NetworkObject netObj = bullet.GetComponent<NetworkObject>();
+                netObj.Spawn();
 
-            // Make sure the bullet has a NetworkObject component
-            var networkObject = bullet.GetComponent<NetworkObject>();
-            if (networkObject != null)
-            {
-                networkObject.Spawn();
-            }
-            else
-            {
-                Debug.LogWarning("Bullet prefab is missing NetworkObject component!");
-            }
-
-            // Apply movement if it has a Rigidbody2D
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.linearVelocity = shootPoint.up * bulletSpeed;
+                Vector2 direction = (target.position - shootPoint.position).normalized;
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = direction * bulletSpeed;
+                }
             }
 
-            // Wait before shooting the next bullet
             yield return new WaitForSeconds(shootInterval);
         }
+    }
+
+    private Transform GetRandomPlayer()
+    {
+        var players = NetworkManager.Singleton.ConnectedClientsList;
+        if (players.Count == 0) return null;
+
+        var randomClient = players[Random.Range(0, players.Count)];
+        return randomClient.PlayerObject.transform;
     }
 }

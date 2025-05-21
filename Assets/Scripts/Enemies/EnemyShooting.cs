@@ -33,8 +33,19 @@ public class EnemyShooting : NetworkBehaviour
     {
         while (true)
         {
-            // Spawn the bullet
+            // Spawn the bullet as a networked object
             GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+
+            // Make sure the bullet has a NetworkObject component
+            var networkObject = bullet.GetComponent<NetworkObject>();
+            if (networkObject != null)
+            {
+                networkObject.Spawn();
+            }
+            else
+            {
+                Debug.LogWarning("Bullet prefab is missing NetworkObject component!");
+            }
 
             // Apply movement if it has a Rigidbody2D
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

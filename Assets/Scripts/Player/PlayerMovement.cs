@@ -12,6 +12,8 @@ public class PlayerMovement : NetworkBehaviour
     private Animator anim;
     private SpriteRenderer[] sprites;
     private SpriteRenderer spriteRenderer;
+    private Transform child;
+    private ClientNetworkTransform[] clientNetTransforms;
 
 
     private PlayerCollision coll;
@@ -97,22 +99,27 @@ public class PlayerMovement : NetworkBehaviour
         anims = GetComponentsInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
         CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
+        clientNetTransforms = GetComponentsInChildren<ClientNetworkTransform>();
         Debug.Log(role);
 
         if (role == CharacterType.Boy)
         {
+            child = transform.GetChild(0);
             anim = anims[0];
             spriteRenderer = sprites[0];
             anims[1].enabled = false;
             sprites[1].enabled = false;
+            clientNetTransforms[2].enabled = false;
         }
         else
         {
-
+            child = transform.GetChild(1);
             anim = anims[1];
             spriteRenderer = sprites[1];
             anims[0].enabled = false;
             sprites[0].enabled = false;
+            clientNetTransforms[1].enabled = false;
+
         }
         
 
@@ -147,8 +154,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
+        child.localScale = new Vector3(side * Math.Abs(child.localScale.x), child.localScale.y, child.localScale.z);
         // spriteRenderer.flipX = side == -1;
-        anim.SetBool("flip",side==-1);
+        // anim.SetBool("flip",side==-1);
         anim.SetFloat("v_y",rb.linearVelocityY);
         anim.SetFloat("v_x",MathF.Abs(rb.linearVelocityX));
         anim.SetBool("wallGrab",wallGrab);

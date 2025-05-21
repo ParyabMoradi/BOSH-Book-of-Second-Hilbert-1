@@ -16,6 +16,8 @@ public class EnemySpawner : NetworkBehaviour
     [SerializeField]
     private Vector2 maxSpawnPos;
 
+    public bool isSpawnable = false;
+
     public List<Transform> enemies = new List<Transform>();
 
     private void Start()
@@ -34,33 +36,39 @@ public class EnemySpawner : NetworkBehaviour
     }
 
     private IEnumerator SpawnEnemies()
-{
-    while (true)
     {
-        int toSpawn = maxEnemyCount - enemies.Count;
-
-        for (int i = 0; i < toSpawn; i++)
+        while (true)
         {
-            Vector2 spawnPos = new Vector2(
-                Random.Range(minSpawnPos.x, maxSpawnPos.x),
-                Random.Range(minSpawnPos.y, maxSpawnPos.y)
-            );
+            int toSpawn = maxEnemyCount - enemies.Count;
 
-            Transform enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, transform);
+            for (int i = 0; i < toSpawn; i++)
+            {
+                Vector2 spawnPos = new Vector2(
+                    Random.Range(minSpawnPos.x, maxSpawnPos.x),
+                    Random.Range(minSpawnPos.y, maxSpawnPos.y)
+                );
 
-            var enemyMover = enemy.GetComponent<EnemyPathMover>();
-            enemyMover.enemySpawner = this;
+                if (this.isSpawnable)
+                {
+                    Transform enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, transform);
+                    var enemyMover = enemy.GetComponent<EnemyPathMover>();
+                    enemyMover.enemySpawner = this;
 
-            // Optional: Set dynamic path
-            enemyMover.pathPositions = new Vector2[] {
-                spawnPos,
-                spawnPos + new Vector2(2f, 0),
-                spawnPos + new Vector2(2f, 2f),
-                spawnPos + new Vector2(0f, 2f)
-            };
+                    // Optional: Set dynamic path
+                    enemyMover.pathPositions = new Vector2[] {
+                    spawnPos,
+                    spawnPos + new Vector2(2f, 0),
+                    spawnPos + new Vector2(2f, 2f),
+                    spawnPos + new Vector2(0f, 2f)
+                };
+                    enemy.GetComponent<NetworkObject>().Spawn();
+                    enemies.Add(enemy);
+                }
 
-            enemy.GetComponent<NetworkObject>().Spawn();
-            enemies.Add(enemy);
+
+
+
+            }
 
             // Optional: add a delay between each clone
             yield return new WaitForSeconds(0.2f);
@@ -71,4 +79,3 @@ public class EnemySpawner : NetworkBehaviour
 }
 
 
-}

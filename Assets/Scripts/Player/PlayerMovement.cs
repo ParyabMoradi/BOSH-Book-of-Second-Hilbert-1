@@ -10,12 +10,12 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     private Animator[] anims;
     private Animator anim;
+    private SpriteRenderer[] sprites;
+    private SpriteRenderer spriteRenderer;
 
 
     private PlayerCollision coll;
     private Rigidbody2D rb;
-    private SpriteRenderer[] sprites;
-    private SpriteRenderer spriteRenderer;
     [Space]
     [Header("Stats")]
     public float speed = 10;
@@ -102,16 +102,16 @@ public class PlayerMovement : NetworkBehaviour
         if (role == CharacterType.Boy)
         {
             anim = anims[0];
-            anims[1].enabled = false;
             spriteRenderer = sprites[0];
+            anims[1].enabled = false;
             sprites[1].enabled = false;
         }
         else
         {
 
             anim = anims[1];
-            anims[0].enabled = false;
             spriteRenderer = sprites[1];
+            anims[0].enabled = false;
             sprites[0].enabled = false;
         }
         
@@ -147,8 +147,8 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        
-        spriteRenderer.flipX = side == -1;
+        // spriteRenderer.flipX = side == -1;
+        anim.SetBool("flip",side==-1);
         anim.SetFloat("v_y",rb.linearVelocityY);
         anim.SetFloat("v_x",MathF.Abs(rb.linearVelocityX));
         anim.SetBool("wallGrab",wallGrab);

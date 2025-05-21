@@ -262,7 +262,6 @@ MonoBehaviour:
     m_InternalValue: 0
   boyModel: {fileID: 3750888205191897343}
   girlModel: {fileID: 7277319066776858950}
-  customSpawnPoint: {fileID: 0}
   boyAnimator: {fileID: 4146986003323676904}
   girlAnimator: {fileID: 8811531250825591337}
 --- !u!114 &-75684367827776813

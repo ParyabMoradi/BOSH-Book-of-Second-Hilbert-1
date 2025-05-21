@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 1f460905e31dcc24eae857937151ab86
+guid: a399eb2cb10c0b84983a6f1c6a265bc2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 109641154503863531
-    second: Idle - Copy_0
+      213: 2436466476253735391
+    second: Climb - Copy_0
   - first:
-      213: 8729571673616230845
-    second: Idle - Copy_1
+      213: 1697442702604209316
+    second: Climb - Copy_1
   - first:
-      213: -5109709752706099236
-    second: Idle - Copy_2
+      213: 4010241835682700871
+    second: Climb - Copy_2
   - first:
-      213: -1333829854711066400
-    second: Idle - Copy_3
+      213: -2200266697077472126
+    second: Climb - Copy_3
   - first:
-      213: 2159936280334018694
-    second: Idle - Copy_4
+      213: -3821500910998398536
+    second: Climb - Copy_4
   - first:
-      213: 3470472721188616725
-    second: Idle - Copy_5
+      213: -3423614246273465572
+    second: Climb - Copy_5
   - first:
-      213: -5443762697202946965
-    second: Idle - Copy_6
+      213: -6273633445101063585
+    second: Climb - Copy_6
   - first:
-      213: -6817291847821518382
-    second: Idle - Copy_7
+      213: -1572390132868158288
+    second: Climb - Copy_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -199,7 +199,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle - Copy_0
+      name: Climb - Copy_0
       rect:
         serializedVersion: 2
         x: 0
@@ -212,16 +212,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bec67f29c06858100800000000000000
-      internalID: 109641154503863531
+      spriteID: aa351497ea7359a4cbbc0ece800c3901
+      internalID: -318845528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_1
+      name: Climb - Copy_1
       rect:
         serializedVersion: 2
         x: 128
@@ -234,16 +234,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: db925379f2ba52970800000000000000
-      internalID: 8729571673616230845
+      spriteID: 6eb7c05bd3df63847affa657503fed52
+      internalID: 1287104789
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_2
+      name: Climb - Copy_2
       rect:
         serializedVersion: 2
         x: 256
@@ -256,16 +256,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cd79a946d0aa619b0800000000000000
-      internalID: -5109709752706099236
+      spriteID: 0679f1f82ace8d143b1a536313e6d509
+      internalID: 802331492
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_3
+      name: Climb - Copy_3
       rect:
         serializedVersion: 2
         x: 384
@@ -278,16 +278,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0e0d22760d84d7de0800000000000000
-      internalID: -1333829854711066400
+      spriteID: d477a495fc297204e99d75d3e5943e90
+      internalID: -275770002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_4
+      name: Climb - Copy_4
       rect:
         serializedVersion: 2
         x: 512
@@ -300,16 +300,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 688a9c66a92a9fd10800000000000000
-      internalID: 2159936280334018694
+      spriteID: 52b409fe1674fa6498ad6705a9ecc2ca
+      internalID: -1863084049
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_5
+      name: Climb - Copy_5
       rect:
         serializedVersion: 2
         x: 640
@@ -322,16 +322,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 51a71257d88992030800000000000000
-      internalID: 3470472721188616725
+      spriteID: bc248e4be4a4e9442820e2f888bc6327
+      internalID: -694308277
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_6
+      name: Climb - Copy_6
       rect:
         serializedVersion: 2
         x: 768
@@ -344,16 +344,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b6c22bf4baed374b0800000000000000
-      internalID: -5443762697202946965
+      spriteID: 15ad9545aad5cba479ab2e1dc91b687b
+      internalID: -817043536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_7
+      name: Climb - Copy_7
       rect:
         serializedVersion: 2
         x: 896
@@ -366,10 +366,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2d99e681f2d1461a0800000000000000
-      internalID: -6817291847821518382
+      spriteID: 0d77d6fd2f7be16409489b37353e166e
+      internalID: -957747663
       vertices: []
       indices: 
       edges: []
@@ -378,7 +378,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 46596d72b28c63243b4f09d16082b7e5
+    spriteID: 54cdbd87b384a654fb798dacb2bc45ad
     internalID: 0
     vertices: []
     indices: 
@@ -388,14 +388,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Idle - Copy_0: 109641154503863531
-      Idle - Copy_1: 8729571673616230845
-      Idle - Copy_2: -5109709752706099236
-      Idle - Copy_3: -1333829854711066400
-      Idle - Copy_4: 2159936280334018694
-      Idle - Copy_5: 3470472721188616725
-      Idle - Copy_6: -5443762697202946965
-      Idle - Copy_7: -6817291847821518382
+      Climb - Copy_0: -318845528
+      Climb - Copy_1: 1287104789
+      Climb - Copy_2: 802331492
+      Climb - Copy_3: -275770002
+      Climb - Copy_4: -1863084049
+      Climb - Copy_5: -694308277
+      Climb - Copy_6: -817043536
+      Climb - Copy_7: -957747663
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

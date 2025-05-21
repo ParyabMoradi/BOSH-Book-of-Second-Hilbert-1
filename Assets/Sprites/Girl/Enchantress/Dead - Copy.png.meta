@@ -1,31 +1,22 @@
 fileFormatVersion: 2
-guid: 1f460905e31dcc24eae857937151ab86
+guid: 5d95c602398ba974ba5f5c5a5c1c7b28
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 109641154503863531
-    second: Idle - Copy_0
+      213: -2201879985725814807
+    second: Dead - Copy_0
   - first:
-      213: 8729571673616230845
-    second: Idle - Copy_1
+      213: 7790689866161033703
+    second: Dead - Copy_1
   - first:
-      213: -5109709752706099236
-    second: Idle - Copy_2
+      213: -3468306066576140812
+    second: Dead - Copy_2
   - first:
-      213: -1333829854711066400
-    second: Idle - Copy_3
+      213: -9131438504931202697
+    second: Dead - Copy_3
   - first:
-      213: 2159936280334018694
-    second: Idle - Copy_4
-  - first:
-      213: 3470472721188616725
-    second: Idle - Copy_5
-  - first:
-      213: -5443762697202946965
-    second: Idle - Copy_6
-  - first:
-      213: -6817291847821518382
-    second: Idle - Copy_7
+      213: 8509056837805652678
+    second: Dead - Copy_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -199,7 +190,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle - Copy_0
+      name: Dead - Copy_0
       rect:
         serializedVersion: 2
         x: 0
@@ -212,16 +203,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bec67f29c06858100800000000000000
-      internalID: 109641154503863531
+      spriteID: 95dbf0c71e9a016408ad9274a24fa4f5
+      internalID: 1202679854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_1
+      name: Dead - Copy_1
       rect:
         serializedVersion: 2
         x: 128
@@ -234,16 +225,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: db925379f2ba52970800000000000000
-      internalID: 8729571673616230845
+      spriteID: d108d528baf88eb4fb25bbd338ad1b9e
+      internalID: 1019851154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_2
+      name: Dead - Copy_2
       rect:
         serializedVersion: 2
         x: 256
@@ -256,16 +247,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cd79a946d0aa619b0800000000000000
-      internalID: -5109709752706099236
+      spriteID: 3ec954c4d666e1d4194943bd98d566cd
+      internalID: 1045299038
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_3
+      name: Dead - Copy_3
       rect:
         serializedVersion: 2
         x: 384
@@ -278,16 +269,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0e0d22760d84d7de0800000000000000
-      internalID: -1333829854711066400
+      spriteID: c6f8707cc0c39c64ba820b6093a9b625
+      internalID: 1785719526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle - Copy_4
+      name: Dead - Copy_4
       rect:
         serializedVersion: 2
         x: 512
@@ -300,76 +291,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 688a9c66a92a9fd10800000000000000
-      internalID: 2159936280334018694
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle - Copy_5
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 51a71257d88992030800000000000000
-      internalID: 3470472721188616725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle - Copy_6
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b6c22bf4baed374b0800000000000000
-      internalID: -5443762697202946965
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle - Copy_7
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2d99e681f2d1461a0800000000000000
-      internalID: -6817291847821518382
+      spriteID: 9d71b4d8e7202bf44a27d6a870a117ab
+      internalID: -400952744
       vertices: []
       indices: 
       edges: []
@@ -378,7 +303,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 46596d72b28c63243b4f09d16082b7e5
+    spriteID: af59dcebc4f59224791358273ff0a4f5
     internalID: 0
     vertices: []
     indices: 
@@ -388,14 +313,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Idle - Copy_0: 109641154503863531
-      Idle - Copy_1: 8729571673616230845
-      Idle - Copy_2: -5109709752706099236
-      Idle - Copy_3: -1333829854711066400
-      Idle - Copy_4: 2159936280334018694
-      Idle - Copy_5: 3470472721188616725
-      Idle - Copy_6: -5443762697202946965
-      Idle - Copy_7: -6817291847821518382
+      Dead - Copy_0: 1202679854
+      Dead - Copy_1: 1019851154
+      Dead - Copy_2: 1045299038
+      Dead - Copy_3: 1785719526
+      Dead - Copy_4: -400952744
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

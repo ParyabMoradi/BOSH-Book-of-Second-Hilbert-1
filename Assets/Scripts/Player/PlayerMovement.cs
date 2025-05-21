@@ -99,7 +99,7 @@ public class PlayerMovement : NetworkBehaviour
         anims = GetComponentsInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
         CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
-        clientNetTransforms = GetComponentsInChildren<ClientNetworkTransform>();
+        // clientNetTransforms = GetComponentsInChildren<ClientNetworkTransform>();
         Debug.Log(role);
 
         if (role == CharacterType.Boy)
@@ -109,7 +109,7 @@ public class PlayerMovement : NetworkBehaviour
             spriteRenderer = sprites[0];
             anims[1].enabled = false;
             sprites[1].enabled = false;
-            clientNetTransforms[2].enabled = false;
+            // clientNetTransforms[2].enabled = false;
         }
         else
         {
@@ -118,7 +118,7 @@ public class PlayerMovement : NetworkBehaviour
             spriteRenderer = sprites[1];
             anims[0].enabled = false;
             sprites[0].enabled = false;
-            clientNetTransforms[1].enabled = false;
+            // clientNetTransforms[1].enabled = false;
 
         }
         
@@ -154,9 +154,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        child.localScale = new Vector3(side * Math.Abs(child.localScale.x), child.localScale.y, child.localScale.z);
+        // child.localScale = new Vector3(side * Math.Abs(child.localScale.x), child.localScale.y, child.localScale.z);
         // spriteRenderer.flipX = side == -1;
-        // anim.SetBool("flip",side==-1);
+        anim.SetBool("flip",side==-1);
         anim.SetFloat("v_y",rb.linearVelocityY);
         anim.SetFloat("v_x",MathF.Abs(rb.linearVelocityX));
         anim.SetBool("wallGrab",wallGrab);

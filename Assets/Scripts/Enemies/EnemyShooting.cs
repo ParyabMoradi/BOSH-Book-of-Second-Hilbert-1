@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Netcode;
+using Unity.Netcode.Components;
 
-public class EnemyShooting : MonoBehaviour
+public class EnemyShooting : NetworkBehaviour
 {
     public GameObject bulletPrefab;    // The bullet prefab to spawn
     public float shootInterval = 2f;   // Time interval between shots
@@ -16,6 +18,15 @@ public class EnemyShooting : MonoBehaviour
 
         // Start shooting repeatedly
         StartCoroutine(ShootBullets());
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsServer)
+        {
+            enabled = false;
+            return;
+        }
     }
 
     private IEnumerator ShootBullets()

@@ -10,8 +10,6 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     private Animator[] anims;
     private Animator anim;
-
-
     private PlayerCollision coll;
     private Rigidbody2D rb;
     private SpriteRenderer[] sprites;
@@ -123,6 +121,25 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
         
+        // Camera follow logic for local player
+        if (IsOwner)
+        {
+            // Try to find a CameraFollow script on the main camera
+            var cam = Camera.main;
+            if (cam != null)
+            {
+                var follow = cam.GetComponent<CameraFollow>();
+                if (follow != null)
+                {
+                    follow.SetTarget(transform);
+                }
+                else
+                {
+                    // Fallback: snap camera to player position (2D)
+                    cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
+                }
+            }
+        }
     }
 
     void Start()

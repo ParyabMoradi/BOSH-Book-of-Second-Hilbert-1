@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1303418839960516818}
   - component: {fileID: -1695990655081597070}
   - component: {fileID: -75684367827776813}
+  - component: {fileID: 7106059960432830637}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -310,6 +311,21 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &7106059960432830637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861279347574551737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce38ab60466b9a49a7534885669a1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  enemyManager: {fileID: 5038895853258517192, guid: cf0c8d1dfb810d4449f3d25f13c2de75, type: 3}
+  playerId: 0
 --- !u!1 &3750888205191897343
 GameObject:
   m_ObjectHideFlags: 0

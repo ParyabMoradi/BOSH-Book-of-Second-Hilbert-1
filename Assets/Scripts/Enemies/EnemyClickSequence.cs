@@ -1,9 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
 using System.Collections;
+using Unity.Netcode;
 
-public class EnemyClickSequence : MonoBehaviour
+public class EnemyClickSequence : NetworkBehaviour
 {
+    public EnemyManager enemyManager;
+    public ulong playerId;
+
+    
     private SpriteRenderer spriteRenderer;
     public int[] clickSequence;
     private int currentIndex = 0;
@@ -38,7 +43,20 @@ public class EnemyClickSequence : MonoBehaviour
         ClickSequenceHolder.Instance.SetClickSequence(clickSequence);
         UpdateClickIndicators();
         Debug.Log("Click Sequence for this enemy: " + string.Join(" ", clickSequence));
+
+        if (IsOwner)
+        {
+            playerId = NetworkManager.Singleton.LocalClientId;
+        }
+        else
+        {
+            playerId = NetworkObject.OwnerClientId;
+        }
+
+        // Start coroutine to wait for EnemyManager to spawn before registering
+        StartCoroutine(WaitForEnemyManagerAndRegister());
     }
+
 
     void Update()
     {
@@ -82,6 +100,8 @@ public class EnemyClickSequence : MonoBehaviour
                 ClickSequenceHolder.Instance.PopClickSequence(clickSequence);
                 ResetSequence();
                 AudioManager.Instance.PlaySFX(CoinEnemyHitsSFX);
+                enemyManager.PlayerFinishedSequenceServerRpc(NetworkManager.Singleton.LocalClientId, gameObject);
+                // enemyManager?.PlayerFinishedSequence(playerId);
             }
             else
             {
@@ -107,8 +127,10 @@ public class EnemyClickSequence : MonoBehaviour
         timer = timeoutDuration;
     }
 
+    
     void ResetSequence()
     {
+        spriteRenderer.color = Color.white;
         currentIndex = 0;
         isTimerActive = false;
         UpdateClickIndicators();
@@ -177,6 +199,28 @@ public class EnemyClickSequence : MonoBehaviour
         circleMid.DOScale(scaleMid, half).SetEase(Ease.OutBack);
         circleSmall.DOScale(scaleSmall, half).SetEase(Ease.OutBack);
         circleLargeRenderer.DOFade(1f, half).SetEase(Ease.OutQuad);
+    }
+
+    public void Defeat()
+    {
+        Debug.Log("Enemy defeated by both players!");
+        // Disable enemy visuals, play death animation, etc.
+        gameObject.SetActive(false);
+    }
+    
+    private IEnumerator WaitForEnemyManagerAndRegister()
+    {
+        // Wait until the network session is active
+        yield return new WaitUntil(() => NetworkManager.Singleton.IsConnectedClient || NetworkManager.Singleton.IsHost);
+
+        // Wait for the EnemyManager to be found and spawned
+        while (enemyManager == null || !enemyManager.IsSpawned)
+        {
+            enemyManager = FindObjectOfType<EnemyManager>();
+            yield return null;
+        }
+        // Register this enemy
+        enemyManager.RegisterEnemyServerRpc(gameObject);
     }
 
 

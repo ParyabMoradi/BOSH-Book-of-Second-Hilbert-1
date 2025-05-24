@@ -7,6 +7,7 @@ public class Interactible : MonoBehaviour
     [SerializeField] private InteractibleType type;
     [SerializeField] private GameObject objectToDisable; // For PressurePlate
     [SerializeField] private EnemySpawner enemySpawner;  // For EnemySpawnerActivator
+    [SerializeField] private SceneLoader sceneLoader; // For LevelTeleport
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -23,10 +24,9 @@ public class Interactible : MonoBehaviour
                     enemySpawner.isSpawnable = true;
                 break;
             case InteractibleType.LevelTeleport:
-                int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-                if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+                if (sceneLoader != null)
                 {
-                    SceneManager.LoadScene(nextSceneIndex);
+                    sceneLoader.RequestSceneLoad();
                 }
                 break;
             // Add more cases for new types here

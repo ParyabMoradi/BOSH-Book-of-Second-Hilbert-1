@@ -16,4 +16,9 @@ public class CameraFollow : MonoBehaviour
 
         transform.LookAt(target);
     }
+
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
 }

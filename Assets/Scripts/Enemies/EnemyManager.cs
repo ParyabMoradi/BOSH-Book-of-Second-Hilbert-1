@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyManager : NetworkBehaviour
 {
+    private const float sequenceTimeout = 5f;
+
     private struct PlayerSequenceStatus
     {
         public NetworkObjectReference playerReference;
@@ -15,10 +17,69 @@ public class EnemyManager : NetworkBehaviour
     {
         public NetworkObjectReference enemyReference;
         public PlayerSequenceStatus[] playerStatuses;
+        public float timer;  // Countdown timer
     }
 
     private List<PlayerSequenceStatus> playerStatuses = new();
     private List<EnemyStatus> enemyStatuses = new();
+    
+    private void Update()
+    {
+        if (!IsServer) return;
+
+        for (int i = 0; i < enemyStatuses.Count; i++)
+        {
+            var enemy = enemyStatuses[i];
+            var p0 = enemy.playerStatuses[0];
+            var p1 = enemy.playerStatuses[1];
+
+            // Debug.Log($"[Enemy {i}] Timer: {enemy.timer:F2} | P0 finished: {p0.sequenceFinished} | P1 finished: {p1.sequenceFinished}");
+
+            // If exactly one player has finished
+            if (p0.sequenceFinished != p1.sequenceFinished)
+            {
+                enemy.timer -= Time.deltaTime;
+                // Debug.Log($"[Enemy {i}] One player finished. Timer counting down: {enemy.timer:F2}");
+
+                if (enemy.timer <= 0f)
+                {
+                    // Debug.Log($"[Enemy {i}] Timer expired! Resetting finished player's sequence.");
+
+                    var finishedPlayer = p0.sequenceFinished ? p0 : p1;
+
+                    ResetPlayerSequence(finishedPlayer.playerReference, enemy.enemyReference);
+
+                    // Reset finished status
+                    for (int j = 0; j < enemy.playerStatuses.Length; j++)
+                    {
+                        if (enemy.playerStatuses[j].playerReference.Equals(finishedPlayer.playerReference))
+                        {
+                            enemy.playerStatuses[j].sequenceFinished = false;
+                            break;
+                        }
+                    }
+
+                    enemy.timer = sequenceTimeout;
+                    enemyStatuses[i] = enemy;
+                }
+                else
+                {
+                    enemyStatuses[i] = enemy;
+                }
+            }
+            else
+            {
+                // Both finished or both not finished
+                if (enemy.timer < sequenceTimeout)
+                    // Debug.Log($"[Enemy {i}] Both players same state (finished/not finished). Timer reset.");
+
+                enemy.timer = sequenceTimeout;
+                enemyStatuses[i] = enemy;
+            }
+        }
+    }
+
+
 
     // Called by players to register themselves with the manager (only works on server/host)
     [ServerRpc(RequireOwnership = false)]
@@ -68,7 +129,8 @@ public class EnemyManager : NetworkBehaviour
             {
                 playerStatuses[0],
                 playerStatuses[1]
-            }
+            },
+            timer = sequenceTimeout
         };
 
         enemyStatuses.Add(enemyStatus);
@@ -121,7 +183,15 @@ public class EnemyManager : NetworkBehaviour
                 if (bothFinished)
                 {
                     Debug.Log($"Enemy {i} defeated by both players!");
-                    // Later: Call Defeat() on the enemy object here
+                    if (enemyRef.TryGet(out NetworkObject enemyObj))
+                    {
+                        EnemyClickSequence ecs = enemyObj.GetComponent<EnemyClickSequence>();
+                        if (ecs != null)
+                        {
+                            ecs.DefeatClientRpc(); // Triggers defeat on both clients
+                            Debug.Log($"Enemy defeated! RPC called on enemy: {enemyObj.name}");
+                        }
+                    }
                 }
 
                 return; // Exit once the correct enemy is found and processed
@@ -131,5 +201,22 @@ public class EnemyManager : NetworkBehaviour
         Debug.LogWarning("Enemy not found for the given reference.");
     }
 
+
+    private void ResetPlayerSequence(NetworkObjectReference playerRef, NetworkObjectReference enemyRef)
+    {
+        if (enemyRef.TryGet(out var enemyObject))
+        {
+            var enemyClickSequence = enemyObject.GetComponent<EnemyClickSequence>();
+
+            if (enemyClickSequence != null)
+            {
+                if (playerRef.TryGet(out var playerObject))
+                {
+                    ulong clientId = playerObject.OwnerClientId;
+                    enemyClickSequence.ResetSequenceClientRpc(clientId);
+                }
+            }
+        }
+    }
 
 }

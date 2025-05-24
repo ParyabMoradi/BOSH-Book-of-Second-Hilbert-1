@@ -2,12 +2,15 @@ using DG.Tweening;
 using UnityEngine;
 using System.Collections;
 using Unity.Netcode;
+using UnityEngine.UI;  // Required for UI.Image
 
 public class EnemyClickSequence : NetworkBehaviour
 {
     public EnemyManager enemyManager;
     public ulong playerId;
 
+    public Image timerCircleUI;
+    [SerializeField] private float timerUIAmount = 5.0f;
     
     private SpriteRenderer spriteRenderer;
     public int[] clickSequence;
@@ -101,6 +104,7 @@ public class EnemyClickSequence : NetworkBehaviour
                 ResetSequence();
                 AudioManager.Instance.PlaySFX(CoinEnemyHitsSFX);
                 enemyManager.PlayerFinishedSequenceServerRpc(NetworkManager.Singleton.LocalClientId, gameObject);
+                StartVisualTimer(timerUIAmount);
                 // enemyManager?.PlayerFinishedSequence(playerId);
             }
             else
@@ -126,11 +130,18 @@ public class EnemyClickSequence : NetworkBehaviour
     {
         timer = timeoutDuration;
     }
-
     
+    [ClientRpc]
+    public void ResetSequenceClientRpc(ulong targetClientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId != targetClientId) return;
+
+        ResetSequence();
+    }
     void ResetSequence()
     {
         spriteRenderer.color = Color.white;
+        timerCircleUI.fillAmount = 1;
         currentIndex = 0;
         isTimerActive = false;
         UpdateClickIndicators();
@@ -201,12 +212,49 @@ public class EnemyClickSequence : NetworkBehaviour
         circleLargeRenderer.DOFade(1f, half).SetEase(Ease.OutQuad);
     }
 
+    [ClientRpc]
+    public void DefeatClientRpc()
+    {
+        Defeat(); // This will run locally on each client
+    }
+
     public void Defeat()
     {
         Debug.Log("Enemy defeated by both players!");
-        // Disable enemy visuals, play death animation, etc.
+
+        // Optional: Stop any remaining timers or coroutines
+        isTimerActive = false;
+        StopAllCoroutines();
+
+        // Visual feedback: fade out and disable enemy
+        StartCoroutine(FadeOutAndDisable());
+
+        // Optionally play a sound effect
+        if (CoinEnemyDefeatSFX != null)
+        {
+            AudioManager.Instance.PlaySFX(CoinEnemyDefeatSFX);
+        }
+    }
+    private IEnumerator FadeOutAndDisable()
+    {
+        float duration = 0.5f;
+        float elapsed = 0f;
+        Color startColor = spriteRenderer.color;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, 1f - t);
+            yield return null;
+        }
+
+        // Ensure fully transparent
+        spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+    
         gameObject.SetActive(false);
     }
+
     
     private IEnumerator WaitForEnemyManagerAndRegister()
     {
@@ -228,4 +276,35 @@ public class EnemyClickSequence : NetworkBehaviour
     {
         return clickType == 0 ? Color.red : Color.blue;
     }
+    
+    public void StartVisualTimer(float duration)
+    {
+        if (timerCoroutine != null)
+            StopCoroutine(timerCoroutine);
+
+        timerCoroutine = StartCoroutine(FillTimer(duration));
+    }
+
+    private Coroutine timerCoroutine;
+
+    private IEnumerator FillTimer(float duration)
+    {
+        float timeRemaining = duration;
+        while (timeRemaining > 0f)
+        {
+            timeRemaining -= Time.deltaTime;
+            float fillAmount = timeRemaining / duration;
+            if (timerCircleUI != null)
+            {
+                timerCircleUI.fillAmount = fillAmount;
+            }
+            yield return null;
+        }
+
+        if (timerCircleUI != null)
+        {
+            timerCircleUI.fillAmount = 0f;
+        }
+    }
+
 }

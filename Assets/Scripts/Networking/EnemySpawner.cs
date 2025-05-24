@@ -6,7 +6,7 @@ using Unity.Netcode;
 public class EnemySpawner : NetworkBehaviour
 {
     [SerializeField]
-    private int maxEnemyCount = 5;
+    private int maxEnemyCount = 1;
     [SerializeField]
     private float spawnCooldown = 2f;
     [SerializeField]

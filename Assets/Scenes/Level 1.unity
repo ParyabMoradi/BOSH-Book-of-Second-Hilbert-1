@@ -128,8 +128,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7420227}
-  - component: {fileID: 7420226}
   - component: {fileID: 7420228}
+  - component: {fileID: 7420226}
   m_Layer: 0
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  sceneName: MyScene
+  sceneName: Level 2
 --- !u!4 &7420227
 Transform:
   m_ObjectHideFlags: 0

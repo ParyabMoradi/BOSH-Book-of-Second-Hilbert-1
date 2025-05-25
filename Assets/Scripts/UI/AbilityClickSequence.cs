@@ -42,7 +42,6 @@ public class AbilityClickSequence : MonoBehaviour
 
             if (timeRemaining <= 0f)
             {
-                Debug.Log("Sequence timed out!");
                 isSequenceTiming = false;
                 currentInputIndex = 0;
                 abilityIndicator.color = Color.red; // failure
@@ -69,7 +68,6 @@ public class AbilityClickSequence : MonoBehaviour
         {
             isSequenceTiming = true;
             timeRemaining = sequenceTimeout; // Start the timer
-            Debug.Log("Timer started!");
         }
 
         if (input == currentSequence[currentInputIndex])

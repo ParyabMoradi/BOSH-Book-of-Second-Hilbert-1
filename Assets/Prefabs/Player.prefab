@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1303418839960516818}
   - component: {fileID: -1695990655081597070}
   - component: {fileID: -75684367827776813}
+  - component: {fileID: 7106059960432830637}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -262,7 +263,6 @@ MonoBehaviour:
     m_InternalValue: 0
   boyModel: {fileID: 3750888205191897343}
   girlModel: {fileID: 7277319066776858950}
-  customSpawnPoint: {fileID: 0}
   boyAnimator: {fileID: 4146986003323676904}
   girlAnimator: {fileID: 8811531250825591337}
 --- !u!114 &-75684367827776813
@@ -311,6 +311,21 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &7106059960432830637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861279347574551737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce38ab60466b9a49a7534885669a1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  enemyManager: {fileID: 5038895853258517192, guid: cf0c8d1dfb810d4449f3d25f13c2de75, type: 3}
+  playerId: 0
 --- !u!1 &3750888205191897343
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +337,7 @@ GameObject:
   - component: {fileID: 3602743609063262652}
   - component: {fileID: 3564214705299816746}
   - component: {fileID: 4146986003323676904}
-  - component: {fileID: 3983297794864709966}
+  - component: {fileID: 8303989753825453801}
   m_Layer: 0
   m_Name: BoyVisuals
   m_TagString: Untagged
@@ -422,7 +437,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3983297794864709966
+--- !u!114 &8303989753825453801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -431,7 +446,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3750888205191897343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: b15278d8b3ad3854ebadcd78a2f475c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
@@ -448,7 +463,7 @@ GameObject:
   - component: {fileID: 3880963143364281745}
   - component: {fileID: 4552748669293705513}
   - component: {fileID: 8811531250825591337}
-  - component: {fileID: 8545535031896016059}
+  - component: {fileID: 5639298308235678010}
   m_Layer: 0
   m_Name: GirlVisuals
   m_TagString: Untagged
@@ -536,7 +551,7 @@ Animator:
   m_GameObject: {fileID: 7277319066776858950}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 454a2269c445846739a1d075528358c7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 760c89cd4c9c7a547a6e25d90a9d022f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -548,7 +563,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8545535031896016059
+--- !u!114 &5639298308235678010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -557,7 +572,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7277319066776858950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: b15278d8b3ad3854ebadcd78a2f475c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1

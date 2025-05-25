@@ -10,10 +10,14 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     private Animator[] anims;
     private Animator anim;
-    private PlayerCollision coll;
-    private Rigidbody2D rb;
     private SpriteRenderer[] sprites;
     private SpriteRenderer spriteRenderer;
+    private Transform child;
+    private ClientNetworkTransform[] clientNetTransforms;
+
+
+    private PlayerCollision coll;
+    private Rigidbody2D rb;
     [Space]
     [Header("Stats")]
     public float speed = 10;
@@ -95,22 +99,27 @@ public class PlayerMovement : NetworkBehaviour
         anims = GetComponentsInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
         CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
+        // clientNetTransforms = GetComponentsInChildren<ClientNetworkTransform>();
         Debug.Log(role);
 
         if (role == CharacterType.Boy)
         {
+            child = transform.GetChild(0);
             anim = anims[0];
-            anims[1].enabled = false;
             spriteRenderer = sprites[0];
+            anims[1].enabled = false;
             sprites[1].enabled = false;
+            // clientNetTransforms[2].enabled = false;
         }
         else
         {
-
+            child = transform.GetChild(1);
             anim = anims[1];
-            anims[0].enabled = false;
             spriteRenderer = sprites[1];
+            anims[0].enabled = false;
             sprites[0].enabled = false;
+            // clientNetTransforms[1].enabled = false;
+
         }
         
 
@@ -121,25 +130,6 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
         
-        // Camera follow logic for local player
-        if (IsOwner)
-        {
-            // Try to find a CameraFollow script on the main camera
-            var cam = Camera.main;
-            if (cam != null)
-            {
-                var follow = cam.GetComponent<CameraFollow>();
-                if (follow != null)
-                {
-                    follow.SetTarget(transform);
-                }
-                else
-                {
-                    // Fallback: snap camera to player position (2D)
-                    cam.transform.position = new Vector3(transform.position.x, transform.position.y, cam.transform.position.z);
-                }
-            }
-        }
     }
 
     void Start()
@@ -164,8 +154,9 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        
-        spriteRenderer.flipX = side == -1;
+        // child.localScale = new Vector3(side * Math.Abs(child.localScale.x), child.localScale.y, child.localScale.z);
+        // spriteRenderer.flipX = side == -1;
+        anim.SetBool("flip",side==-1);
         anim.SetFloat("v_y",rb.linearVelocityY);
         anim.SetFloat("v_x",MathF.Abs(rb.linearVelocityX));
         anim.SetBool("wallGrab",wallGrab);

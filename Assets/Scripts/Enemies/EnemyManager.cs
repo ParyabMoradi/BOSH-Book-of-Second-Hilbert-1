@@ -151,11 +151,13 @@ public class EnemyManager : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        Debug.Log(playerId);
         for (int i = 0; i < enemyStatuses.Count; i++)
         {
             if (enemyStatuses[i].enemyReference.Equals(enemyRef))
             {
+                int finishedPlayerIndex = -1;
+
+                // Mark the player who called this as finished
                 for (int j = 0; j < enemyStatuses[i].playerStatuses.Length; j++)
                 {
                     var netObj = enemyStatuses[i].playerStatuses[j].playerReference;
@@ -164,10 +166,41 @@ public class EnemyManager : NetworkBehaviour
                         if (playerObj.OwnerClientId == playerId)
                         {
                             enemyStatuses[i].playerStatuses[j].sequenceFinished = true;
+                            finishedPlayerIndex = j;
                             Debug.Log($"Player {playerId} finished sequence for enemy {i}");
                         }
                     }
                 }
+
+                // Now trigger timer for the other player (if they haven't finished)
+                if (finishedPlayerIndex != -1)
+                {
+                    int otherPlayerIndex = 1 - finishedPlayerIndex; // Assumes only 2 players
+                    var otherPlayerRef = enemyStatuses[i].playerStatuses[otherPlayerIndex].playerReference;
+
+                    if (!enemyStatuses[i].playerStatuses[otherPlayerIndex].sequenceFinished &&
+                        enemyStatuses[i].enemyReference.TryGet(out NetworkObject enemyObj) &&
+                        otherPlayerRef.TryGet(out NetworkObject otherPlayerObj))
+                    {
+                        var enemyScript = enemyObj.GetComponent<EnemyClickSequence>();
+                        if (enemyScript != null)
+                        {
+                            ulong otherClientId = otherPlayerObj.OwnerClientId;
+
+                            var rpcParams = new ClientRpcParams
+                            {
+                                Send = new ClientRpcSendParams
+                                {
+                                    TargetClientIds = new[] { otherClientId }
+                                }
+                            };
+
+                            Debug.Log($"Starting visual timer for Player {otherClientId} on Enemy {i}");
+                            enemyScript.StartVisualTimerClientRpc(5f);
+                        }
+                    }
+                }
+            
 
                 // Check if both players are done
                 bool bothFinished = true;

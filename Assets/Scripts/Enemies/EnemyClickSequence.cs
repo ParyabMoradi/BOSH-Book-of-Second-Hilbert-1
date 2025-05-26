@@ -141,10 +141,10 @@ public class EnemyClickSequence : NetworkBehaviour
     void ResetSequence()
     {
         spriteRenderer.color = Color.white;
-        timerCircleUI.fillAmount = 1;
         currentIndex = 0;
         isTimerActive = false;
         UpdateClickIndicators();
+        timerCircleUI.fillAmount = 1;
     }
 
     void UpdateClickIndicators()
@@ -277,6 +277,12 @@ public class EnemyClickSequence : NetworkBehaviour
         return clickType == 0 ? Color.red : Color.blue;
     }
     
+    [ClientRpc]
+    public void StartVisualTimerClientRpc(float duration)
+    {
+        StartVisualTimer(duration);
+    }
+    
     public void StartVisualTimer(float duration)
     {
         if (timerCoroutine != null)
@@ -303,7 +309,7 @@ public class EnemyClickSequence : NetworkBehaviour
 
         if (timerCircleUI != null)
         {
-            timerCircleUI.fillAmount = 0f;
+            timerCircleUI.fillAmount = 1f;
         }
     }
 

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -1695990655081597070}
   - component: {fileID: -75684367827776813}
   - component: {fileID: 7106059960432830637}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 3564214705299816746}
   - component: {fileID: 4146986003323676904}
   - component: {fileID: 8303989753825453801}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoyVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 4552748669293705513}
   - component: {fileID: 8811531250825591337}
   - component: {fileID: 5639298308235678010}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GirlVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

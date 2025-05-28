@@ -28,7 +28,13 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) // Check if the Escape key is pressed
+        if (PlayerJoinHandler.IsJoinCanvasActive && isPaused)
+        {
+            Resume();
+            Time.timeScale = 0;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Escape) && !(PlayerJoinHandler.IsJoinCanvasActive)) // Check if the Escape key is pressed
         {
             if (isPaused) // If the game is currently paused
             {

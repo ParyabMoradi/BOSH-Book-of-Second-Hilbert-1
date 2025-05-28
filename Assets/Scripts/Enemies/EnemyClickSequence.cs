@@ -63,6 +63,7 @@ public class EnemyClickSequence : NetworkBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         if (isTimerActive)
         {
             timer -= Time.deltaTime;
@@ -77,6 +78,7 @@ public class EnemyClickSequence : NetworkBehaviour
 
     void OnMouseOver()
     {
+        if (Time.timeScale == 0) return;
         int clickType = -1;
         if (Input.GetMouseButtonDown(0)) clickType = 0;
         if (Input.GetMouseButtonDown(1)) clickType = 1;

@@ -44,7 +44,11 @@ public class BulletChase : NetworkBehaviour
     
         if (collision.CompareTag("Player"))
         {
-            GetComponent<NetworkObject>().Despawn(); // Safe way to remove it from network
+            NetworkObject netObj = GetComponent<NetworkObject>();
+            if (netObj.IsSpawned)
+            {
+                netObj.Despawn();
+            }
         }
     }
 }

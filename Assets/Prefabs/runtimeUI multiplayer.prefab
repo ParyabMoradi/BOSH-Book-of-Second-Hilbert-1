@@ -348,7 +348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5524827541944028343}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: OnResumeButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3214,6 +3214,7 @@ GameObject:
   - component: {fileID: 3632208527865503922}
   - component: {fileID: 3861702639895226263}
   - component: {fileID: 5524827541944028343}
+  - component: {fileID: 5644031081313035591}
   m_Layer: 5
   m_Name: pauseMenuCanvas
   m_TagString: Untagged
@@ -3316,8 +3317,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125aded6a60e35241bed1527761281d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   pauseMenuUI: {fileID: 2589781739051336499}
   runtimeUI: {fileID: 8248132317907973603}
+--- !u!114 &5644031081313035591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516079718867170420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &6691283925197616545
 GameObject:
   m_ObjectHideFlags: 0

@@ -102,8 +102,10 @@ public class EnemyClickSequence : NetworkBehaviour
             {
                 spriteRenderer.color = Color.black;
                 Debug.Log("Sequence Completed! Enemy changed color.");
-                ClickSequenceHolder.Instance.PopClickSequence(clickSequence);
-                ResetSequence();
+                // ClickSequenceHolder.Instance.PopClickSequence(clickSequence);
+                // ResetSequence();
+                ResetTimer();
+                isTimerActive = false;
                 AudioManager.Instance.PlaySFX(CoinEnemyHitsSFX);
                 enemyManager.PlayerFinishedSequenceServerRpc(NetworkManager.Singleton.LocalClientId, gameObject);
                 StartVisualTimer(timerUIAmount);
@@ -117,7 +119,11 @@ public class EnemyClickSequence : NetworkBehaviour
         else
         {
             Debug.Log("Wrong Click! Restarting sequence.");
-            ResetSequence();
+            // ResetSequence();
+            currentIndex = 0;
+            ResetTimer();
+            isTimerActive = false;
+            UpdateClickIndicators();
             AudioManager.Instance.PlaySFX(wrongSequenceSFX);
         }
     }
@@ -144,7 +150,11 @@ public class EnemyClickSequence : NetworkBehaviour
     {
         spriteRenderer.color = Color.white;
         currentIndex = 0;
+        AudioManager.Instance.PlaySFX(wrongSequenceSFX);
         isTimerActive = false;
+        ClickSequenceHolder.Instance.PopClickSequence(clickSequence);
+        clickSequence = ClickSequenceGenerator.GenerateSequence(enemyClickSequenceLength, enemySeqRepeatAllow);
+        ClickSequenceHolder.Instance.SetClickSequence(clickSequence);
         UpdateClickIndicators();
         timerCircleUI.fillAmount = 1;
     }
@@ -308,7 +318,6 @@ public class EnemyClickSequence : NetworkBehaviour
             }
             yield return null;
         }
-
         if (timerCircleUI != null)
         {
             timerCircleUI.fillAmount = 1f;

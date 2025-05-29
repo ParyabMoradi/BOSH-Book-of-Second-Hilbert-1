@@ -1,73 +1,59 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Importing the SceneManagement namespace to manage scenes
-using UnityEngine.UI; // Importing the UI namespace to manage UI elements
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Unity.Netcode;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : NetworkBehaviour
 {
-    // Static variable to track if the game is paused
     public static bool isPaused = false;
 
-    // Reference to the pause menu UI GameObject
     public GameObject pauseMenuUI;
-
-    // Reference to the runtime UI GameObject
     public GameObject runtimeUI;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Initialization logic can go here if needed
-        pauseMenuUI.SetActive(false); // Ensure the pause menu is not visible at the start
+        pauseMenuUI.SetActive(false);
         if (runtimeUI != null)
         {
-            runtimeUI.SetActive(true); // Ensure the runtime UI is visible at the start
+            runtimeUI.SetActive(true);
         }
+
         Debug.Log("PauseMenu initialized. isPaused: " + isPaused);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (PlayerJoinHandler.IsJoinCanvasActive && isPaused)
-        {
-            Resume();
-            Time.timeScale = 0;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Escape) && !(PlayerJoinHandler.IsJoinCanvasActive)) // Check if the Escape key is pressed
-        {
-            if (isPaused) // If the game is currently paused
-            {
-                Debug.Log("Escape key pressed. Game is paused. Resuming...");
-                Resume(); // Call the Resume method to unpause the game
-            }
-            else // If the game is not paused
-            {
-                Debug.Log("Escape key pressed. Game is not paused. Pausing...");
-                Pause(); // Call the Pause method to pause the game
-            }
-        }
-    }
-
-    public void Resume() // Method to resume the game
-    {
-        if (!isPaused)
-        {
-            Debug.LogWarning("Resume called, but the game is not paused.");
+        // Only listen to input if this is a client and the join canvas isn't active
+        if (!IsClient || PlayerJoinHandler.IsJoinCanvasActive)
             return;
-        }
 
-        pauseMenuUI.SetActive(false); // Deactivate the pause menu UI
-        if (runtimeUI != null)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            runtimeUI.SetActive(true); // Show the runtime UI
+            if (isPaused)
+            {
+                RequestResumeServerRpc();
+            }
+            else
+            {
+                RequestPauseServerRpc();
+            }
         }
-        Time.timeScale = 1f; // Set the time scale to 1 (normal speed)
-        isPaused = false; // Update the isPaused variable to false
-        Debug.Log("Game resumed. isPaused: " + isPaused);
     }
 
-    void Pause() // Method to pause the game
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestPauseServerRpc(ServerRpcParams rpcParams = default)
+    {
+        PauseGameClientRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestResumeServerRpc(ServerRpcParams rpcParams = default)
+    {
+        ResumeGameClientRpc();
+    }
+
+    [ClientRpc]
+    private void PauseGameClientRpc()
     {
         if (isPaused)
         {
@@ -75,14 +61,44 @@ public class PauseMenu : MonoBehaviour
             return;
         }
 
-        pauseMenuUI.SetActive(true); // Activate the pause menu UI
+        pauseMenuUI.SetActive(true);
         if (runtimeUI != null)
         {
-            runtimeUI.SetActive(false); // Hide the runtime UI
+            runtimeUI.SetActive(false);
         }
-        Time.timeScale = 0f; // Set the time scale to 0 (pause the game)
-        isPaused = true; // Update the isPaused variable to true
+
+        Time.timeScale = 0f;
+        isPaused = true;
         Debug.Log("Game paused. isPaused: " + isPaused);
+    }
+
+    [ClientRpc]
+    private void ResumeGameClientRpc()
+    {
+        if (!isPaused)
+        {
+            Debug.LogWarning("Resume called, but the game is not paused.");
+            return;
+        }
+
+        pauseMenuUI.SetActive(false);
+        if (runtimeUI != null)
+        {
+            runtimeUI.SetActive(true);
+        }
+
+        Time.timeScale = 1f;
+        isPaused = false;
+        Debug.Log("Game resumed. isPaused: " + isPaused);
+    }
+
+    // Called from the Resume button UI
+    public void OnResumeButtonPressed()
+    {
+        if (IsClient && isPaused)
+        {
+            RequestResumeServerRpc();
+        }
     }
 
     public void GoToScene(string sceneName)

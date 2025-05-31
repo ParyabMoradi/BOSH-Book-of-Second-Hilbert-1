@@ -20,8 +20,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: f365f8c6d6e314f44952239370d06947
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TheBookTest.unity
     guid: 2d33f933607f678438f79136cbf620f0
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 1bc87851cc83f8647827a2d2d036fdf8
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -47745,7 +47745,7 @@ MonoBehaviour:
   sceneLoader: {fileID: 0}
   cameraController: {fileID: 740435231}
   cameraFocusTarget: {fileID: 7938177789072831560, guid: 373ecde031cc7be4f9d960a3622cbb97, type: 3}
-  zoomLevel: 12
+  zoomLevel: 15
   cameraClampArea: {fileID: 696782838}
 --- !u!1 &842920548
 GameObject:

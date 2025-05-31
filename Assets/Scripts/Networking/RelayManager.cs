@@ -22,7 +22,7 @@ public class RelayManager : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
-    public async void StartRelay()
+    public async void StartRelay(string level)
     {
         string joinCode = await StartHostWithRelay();
 
@@ -31,7 +31,7 @@ public class RelayManager : MonoBehaviour
         LastJoinCode = joinCode;
 
         // Proper way to load scene in a networked game
-        NetworkManager.Singleton.SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
         
     }
 

@@ -36,6 +36,8 @@ public class PlayerMovement : NetworkBehaviour
     public bool wallSlide;
     public bool isDashing;
     public bool isJumping;
+    public bool pickedUpTheBook = false;
+    private Transform heldBook;
     private bool isHoldingLedge = false;
     private float ledgeHoldTimer = 0f;
     private const float maxLedgeHoldTime = 0.2f;
@@ -97,7 +99,6 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-
         anims = GetComponentsInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
         CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
@@ -136,6 +137,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Start()
     {
+        transform.position = Vector3.zero;
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
         
@@ -431,7 +433,70 @@ else if (wallGrab)
         }
 
 
+        if (IsLocalPlayer) // only local player runs input
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                TryPickOrDropBookServerRpc();
+            }
+        }
     }
+    
+    [ServerRpc(RequireOwnership = false)]
+    void TryPickOrDropBookServerRpc(ServerRpcParams rpcParams = default)
+    {
+        if (pickedUpTheBook) // your bool that tracks if this player holds the book
+        {
+            DropBook();
+        }
+        else
+        {
+            TryPickUpBook();
+        }
+    }
+    void TryPickUpBook()
+    {
+        Debug.Log("here");
+        // You can use a trigger or physics overlap to detect nearby book
+        Collider2D bookCollider = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("TheBook"));
+
+        if (bookCollider != null && bookCollider.CompareTag("TheBook"))
+        {
+            Debug.Log("here inside");
+            Transform bookRoot = bookCollider.transform.parent ?? bookCollider.transform;
+            Rigidbody2D bookRb = bookRoot.GetComponent<Rigidbody2D>();
+
+            if (bookRb != null)
+            {
+                bookRb.isKinematic = true;
+                bookRb.linearVelocity = Vector2.zero;
+                bookRoot.SetParent(transform);
+                bookRoot.localPosition = new Vector3(0, 1f, 0);
+
+                heldBook = bookRoot;
+                pickedUpTheBook = true;
+            }
+        }
+    }
+
+    void DropBook()
+    {
+        if (heldBook != null)
+        {
+            heldBook.SetParent(null);
+            Rigidbody2D bookRb = heldBook.GetComponent<Rigidbody2D>();
+            if (bookRb != null)
+            {
+                bookRb.isKinematic = false;
+            }
+
+            heldBook = null;
+            pickedUpTheBook = false;
+        }
+    }
+
+
+
     
     private void Walk(Vector2 dir, Vector2 moveDirection)
     {

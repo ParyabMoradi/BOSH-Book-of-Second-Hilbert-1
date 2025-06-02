@@ -52,7 +52,7 @@ public class EnemySpawner : NetworkBehaviour
                 {
                     Transform enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, transform);
                     var enemyMover = enemy.GetComponent<EnemyPathMover>();
-                    // enemyMover.enemySpawner = this;
+                    enemyMover.enemySpawner = this;
 
                     // Optional: Set dynamic path
                     enemyMover.pathPositions = new Vector2[] {

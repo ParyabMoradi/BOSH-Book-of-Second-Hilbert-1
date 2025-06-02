@@ -1,12 +1,11 @@
 using UnityEngine;
 using DG.Tweening;
-using Unity.Netcode;
-using System.Collections;
+using System.Collections.Generic;
 
-public class EnemyRandomAreaMover : NetworkBehaviour
+public class EnemyRandomAreaMover : MonoBehaviour
 {
     [Header("Polygon Area (Clockwise or Counter-Clockwise)")]
-    public Vector2[] polygonPoints;
+    public Vector2[] polygonPoints; // Points defining the polygon area
 
     [Header("Movement Settings")]
     public float moveDuration = 2f;
@@ -15,8 +14,6 @@ public class EnemyRandomAreaMover : NetworkBehaviour
     public bool lookAtTarget = false;
 
     private Bounds polygonBounds;
-    private float originalMoveDuration;
-    private bool isSlowed = false;
 
     private void Start()
     {
@@ -27,7 +24,6 @@ public class EnemyRandomAreaMover : NetworkBehaviour
         }
 
         polygonBounds = GetPolygonBounds(polygonPoints);
-        originalMoveDuration = moveDuration;
         MoveToRandomPoint();
     }
 
@@ -36,6 +32,7 @@ public class EnemyRandomAreaMover : NetworkBehaviour
         Vector2 randomPoint = GetRandomPointInPolygon();
         Vector3 targetPosition = new Vector3(randomPoint.x, randomPoint.y, transform.position.z);
 
+        // Optional: look at movement direction
         if (lookAtTarget)
         {
             Vector2 direction = (targetPosition - transform.position).normalized;
@@ -51,7 +48,8 @@ public class EnemyRandomAreaMover : NetworkBehaviour
     private Vector2 GetRandomPointInPolygon()
     {
         Vector2 point;
-        int maxTries = 100, tries = 0;
+        int maxTries = 100;
+        int tries = 0;
 
         do
         {
@@ -79,6 +77,7 @@ public class EnemyRandomAreaMover : NetworkBehaviour
         return new Bounds((min + max) / 2f, max - min);
     }
 
+    // Raycasting method to check if a point is inside the polygon
     private bool IsPointInPolygon(Vector2 point, Vector2[] poly)
     {
         int j = poly.Length - 1;
@@ -94,24 +93,6 @@ public class EnemyRandomAreaMover : NetworkBehaviour
         }
 
         return inside;
-    }
-
-    [ClientRpc]
-    public void SlowMovementClientRpc(float duration)
-    {
-        if (!isSlowed)
-        {
-            StartCoroutine(SlowForDuration(duration));
-        }
-    }
-
-    private IEnumerator SlowForDuration(float duration)
-    {
-        isSlowed = true;
-        moveDuration *= 2f; // slow movement
-        yield return new WaitForSeconds(duration);
-        moveDuration = originalMoveDuration;
-        isSlowed = false;
     }
 
     private void OnDrawGizmosSelected()

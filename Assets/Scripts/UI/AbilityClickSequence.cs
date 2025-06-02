@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.Netcode;
 
-public class AbilityClickSequence : NetworkBehaviour
+public class AbilityClickSequence : MonoBehaviour
 {
+    
     public Image timeoutBar;
     [Header("Sequence Settings")]
     public int sequenceLength = 6;
@@ -18,19 +17,14 @@ public class AbilityClickSequence : NetworkBehaviour
 
     private int[] currentSequence;
     private int currentInputIndex = 0;
-
+    
     [Header("Timeout Settings")]
     public float sequenceTimeout = 5f;
 
     private float timeRemaining;
     private bool isSequenceTiming = false;
 
-    private CharacterType role;
 
-    public override void OnNetworkSpawn()
-    {
-        role = RoleManager.Instance.GetOrAssignRole(NetworkManager.Singleton.LocalClientId);
-    }
 
     private void Start()
     {
@@ -43,15 +37,17 @@ public class AbilityClickSequence : NetworkBehaviour
         if (isSequenceTiming)
         {
             timeRemaining -= Time.deltaTime;
+
+            // Update the fillAmount of the ability indicator (image bar)
             timeoutBar.fillAmount = timeRemaining / sequenceTimeout;
 
             if (timeRemaining <= 0f)
             {
                 isSequenceTiming = false;
                 currentInputIndex = 0;
-                abilityIndicator.color = Color.red;
+                abilityIndicator.color = Color.red; // failure
                 UpdateSequenceDisplay();
-                Invoke(nameof(GenerateAndDisplayNewSequence), 0.5f);
+                Invoke(nameof(GenerateAndDisplayNewSequence), 0.5f); // retry after timeout
                 timeoutBar.fillAmount = 1;
             }
         }
@@ -60,22 +56,26 @@ public class AbilityClickSequence : NetworkBehaviour
         if (Input.GetMouseButtonDown(1)) HandleInput(1);
     }
 
+
+
+
     private void HandleInput(int input)
     {
         if (currentSequence == null || currentInputIndex >= currentSequence.Length)
             return;
 
+        // Start the timer when the player first inputs correctly
         if (!isSequenceTiming)
         {
             isSequenceTiming = true;
-            timeRemaining = sequenceTimeout;
+            timeRemaining = sequenceTimeout; // Start the timer
         }
 
         if (input == currentSequence[currentInputIndex])
         {
             currentInputIndex++;
             UpdateSequenceDisplay();
-            abilityIndicator.color = Color.yellow;
+            abilityIndicator.color = Color.yellow; // optional: highlight current input
 
             if (currentInputIndex >= currentSequence.Length)
             {
@@ -99,15 +99,18 @@ public class AbilityClickSequence : NetworkBehaviour
         }
     }
 
+
     private void GenerateAndDisplayNewSequence()
     {
         currentSequence = ClickSequenceHolder.Instance.CreateUniqueClickSequence(sequenceLength, maxRepeats);
         currentInputIndex = 0;
-        isSequenceTiming = false;
-        timeRemaining = sequenceTimeout;
-        abilityIndicator.color = Color.white;
+        isSequenceTiming = false; // Stop timing if needed
+        timeRemaining = sequenceTimeout; // Reset timer for new sequence
+        abilityIndicator.color = Color.white; // Reset indicator color
         UpdateSequenceDisplay();
     }
+
+
 
     private void UpdateSequenceDisplay()
     {
@@ -117,42 +120,53 @@ public class AbilityClickSequence : NetworkBehaviour
         {
             if (i < currentInputIndex)
             {
+                // Completed part: highlight in green
                 elements.Add($"<color=green>{currentSequence[i]}</color>");
             }
             else if (i == currentInputIndex)
             {
+                // Current target: yellow
                 elements.Add($"<color=yellow>{currentSequence[i]}</color>");
             }
             else
             {
+                // Not yet completed
                 elements.Add(currentSequence[i].ToString());
             }
         }
 
         sequenceText.text = string.Join(" ", elements);
     }
-
+    
     private void TryApplyAbilityToTargetUnderCursor()
     {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Only hit colliders on a specific layer if desired (e.g., LayerMask.GetMask("Player"))
         Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
 
         if (hit != null)
         {
+            Debug.Log($"Mouse is over: {hit.gameObject.name}");
 
-            if (role == CharacterType.Boy && hit.CompareTag("Enemy"))
+            // Example check: only apply to enemies or players
+            if (hit.CompareTag("Player")) // Make sure the target has the correct tag
             {
-                hit.GetComponent<EnemyShooting>()?.SlowEnemyClientRpc(7f);
-                hit.GetComponent<EnemyRandomAreaMover>()?.SlowMovementClientRpc(7f);
-                hit.GetComponent<EnemyPathMover>()?.SlowMovementClientRpc(7f);
+                // Example ability effect
+                Debug.Log("Ability applied to: " + hit.name);
 
-                Debug.Log("hitted the enemy");
+                // Optionally call a method on that object
+                // hit.GetComponent<PlayerAbilityTarget>()?.OnAbilityHit(); // Your custom method
             }
-            else if (role == CharacterType.Girl && hit.CompareTag("Player"))
+            else
             {
-                // hit.GetComponent<NetworkObject>()?.GetComponent<PlayerRPC>()?.MakeInvulnerableRpc();
-                Debug.Log("hitted the player");
+                Debug.Log("Hit object is not a valid target.");
             }
         }
+        else
+        {
+            Debug.Log("No target under cursor.");
+        }
     }
+
 }

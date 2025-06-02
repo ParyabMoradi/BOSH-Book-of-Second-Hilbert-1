@@ -1,15 +1,18 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class CameraController : MonoBehaviour
+public class CameraController : NetworkBehaviour
 {
     public float smoothSpeed = 0.125f;
     public float zoomSpeed = 2f;
     public Vector3 offset = new Vector3(0, 4, -10);
 
-    private Transform target;
+    public Transform target;
     private float targetZoom;
     private float defaultZoom;
     private bool isLockedToArea = false;
+
+    
     private Bounds lockBounds;
 
     private Camera cam;
@@ -17,7 +20,16 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        target = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        target = GameObject.FindGameObjectsWithTag("Player")[NetworkManager.Singleton.LocalClientId]?.transform;
+        //Debug.Log($"CameraController spawned. Target: {target?.name}");
+    
+        if (target == null)
+        {
+            // Try to find the player object if no target is set
+            Debug.Log("No target set for CameraController. Defaulting to player object.");
+        }
+        
 
         if (cam != null)
             defaultZoom = cam.orthographicSize;
@@ -29,6 +41,9 @@ public class CameraController : MonoBehaviour
     {
         if (target == null) return;
 
+        //Debug.Log($"Camera target: {target.name}, Position: {target.position}");
+
+        
         Vector3 desiredPosition = target.position + offset;
 
         // Clamp the desired position before smoothing
@@ -46,6 +61,13 @@ public class CameraController : MonoBehaviour
         {
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
         }
+    }
+
+    public void SetCameraTarget(Transform newTarget)
+    {
+        Debug.Log($"Setting camera target to: {newTarget?.name}");
+        target = newTarget;
+
     }
 
     public void FocusOnTarget(Transform focusTarget, float zoomOutSize = 8f, Bounds? areaBounds = null)

@@ -14,6 +14,8 @@ public class PlayerMovement : NetworkBehaviour
     private SpriteRenderer spriteRenderer;
     private Transform child;
     private ClientNetworkTransform[] clientNetTransforms;
+    public bool resetPosition = true;
+
 
 
     private PlayerCollision coll;
@@ -156,7 +158,19 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
+        if (resetPosition)
+        {
+            resetPosition = false;
+            rb.position = new Vector2(0, 0);
+            rb.rotation = 0;
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0;
+        }
+        // if (!IsOwner || MatchManager.Instance == null || MatchManager.Instance.isGameFrozen.Value)
+        // return;
+
         if (Time.timeScale == 0) return;
+        
         // child.localScale = new Vector3(side * Math.Abs(child.localScale.x), child.localScale.y, child.localScale.z);
         // spriteRenderer.flipX = side == -1;
         anim.SetBool("flip",side==-1);

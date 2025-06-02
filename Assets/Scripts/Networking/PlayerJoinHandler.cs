@@ -25,11 +25,22 @@ public class PlayerJoinHandler : NetworkBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
         NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnected;
 
-        ShowJoinUI(true);
-        FreezeGame(true);
+        if (NetworkManager.Singleton.ConnectedClients.Count < MaxPlayers)
+        {
+            ShowJoinUI(true);
+            FreezeGame(true);
 
-        if (codeText != null)
-            codeText.text = RelayManager.LastJoinCode;
+            if (codeText != null)
+                codeText.text = RelayManager.LastJoinCode;
+        }
+        else
+        {
+            ShowJoinUI(false);
+            FreezeGame(false);
+        }
+        
+
+        
     }
 
     private void ShowJoinUI(bool show)

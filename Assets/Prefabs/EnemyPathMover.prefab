@@ -175,6 +175,7 @@ MonoBehaviour:
   enemyManager: {fileID: 5038895853258517192, guid: cf0c8d1dfb810d4449f3d25f13c2de75, type: 3}
   playerId: 0
   timerCircleUI: {fileID: 850456191921074201}
+  timerUIAmount: 5
   clickSequence: 
   enemyClickSequenceLength: 5
   timeoutDuration: 1.5
@@ -326,6 +327,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4833466964494947817, guid: b7c9c0f64eb17b049a3c8f0ddb3a19d6, type: 3}
   shootInterval: 2
   bulletSpeed: 5
+  slowDuration: 7
+  slowMultiplier: 0.5
+  shootIntervalMultiplier: 2
 --- !u!114 &-973824406691869733
 MonoBehaviour:
   m_ObjectHideFlags: 0

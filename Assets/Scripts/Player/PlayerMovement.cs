@@ -166,10 +166,11 @@ public class PlayerMovement : NetworkBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0;
         }
-        if (!IsOwner || MatchManager.Instance == null || MatchManager.Instance.isGameFrozen.Value)
-        return;
+        // if (!IsOwner || MatchManager.Instance == null || MatchManager.Instance.isGameFrozen.Value)
+        // return;
 
         if (Time.timeScale == 0) return;
+        
         // child.localScale = new Vector3(side * Math.Abs(child.localScale.x), child.localScale.y, child.localScale.z);
         // spriteRenderer.flipX = side == -1;
         anim.SetBool("flip",side==-1);

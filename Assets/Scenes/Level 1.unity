@@ -47183,9 +47183,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ce9100aa5485f4695043e125d45d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   smoothSpeed: 0.125
   zoomSpeed: 2
   offset: {x: 0, y: 4, z: -10}
+  target: {fileID: 0}
+--- !u!114 &740435232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740435229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4209437803
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &807767361
 GameObject:
   m_ObjectHideFlags: 0
@@ -52716,6 +52743,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MatchManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8825297823456938770, guid: aee3c5b0d821d4c9f92e929d4b0aebbd, type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 740435231}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -52780,6 +52811,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 858232290264459062, guid: 2cd9ed221bb2ed746a18a2981fd9a1d1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 740435230}
+    - targetCorrespondingSourceObject: {fileID: 858232290264459062, guid: 2cd9ed221bb2ed746a18a2981fd9a1d1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 740435232}
     - targetCorrespondingSourceObject: {fileID: 858232290264459062, guid: 2cd9ed221bb2ed746a18a2981fd9a1d1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 740435231}

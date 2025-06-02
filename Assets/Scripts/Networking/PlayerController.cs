@@ -29,26 +29,29 @@ public class PlayerController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        AllPlayers.Add(this);
+        
         if (IsServer)
         {
-            AllPlayers.Add(this);
-            role.Value = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
-        }
 
-        role.OnValueChanged += (_, newValue) =>
-        {
-            ApplyRole(newValue);
-        };
+            role.Value = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
+
+            role.OnValueChanged += (_, newValue) =>
+            {
+                ApplyRole(newValue);
+            };
+        }
+        
 
         ApplyRole(role.Value);
     }
 
     public override void OnNetworkDespawn()
     {
-        if (IsServer)
-        {
-            AllPlayers.Remove(this);
-        }
+        
+        
+        AllPlayers.Remove(this);
+        
     }
 
     private void Start()

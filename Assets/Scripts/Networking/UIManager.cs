@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 0;
+
             clientEndScreen.SetActive(true);
                     
 
@@ -42,12 +44,14 @@ public class UIManager : MonoBehaviour
         hostEndScreen.SetActive(false);
         Time.timeScale = 1; 
         
-        MatchManager.Instance.RestartLevelServerRpc();
+        MatchManager.Instance.RestartLevelClientRpc();
     }
 
     public void HideAllScreens()
     {
         hostEndScreen.SetActive(false);
+        Time.timeScale = 1;
         clientEndScreen.SetActive(false);
+
     }
 }

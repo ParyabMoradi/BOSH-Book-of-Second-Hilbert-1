@@ -5,20 +5,22 @@ public class PlayerHealth : NetworkBehaviour
 {
     [SerializeField] private int maxHealth = 4;
     private NetworkVariable<int> currentHealth = new NetworkVariable<int>(
-        4, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server
-    );
+    4, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
     public NetworkVariable<bool> isDead = new NetworkVariable<bool>(
-        false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server
-    );
+    false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+
 
     public override void OnNetworkSpawn()
     {
         if (IsServer)
-        {
-            currentHealth.Value = maxHealth;
-            isDead.Value = false;
-        }
+    {
+        currentHealth.Value -= 1;
+        if (currentHealth.Value <= 0)
+            isDead.Value = true;
     }
+        }
 
     [ServerRpc(RequireOwnership = false)] 
     public void TakeDamageServerRpc(int amount)

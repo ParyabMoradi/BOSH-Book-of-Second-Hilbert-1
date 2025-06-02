@@ -48,6 +48,13 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    public void SetCameraTarget(Transform newTarget)
+    {
+        Debug.Log($"Setting camera target to: {newTarget?.name}");
+        target = newTarget;
+
+    }
+
     public void FocusOnTarget(Transform focusTarget, float zoomOutSize = 8f, Bounds? areaBounds = null)
     {
         target = focusTarget;

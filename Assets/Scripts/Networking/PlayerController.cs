@@ -105,6 +105,4 @@ public class PlayerController : NetworkBehaviour
         Debug.Log($"[CLIENT {OwnerClientId}] Role applied: {r}");
     }
 
-
-
 }

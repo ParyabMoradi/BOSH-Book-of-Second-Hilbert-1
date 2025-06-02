@@ -696,6 +696,4 @@ IEnumerator PerformLedgeClimb()
     {
         rb.linearDamping = x;
     }
-
-
 }

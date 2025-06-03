@@ -3402,7 +3402,7 @@ Transform:
   m_GameObject: {fileID: 138584178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 66.5, y: -8, z: 0}
+  m_LocalPosition: {x: 64.7, y: -9.1, z: 0}
   m_LocalScale: {x: 100, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52041,6 +52041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  obstacleType: 0
 --- !u!19719996 &1985698508
 TilemapCollider2D:
   m_ObjectHideFlags: 0

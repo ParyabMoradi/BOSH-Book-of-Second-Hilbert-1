@@ -107,20 +107,24 @@ public class PlayerMovement : NetworkBehaviour
 
         if (role == CharacterType.Boy)
         {
+            
             child = transform.GetChild(0);
             anim = anims[0];
-            spriteRenderer = sprites[0];
+            spriteRenderer = sprites[1];
             anims[1].enabled = false;
-            sprites[1].enabled = false;
+            sprites[2].enabled = false;
+            sprites[0].enabled = false;
             // clientNetTransforms[2].enabled = false;
         }
         else
         {
             child = transform.GetChild(1);
             anim = anims[1];
-            spriteRenderer = sprites[1];
+            spriteRenderer = sprites[2];
             anims[0].enabled = false;
+            sprites[1].enabled = false;
             sprites[0].enabled = false;
+
             // clientNetTransforms[1].enabled = false;
 
         }

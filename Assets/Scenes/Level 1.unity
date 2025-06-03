@@ -2825,7 +2825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2060937583452680235, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25
+      value: 25.3
       objectReference: {fileID: 0}
     - target: {fileID: 2060937583452680235, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3204,8 +3204,12 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8356578417589528556, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
+      propertyPath: pathPoints.Array.data[0].y
+      value: -14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8356578417589528556, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
       propertyPath: pathPoints.Array.data[1].y
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8356578417589528556, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
       propertyPath: pathPoints.Array.data[2].x
@@ -3213,7 +3217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8356578417589528556, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
       propertyPath: pathPoints.Array.data[2].y
-      value: 10.75
+      value: -14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

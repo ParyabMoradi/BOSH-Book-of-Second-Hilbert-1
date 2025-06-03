@@ -31,17 +31,27 @@ public class RelayManager : MonoBehaviour
 
 
     public async void StartRelay(string level)
+{
+    UIManager.Instance.ShowLoadingScreen();  // Enable it when starting
+
+    string joinCode = await StartHostWithRelay();
+
+    if (!string.IsNullOrEmpty(joinCode))
     {
-        string joinCode = await StartHostWithRelay();
-
         joinCodeText.text = joinCode;
-
         LastJoinCode = joinCode;
 
-        // Proper way to load scene in a networked game
-        NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
+        UIManager.Instance.HideLoadingScreen(); // Hide it after success
 
+        NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
     }
+    else
+    {
+        Debug.LogError("Relay creation failed.");
+        UIManager.Instance.HideLoadingScreen(); //  Hide it if failed
+    }
+}
+
 
     public async void JoinRelay()
     {

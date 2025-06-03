@@ -102,4 +102,13 @@ public class PlayerHealth : NetworkBehaviour
             HeartContainerUI.Instance.SetHeartCount((int)targetClientId, health);
         }
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void KillPlayerServerRpc()
+    {
+        if (!IsOwner) return;
+        if (isDead.Value) return;
+        isDead.Value = true;
+        MatchManager.Instance?.OnPlayerDied();
+    }
 }

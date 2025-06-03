@@ -1,19 +1,21 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class DeadlyObstacle : NetworkBehaviour
+public class OutOfBounds : NetworkBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsServer) return; // Only the server applies damage
+
+        if (!IsOwner) return; // Only the owner applies damage
 
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Out of bounds triggered");
             PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
             {
-                health.TakeDamageServerRpc(4);
-                Debug.Log($"[Obstacle] Damaged player {health.OwnerClientId}");
+                health.KillPlayerServerRpc();
+                Debug.Log($"[Obstacle] Player {health.OwnerClientId} out of bounds");
             }
         }
     }

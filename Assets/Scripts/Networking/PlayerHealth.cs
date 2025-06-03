@@ -107,9 +107,8 @@ public class PlayerHealth : NetworkBehaviour
     public void KillPlayerServerRpc()
     {
         if (isDead.Value) return;
-        currentHealth.Value = 0;
         isDead.Value = true;
-        UpdateHeartUIClientRpc(currentHealth.Value, OwnerClientId);
+
         MatchManager.Instance?.OnPlayerDied();
     }
 }

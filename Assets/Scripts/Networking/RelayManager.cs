@@ -55,7 +55,17 @@ public class RelayManager : MonoBehaviour
 
     public async void JoinRelay()
     {
-        await StartClientWithRelay(joinCodeInputField.text);
+        UIManager.Instance.ShowLoadingScreen();
+
+        bool success = await StartClientWithRelay(joinCodeInputField.text);
+
+        UIManager.Instance.HideLoadingScreen();
+
+        if (!success)
+        {
+            Debug.LogError("Failed to join relay with code: " + joinCodeInputField.text);
+            // Optional: show an error popup or UI feedback
+        }
     }
 
     private async Task<float> GetRegionLatency(string url)

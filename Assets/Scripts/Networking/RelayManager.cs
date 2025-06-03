@@ -18,16 +18,17 @@ public class RelayManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI joinCodeText;
     [SerializeField] private TMP_InputField joinCodeInputField;
 
-    async Task Start()
+    private async void Awake()
     {
         await UnityServices.InitializeAsync();
 
-        if (!AuthenticationService.Instance.IsSignedIn)
-        {
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            Debug.Log("Signed in anonymously.");
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                Debug.Log("Signed in anonymously.");
         }
     }
+
 
 
     public async void StartRelay(string level)
@@ -78,65 +79,28 @@ public class RelayManager : MonoBehaviour
     }
 
 
-    private async Task<string> StartHostWithRelay(int maxConnections = 2)
-{
-    try
-    {
-        // 1. Get all active Relay regions
-        List<Region> regions = await RelayService.Instance.ListRegionsAsync();
-        Dictionary<string, float> regionLatencies = new Dictionary<string, float>();
+    private async Task<string> StartHostWithRelay(int maxConnections = 3)
 
-        // 2. Estimate latency to each (custom or proxy endpoints; fake here for logic)
-        foreach (var region in regions)
+    {
+        try
         {
-            string testUrl = $"https://{region.Id}-a1.ud-relay.unity3d.com";
-            try
-            {
-                float latency = await GetRegionLatency(testUrl);
-                regionLatencies[region.Id] = latency;
-                Debug.Log($"Ping to {region.Id}: {latency:F1} ms");
-            }
-            catch
-            {
-                Debug.LogWarning($"Latency check failed for region: {region.Id}");
-                regionLatencies[region.Id] = float.MaxValue;
-            }
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
+            var relayServerData = new RelayServerData(allocation, "udp");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+
+            string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            bool started = NetworkManager.Singleton.StartHost();
+            return started ? joinCode : null;
+        }
+        catch
+        {
+            Debug.LogError("Creating allocation failed");
+            throw;
         }
 
-        // 3. Sort regions by latency
-        var sortedRegions = new List<string>(regionLatencies.Keys);
-        sortedRegions.Sort((a, b) => regionLatencies[a].CompareTo(regionLatencies[b]));
 
-        // 4. Try allocation in best regions first
-        foreach (string regionId in sortedRegions)
-        {
-            try
-            {
-                Debug.Log($"Trying allocation in region: {regionId}");
-                Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, regionId);
-                var relayServerData = new RelayServerData(allocation, "udp");
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-
-                string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-                bool started = NetworkManager.Singleton.StartHost();
-                return started ? joinCode : null;
-            }
-            catch (RelayServiceException ex)
-            {
-                Debug.LogWarning($"Allocation failed in {regionId}: {ex.Message}");
-                continue;
-            }
-        }
-
-        Debug.LogError("All relay region allocation attempts failed.");
-        return null;
+        
     }
-    catch (System.Exception e)
-    {
-        Debug.LogError("Relay setup failed: " + e.Message);
-        return null;
-    }
-}
 
 
 

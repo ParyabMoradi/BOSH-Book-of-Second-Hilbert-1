@@ -159,6 +159,11 @@ public class AbilityClickSequence : NetworkBehaviour
                 // Optionally call a method on that object
                 // hit.GetComponent<PlayerAbilityTarget>()?.OnAbilityHit(); // Your custom method
             }
+            else if (role == CharacterType.Girl && hit.CompareTag("Player"))
+            {
+                hit.GetComponent<PlayerHealth>()?.ActivateInvulnerabilityServerRpc(7f);
+                
+            }
             else
             {
                 Debug.Log("Hit object is not a valid target.");

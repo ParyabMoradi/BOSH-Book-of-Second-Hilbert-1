@@ -14,7 +14,7 @@ public class OutOfBounds : NetworkBehaviour
             PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
             {
-                health.KillPlayerServerRpc();
+                health.KillPlayerClientRpc();
                 Debug.Log($"[Obstacle] Player {health.OwnerClientId} out of bounds");
             }
         }

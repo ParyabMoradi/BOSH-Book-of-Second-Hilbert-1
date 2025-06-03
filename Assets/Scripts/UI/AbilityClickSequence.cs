@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Netcode;
 
-public class AbilityClickSequence : MonoBehaviour
+public class AbilityClickSequence : NetworkBehaviour
 {
     
     public Image timeoutBar;
@@ -24,7 +25,7 @@ public class AbilityClickSequence : MonoBehaviour
     private float timeRemaining;
     private bool isSequenceTiming = false;
 
-
+    private CharacterType role;
 
     private void Start()
     {

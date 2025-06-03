@@ -4989,7 +4989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4800613287256899084, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[0].x

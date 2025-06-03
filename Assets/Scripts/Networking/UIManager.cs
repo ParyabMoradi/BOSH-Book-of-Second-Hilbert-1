@@ -38,12 +38,27 @@ public class UIManager : MonoBehaviour
 
         }
     }
+    
+    public GameObject loadingScreen;
+
+    public void ShowLoadingScreen()
+    {
+        if (loadingScreen != null)
+            loadingScreen.SetActive(true);
+    }
+
+    public void HideLoadingScreen()
+    {
+        if (loadingScreen != null)
+            loadingScreen.SetActive(false);
+    }
+
 
     private void OnTryAgainClicked()
     {
         hostEndScreen.SetActive(false);
-        Time.timeScale = 1; 
-        
+        Time.timeScale = 1;
+
         MatchManager.Instance.RestartLevelClientRpc();
     }
 

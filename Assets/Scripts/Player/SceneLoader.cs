@@ -6,7 +6,7 @@ public class SceneLoader : NetworkBehaviour
 {
     public string sceneName = "MyScene"; // The name of your scene
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void LoadSceneServerRpc()
     {
         // Load the scene on the server

@@ -90513,6 +90513,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6748873994760023700, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 45338628
+      objectReference: {fileID: 0}
+    - target: {fileID: -6748873994760023700, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6748873994760023700, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3361393010
+      objectReference: {fileID: 0}
     - target: {fileID: 2060937583452680235, guid: 2e9ef2451a80bf34eabf460c1d6ac901, type: 3}
       propertyPath: m_LocalPosition.x
       value: 60

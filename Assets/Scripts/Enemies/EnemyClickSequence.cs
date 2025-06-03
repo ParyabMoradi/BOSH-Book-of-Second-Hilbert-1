@@ -120,11 +120,12 @@ public class EnemyClickSequence : NetworkBehaviour
         {
             Debug.Log("Wrong Click! Restarting sequence.");
             // ResetSequence();
+            if (currentIndex != 0)
+                AudioManager.Instance.PlaySFX(wrongSequenceSFX);
             currentIndex = 0;
             ResetTimer();
             isTimerActive = false;
             UpdateClickIndicators();
-            AudioManager.Instance.PlaySFX(wrongSequenceSFX);
         }
     }
 

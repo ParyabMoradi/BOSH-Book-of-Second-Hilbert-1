@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   anims: []
+  resetPosition: 1
   speed: 10
   jumpForce: 15
   slideSpeed: 5
@@ -141,6 +142,7 @@ MonoBehaviour:
   wallSlide: 0
   isDashing: 0
   isJumping: 0
+  pickedUpTheBook: 0
   side: 1
   isCrouching: 0
   crouchSpeedMultiplier: 0.5

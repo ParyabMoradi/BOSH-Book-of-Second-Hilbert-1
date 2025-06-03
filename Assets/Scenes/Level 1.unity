@@ -3317,11 +3317,11 @@ PrefabInstance:
     - target: {fileID: 5803931163321051820, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
       propertyPath: SFXSource
       value: 
-      objectReference: {fileID: 460655837}
+      objectReference: {fileID: 91429959}
     - target: {fileID: 5803931163321051820, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
       propertyPath: musicSource
       value: 
-      objectReference: {fileID: 460655837}
+      objectReference: {fileID: 91429959}
     - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.1496743
@@ -3367,6 +3367,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+--- !u!82 &91429959 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5965627870561973415, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+  m_PrefabInstance: {fileID: 91429958}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &140727711 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5955268754054536266, guid: 746b3011aa8314b4692b8fbce66993a1, type: 3}
@@ -4978,6 +4983,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyAreaMover
       objectReference: {fileID: 0}
+    - target: {fileID: 4800613287256899084, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[0].x
       value: 7.8
@@ -5007,11 +5016,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
---- !u!82 &460655837 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5237065446895235260, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
-  m_PrefabInstance: {fileID: 460655836}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &473205126
 GameObject:
   m_ObjectHideFlags: 0

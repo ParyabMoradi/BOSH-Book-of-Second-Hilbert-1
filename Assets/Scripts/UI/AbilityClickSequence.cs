@@ -35,6 +35,7 @@ public class AbilityClickSequence : NetworkBehaviour
     private void Start()
     {
         GenerateAndDisplayNewSequence();
+        role = RoleManager.Instance.GetOrAssignRole(NetworkManager.Singleton.LocalClientId);
     }
 
     private void Update()
@@ -139,9 +140,9 @@ public class AbilityClickSequence : NetworkBehaviour
 
         if (hit != null)
         {
-
             if (role == CharacterType.Boy && hit.CompareTag("Enemy"))
             {
+                Debug.Log("here");
                 hit.GetComponent<EnemyShooting>()?.SlowEnemyClientRpc(7f);
                 hit.GetComponent<EnemyRandomAreaMover>()?.SlowMovementClientRpc(7f);
                 hit.GetComponent<EnemyPathMover>()?.SlowMovementClientRpc(7f);

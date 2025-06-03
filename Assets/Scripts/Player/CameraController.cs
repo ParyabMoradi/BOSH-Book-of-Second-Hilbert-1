@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections;
 
 public class CameraController : NetworkBehaviour
 {
@@ -17,26 +18,45 @@ public class CameraController : NetworkBehaviour
 
     private Camera cam;
 
-    void Start()
+    private void Start()
     {
         cam = Camera.main;
-
-        target = GameObject.FindGameObjectsWithTag("Player")[NetworkManager.Singleton.LocalClientId]?.transform;
-        //Debug.Log($"CameraController spawned. Target: {target?.name}");
-    
-        if (target == null)
-        {
-            // Try to find the player object if no target is set
-            Debug.Log("No target set for CameraController. Defaulting to player object.");
-        }
-        
 
         if (cam != null)
             defaultZoom = cam.orthographicSize;
 
         targetZoom = defaultZoom;
+
+        StartCoroutine(AssignTargetWhenReady());
     }
 
+    private IEnumerator AssignTargetWhenReady()
+    {
+        // Wait until NetworkManager is ready and the player list is populated
+        while (PlayerController.AllPlayers.Count < 2 || !NetworkManager.Singleton.IsClient)
+        {
+            yield return null;
+        }
+
+        // Find the local player based on NetworkClientId
+        foreach (var player in PlayerController.AllPlayers)
+        {
+            if (player.OwnerClientId == NetworkManager.Singleton.LocalClientId)
+            {
+                target = player.transform;
+                break;
+            }
+        }
+
+        if (target == null)
+        {
+            Debug.LogWarning("CameraController: Could not find the local player target.");
+        }
+        else
+        {
+            Debug.Log("CameraController: Target assigned to local player.");
+        }
+    }
     void LateUpdate()
     {
         if (target == null) return;

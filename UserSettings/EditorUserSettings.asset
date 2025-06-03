@@ -38,6 +38,7 @@ EditorUserSettings:
     RecentlyUsedSceneGuid-4:
       value: 5253575e520d5c0a0e0d5471167b0944414f4a7d2d7a226229794e65e4e43260
       flags: 0
+<<<<<<< Updated upstream
     RecentlyUsedSceneGuid-5:
       value: 5b0603535506590b5b5d5c74477107444e15497d7c7e72342e2b1b61e0b56361
       flags: 0
@@ -47,6 +48,8 @@ EditorUserSettings:
     RecentlyUsedSceneGuid-7:
       value: 05020253030d0a0d0958097141775944424e4d787e7b7f637a791963b4b9606f
       flags: 0
+=======
+>>>>>>> Stashed changes
     RecentlyUsedSceneGuid-8:
       value: 57095007570d5c030c0c0e2611275a44154e4829757e253529794f65bbb7656f
       flags: 0

@@ -103,8 +103,8 @@ public class PlayerHealth : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void KillPlayerServerRpc()
+    [ClientRpc]
+    public void KillPlayerClientRpc()
     {
         if (!IsOwner) return;
         if (isDead.Value) return;

@@ -78,7 +78,7 @@ private IEnumerator WaitAndAssignCameraTarget()
         {
             if (player.IsServer) 
             {
-                player.GetComponent<PlayerHealth>().ResetHealth();
+                player.GetComponent<PlayerHealth>().ResetHealthServerRpc();
             }
 
             // var health = player.GetComponent<PlayerHealth>();

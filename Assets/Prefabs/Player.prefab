@@ -343,8 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 4
-  isDead:
-    m_InternalValue: 0
+  playerHealthUIPrefab: {fileID: 181211594997748888, guid: 31038868b7aefbc49b31e6071b01f5e3, type: 3}
 --- !u!1 &3750888205191897343
 GameObject:
   m_ObjectHideFlags: 0

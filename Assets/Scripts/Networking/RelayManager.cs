@@ -9,6 +9,8 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class RelayManager : MonoBehaviour
 {
@@ -19,8 +21,14 @@ public class RelayManager : MonoBehaviour
     async Task Start()
     {
         await UnityServices.InitializeAsync();
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            Debug.Log("Signed in anonymously.");
+        }
     }
+
 
     public async void StartRelay(string level)
     {
@@ -32,7 +40,7 @@ public class RelayManager : MonoBehaviour
 
         // Proper way to load scene in a networked game
         NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
-        
+
     }
 
     public async void JoinRelay()
@@ -40,28 +48,77 @@ public class RelayManager : MonoBehaviour
         await StartClientWithRelay(joinCodeInputField.text);
     }
 
-    private async Task<string> StartHostWithRelay(int maxConnections = 3)
-
+    private async Task<float> GetRegionLatency(string url)
     {
-        try
-        {
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
-            var relayServerData = new RelayServerData(allocation, "udp");
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-
-            string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            bool started = NetworkManager.Singleton.StartHost();
-            return started ? joinCode : null;
-        }
-        catch
-        {
-            Debug.LogError("Creating allocation failed");
-            throw;
-        }
-
-
-        
+        var request = UnityWebRequest.Get(url);
+        var startTime = Time.realtimeSinceStartup;
+        await request.SendWebRequest();
+        float latency = (Time.realtimeSinceStartup - startTime) * 1000f; // milliseconds
+        return latency;
     }
+
+
+    private async Task<string> StartHostWithRelay(int maxConnections = 2)
+{
+    try
+    {
+        // 1. Get all active Relay regions
+        List<Region> regions = await RelayService.Instance.ListRegionsAsync();
+        Dictionary<string, float> regionLatencies = new Dictionary<string, float>();
+
+        // 2. Estimate latency to each (custom or proxy endpoints; fake here for logic)
+        foreach (var region in regions)
+        {
+            string testUrl = $"https://{region.Id}-a1.ud-relay.unity3d.com";
+            try
+            {
+                float latency = await GetRegionLatency(testUrl);
+                regionLatencies[region.Id] = latency;
+                Debug.Log($"Ping to {region.Id}: {latency:F1} ms");
+            }
+            catch
+            {
+                Debug.LogWarning($"Latency check failed for region: {region.Id}");
+                regionLatencies[region.Id] = float.MaxValue;
+            }
+        }
+
+        // 3. Sort regions by latency
+        var sortedRegions = new List<string>(regionLatencies.Keys);
+        sortedRegions.Sort((a, b) => regionLatencies[a].CompareTo(regionLatencies[b]));
+
+        // 4. Try allocation in best regions first
+        foreach (string regionId in sortedRegions)
+        {
+            try
+            {
+                Debug.Log($"Trying allocation in region: {regionId}");
+                Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, regionId);
+                var relayServerData = new RelayServerData(allocation, "udp");
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+
+                string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+                bool started = NetworkManager.Singleton.StartHost();
+                return started ? joinCode : null;
+            }
+            catch (RelayServiceException ex)
+            {
+                Debug.LogWarning($"Allocation failed in {regionId}: {ex.Message}");
+                continue;
+            }
+        }
+
+        Debug.LogError("All relay region allocation attempts failed.");
+        return null;
+    }
+    catch (System.Exception e)
+    {
+        Debug.LogError("Relay setup failed: " + e.Message);
+        return null;
+    }
+}
+
+
 
     private async Task<bool> StartClientWithRelay(string joinCode)
     {

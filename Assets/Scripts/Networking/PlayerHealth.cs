@@ -113,7 +113,7 @@ public class PlayerHealth : NetworkBehaviour
     [ClientRpc]
     public void KillPlayerClientRpc()
     {
-        // if (!IsServer) return;
+        if (!IsServer) return;
         if (isDead.Value) return;
         isDead.Value = true;
         MatchManager.Instance?.OnPlayerDied();

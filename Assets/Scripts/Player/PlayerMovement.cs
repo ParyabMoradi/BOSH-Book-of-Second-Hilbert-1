@@ -20,7 +20,6 @@ public class PlayerMovement : NetworkBehaviour
     public AudioClip dashSFX;
     public AudioClip jumpSFX_girl;
     public AudioClip jumpSFX_boy;
-    public AudioClip WalkSFX;
 
 
     private PlayerCollision coll;
@@ -533,8 +532,6 @@ public class PlayerMovement : NetworkBehaviour
         {
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, new Vector2(dir.x * currentSpeed, rb.linearVelocity.y), wallJumpLerp * Time.deltaTime);
         }
-
-        AudioManager.Instance.PlaySFX(WalkSFX);
     }
 
 

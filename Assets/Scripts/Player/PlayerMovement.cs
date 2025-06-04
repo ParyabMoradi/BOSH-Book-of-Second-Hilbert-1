@@ -103,7 +103,7 @@ public class PlayerMovement : NetworkBehaviour
         sprites = GetComponentsInChildren<SpriteRenderer>();
         CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
         // clientNetTransforms = GetComponentsInChildren<ClientNetworkTransform>();
-        Debug.Log(role);
+        // Debug.Log(role);
 
         if (role == CharacterType.Boy)
         {

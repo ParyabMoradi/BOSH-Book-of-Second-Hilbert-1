@@ -17,9 +17,9 @@ public class PlayerMovement : NetworkBehaviour
     public bool resetPosition = true;
 
     // Audio files
-    public AudioClip dashSFX;
-    public AudioClip jumpSFX_girl;
-    public AudioClip jumpSFX_boy;
+    // public AudioClip dashSFX;
+    // public AudioClip jumpSFX_girl;
+    // public AudioClip jumpSFX_boy;
 
 
     private PlayerCollision coll;
@@ -563,7 +563,7 @@ public class PlayerMovement : NetworkBehaviour
         rb.linearVelocity += dir.normalized * dashSpeed;
         StartCoroutine(DashWait());
 
-        AudioManager.Instance.PlaySFX(dashSFX);
+        // // AudioManager.Instance.PlaySFX(dashSFX);
     }
 
     IEnumerator DashWait()
@@ -642,11 +642,11 @@ public class PlayerMovement : NetworkBehaviour
         CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
         if (role == CharacterType.Boy)
         {
-            AudioManager.Instance.PlaySFX(jumpSFX_boy);
+            // AudioManager.Instance.PlaySFX(jumpSFX_boy);
         }
         else
         {
-            AudioManager.Instance.PlaySFX(jumpSFX_girl);
+            // AudioManager.Instance.PlaySFX(jumpSFX_girl);
         }
     }
 

@@ -75,6 +75,8 @@ public class RelayManager : MonoBehaviour
         {
             Debug.LogError("Failed to join relay with code: " + joinCodeInputField.text);
             // Optional: show an error popup or UI feedback
+            UIManager.Instance.HideLoadingScreen();
+
         }
     }
 

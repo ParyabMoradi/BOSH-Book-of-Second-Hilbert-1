@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
@@ -28,7 +29,13 @@ public class RelayManager : MonoBehaviour
                 
     //     }
     // }
-    private async void Awake()
+    private void Awake()
+    {
+        NetworkManager.Singleton.OnTransportFailure += OnTransportFailure;
+        _ = InitializeUnityServices();
+    }
+
+    private async Task InitializeUnityServices()
     {
         await UnityServices.InitializeAsync();
 
@@ -36,6 +43,19 @@ public class RelayManager : MonoBehaviour
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log("Signed in anonymously.");
+        }
+    }
+
+    private void OnTransportFailure()
+    {
+        Debug.LogError("Transport failure detected. Restarting network manager.");
+
+        if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsClient)
+        {
+            NetworkManager.Singleton.Shutdown();
+            // UIManager.Instance.ShowError("Network transport failure. Please restart or rejoin.");
+            // Optionally reload menu scene here:
+            // SceneManager.LoadScene("YourMenuScene");
         }
     }
 
@@ -95,7 +115,13 @@ public class RelayManager : MonoBehaviour
     {
         try
         {
+            
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
+            if (allocation == null || allocation.AllocationId == Guid.Empty)
+            {
+                Debug.LogError("Relay allocation is null or invalid.");
+                return null;
+            }
             var relayServerData = new RelayServerData(allocation, "udp");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
@@ -122,13 +148,20 @@ public class RelayManager : MonoBehaviour
         {
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
+            if (joinAllocation == null)
+            {
+                Debug.LogError("Join allocation returned null.");
+                return false;
+            }
+
             var relayServerData = new RelayServerData(joinAllocation, "udp");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
 
             return NetworkManager.Singleton.StartClient();
         }
-        catch
+        catch (System.Exception ex)
         {
+            Debug.LogError($"Join allocation failed: {ex.Message}");
             return false;
         }
     }

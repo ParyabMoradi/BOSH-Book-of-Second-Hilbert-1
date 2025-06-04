@@ -134,7 +134,6 @@ MonoBehaviour:
   dashSFX: {fileID: 8300000, guid: f59d7f6a596081b4db501f3f52567c20, type: 3}
   jumpSFX_girl: {fileID: 8300000, guid: 12176971d77b82d42b10b65a329ad999, type: 3}
   jumpSFX_boy: {fileID: 8300000, guid: b76c0085853bcdc47b80923977e52e7b, type: 3}
-  WalkSFX: {fileID: 0}
   speed: 10
   jumpForce: 15
   slideSpeed: 5

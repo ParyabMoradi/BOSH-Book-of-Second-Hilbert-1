@@ -15,7 +15,7 @@ public class PlayerHealth : NetworkBehaviour
     private float invulnerabilityEndTime;
     private Coroutine invulnerabilityCoroutine;
 
-    // public AudioClip TakeDamageSFX; // Sound effect for taking damage
+    public AudioClip TakeDamageSFX; // Sound effect for taking damage
 
     public override void OnNetworkSpawn()
     {
@@ -49,7 +49,7 @@ public class PlayerHealth : NetworkBehaviour
 
             if (OwnerClientId == NetworkManager.Singleton.LocalClientId)
             {
-                // AudioManager.Instance.PlaySFX(TakeDamageSFX); // Play damage sound
+                AudioManager.Instance.PlaySFX(TakeDamageSFX); // Play damage sound
             }
         }
     }

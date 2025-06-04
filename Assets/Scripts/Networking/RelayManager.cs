@@ -26,14 +26,38 @@ public class RelayManager : MonoBehaviour
     //         if (!AuthenticationService.Instance.IsSignedIn)
     //         {
     //             await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                
+
     //     }
     // }
-    private void Awake()
+
+    private async void Start()
     {
-        NetworkManager.Singleton.OnTransportFailure += OnTransportFailure;
-        _ = InitializeUnityServices();
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.OnTransportFailure += OnTransportFailure;
+        }
+        else
+        {
+            Debug.LogError("NetworkManager.Singleton is null in Awake. Make sure it's in the scene and has a NetworkObject.");
+        }
+
+        await InitializeUnityServices();
+        
     }
+
+    // private async void Awake()
+    // {
+    //     if (NetworkManager.Singleton != null)
+    //     {
+    //         NetworkManager.Singleton.OnTransportFailure += OnTransportFailure;
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("NetworkManager.Singleton is null in Awake. Make sure it's in the scene and has a NetworkObject.");
+    //     }
+
+    //     await InitializeUnityServices();
+    // }
 
     private async Task InitializeUnityServices()
     {
@@ -61,26 +85,26 @@ public class RelayManager : MonoBehaviour
 
 
     public async void StartRelay(string level)
-{
-    UIManager.Instance.ShowLoadingScreen();  // Enable it when starting
-
-    string joinCode = await StartHostWithRelay();
-
-    if (!string.IsNullOrEmpty(joinCode))
     {
-        joinCodeText.text = joinCode;
-        LastJoinCode = joinCode;
+        UIManager.Instance.ShowLoadingScreen();  // Enable it when starting
 
-        UIManager.Instance.HideLoadingScreen(); // Hide it after success
+        string joinCode = await StartHostWithRelay();
 
-        NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
+        if (!string.IsNullOrEmpty(joinCode))
+        {
+            joinCodeText.text = joinCode;
+            LastJoinCode = joinCode;
+
+            UIManager.Instance.HideLoadingScreen(); // Hide it after success
+
+            NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
+        }
+        else
+        {
+            Debug.LogError("Relay creation failed.");
+            UIManager.Instance.HideLoadingScreen(); //  Hide it if failed
+        }
     }
-    else
-    {
-        Debug.LogError("Relay creation failed.");
-        UIManager.Instance.HideLoadingScreen(); //  Hide it if failed
-    }
-}
 
 
     public async void JoinRelay()
@@ -115,7 +139,7 @@ public class RelayManager : MonoBehaviour
     {
         try
         {
-            
+
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
             if (allocation == null || allocation.AllocationId == Guid.Empty)
             {
@@ -137,7 +161,7 @@ public class RelayManager : MonoBehaviour
         }
 
 
-        
+
     }
 
 

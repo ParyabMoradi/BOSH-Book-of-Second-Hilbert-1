@@ -4298,7 +4298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4380664982203949939, guid: b9bc6f60b30f54bbdada0871f78ada84, type: 3}
       propertyPath: m_ProtocolType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4380664982203949939, guid: b9bc6f60b30f54bbdada0871f78ada84, type: 3}
       propertyPath: m_MaxPayloadSize

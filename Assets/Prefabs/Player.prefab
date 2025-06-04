@@ -131,6 +131,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   anims: []
   resetPosition: 1
+  dashSFX: {fileID: 8300000, guid: f59d7f6a596081b4db501f3f52567c20, type: 3}
+  jumpSFX_girl: {fileID: 8300000, guid: 12176971d77b82d42b10b65a329ad999, type: 3}
+  jumpSFX_boy: {fileID: 8300000, guid: b76c0085853bcdc47b80923977e52e7b, type: 3}
   speed: 10
   jumpForce: 15
   slideSpeed: 5
@@ -344,9 +347,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 4
-  invulnerabilityDuration: 10
   isDead:
     m_InternalValue: 0
+  TakeDamageSFX: {fileID: 8300000, guid: 0fb6ca7db4e9af84990b557fe0b761f7, type: 3}
 --- !u!212 &466034622491954349
 SpriteRenderer:
   m_ObjectHideFlags: 0

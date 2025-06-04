@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     [Header("---------- Audio Clip ----------------")]
     public AudioClip background;
     public AudioClip creditScene;
+
+    public AudioClip[] sfxClips; // Array to hold sound effects
     
 
     private void Awake()

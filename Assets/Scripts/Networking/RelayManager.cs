@@ -28,7 +28,7 @@ public class RelayManager : MonoBehaviour
                 
     //     }
     // }
-    async Task Start()
+    private async void Awake()
     {
         await UnityServices.InitializeAsync();
 
@@ -104,6 +104,7 @@ public class RelayManager : MonoBehaviour
         catch
         {
             Debug.LogError("Creating allocation failed");
+            UIManager.Instance.HideLoadingScreen();
             throw;
         }
 

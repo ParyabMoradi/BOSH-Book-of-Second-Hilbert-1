@@ -14,6 +14,10 @@ public class EnemyShooting : NetworkBehaviour
     public float slowMultiplier = 0.5f;         // bullet speed reduced by this
     public float shootIntervalMultiplier = 2f;  // interval increased by this
 
+    [Header("Visual Effects")]
+    [Tooltip("Assign the PoisonEffect child here")]
+    public GameObject poisonEffect; // 🔹 Assign this in the Inspector
+
     private Transform shootPoint;
     private bool isSlowed = false;
     private float originalShootInterval;
@@ -25,6 +29,16 @@ public class EnemyShooting : NetworkBehaviour
 
         originalShootInterval = shootInterval;
         originalBulletSpeed = bulletSpeed;
+
+        // 🔹 Ensure poison effect is disabled at start
+        if (poisonEffect != null)
+        {
+            poisonEffect.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("PoisonEffect reference is not assigned in the Inspector.");
+        }
 
         if (IsServer)
         {
@@ -76,8 +90,16 @@ public class EnemyShooting : NetworkBehaviour
     {
         isSlowed = true;
         Debug.Log("Enemy is slowed!");
+
+        if (poisonEffect != null)
+            poisonEffect.SetActive(true);
+
         yield return new WaitForSeconds(duration);
+
         isSlowed = false;
         Debug.Log("Enemy slow ended.");
+
+        if (poisonEffect != null)
+            poisonEffect.SetActive(false);
     }
 }

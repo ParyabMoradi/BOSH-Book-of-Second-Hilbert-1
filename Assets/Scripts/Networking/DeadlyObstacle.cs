@@ -12,7 +12,7 @@ public class DeadlyObstacle : NetworkBehaviour
             PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
             {
-                health.TakeDamageServerRpc(4);
+                health.TakeDamageServerRpc(1);
                 Debug.Log($"[Obstacle] Damaged player {health.OwnerClientId}");
             }
         }

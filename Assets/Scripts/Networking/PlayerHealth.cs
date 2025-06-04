@@ -15,6 +15,8 @@ public class PlayerHealth : NetworkBehaviour
     private float invulnerabilityEndTime;
     private Coroutine invulnerabilityCoroutine;
 
+    public AudioClip TakeDamageSFX; // Sound effect for taking damage
+
     public override void OnNetworkSpawn()
     {
         if (IsServer)
@@ -42,6 +44,11 @@ public class PlayerHealth : NetworkBehaviour
         {
             isDead.Value = true;
             MatchManager.Instance?.OnPlayerDied();
+        }
+
+        if (OwnerClientId == NetworkManager.Singleton.LocalClientId)
+        {
+            AudioManager.Instance.PlaySFX(TakeDamageSFX); // Play damage sound
         }
     }
 
@@ -106,7 +113,7 @@ public class PlayerHealth : NetworkBehaviour
     [ClientRpc]
     public void KillPlayerClientRpc()
     {
-        if (!IsServer) return;
+        // if (!IsServer) return;
         if (isDead.Value) return;
         isDead.Value = true;
         MatchManager.Instance?.OnPlayerDied();

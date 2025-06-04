@@ -16,6 +16,10 @@ public class PlayerMovement : NetworkBehaviour
     private ClientNetworkTransform[] clientNetTransforms;
     public bool resetPosition = true;
 
+    // Audio files
+    public AudioClip dashSFX;
+    public AudioClip jumpSFX_girl;
+    public AudioClip jumpSFX_boy;
 
 
     private PlayerCollision coll;
@@ -129,14 +133,11 @@ public class PlayerMovement : NetworkBehaviour
 
         }
         
-
         if (!IsOwner)
         {
-
             enabled = false;
             return;
         }
-        
     }
 
     void Start()
@@ -144,7 +145,6 @@ public class PlayerMovement : NetworkBehaviour
         transform.position = Vector3.zero;
         coll = GetComponent<PlayerCollision>();
         rb = GetComponent<Rigidbody2D>();
-        
 
 		playerCollider = GetComponent<Collider2D>();
 		if (playerCollider is BoxCollider2D box)
@@ -157,7 +157,6 @@ public class PlayerMovement : NetworkBehaviour
     		originalColliderSize = capsule.size;
     		originalColliderOffset = capsule.offset;
 		}
-
     }
 
     void Update()
@@ -548,7 +547,7 @@ else if (wallGrab)
 
         // jumpParticle.Play();
     }
-    
+
     private void Dash(float x, float y)
     {
         // Camera.main.transform.DOComplete();
@@ -564,6 +563,8 @@ else if (wallGrab)
 
         rb.linearVelocity += dir.normalized * dashSpeed;
         StartCoroutine(DashWait());
+
+        AudioManager.Instance.PlaySFX(dashSFX);
     }
     
     IEnumerator DashWait()
@@ -632,20 +633,22 @@ else if (wallGrab)
 
         rb.linearVelocity = new Vector2(push, -slideSpeed);
     }
-    
+
     private void Jump(Vector2 dir, bool wall)
     {
-        // slideParticle.transform.parent.localScale = new Vector3(ParticleSide(), 1, 1);
-        // ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
-
-		anim.SetBool("isJumping",true);
-        
-        //rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+        anim.SetBool("isJumping", true);
         rb.linearVelocity += dir * jumpForce;
-
         isJumping = true;
 
-        // particle.Play();
+        CharacterType role = RoleManager.Instance.GetOrAssignRole(OwnerClientId);
+        if (role == CharacterType.Boy)
+        {
+            AudioManager.Instance.PlaySFX(jumpSFX_boy);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX(jumpSFX_girl);
+        }
     }
 
 private void LedgeClimb()

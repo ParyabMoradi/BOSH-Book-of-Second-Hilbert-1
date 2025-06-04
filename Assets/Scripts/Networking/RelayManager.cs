@@ -18,17 +18,26 @@ public class RelayManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI joinCodeText;
     [SerializeField] private TMP_InputField joinCodeInputField;
 
-    private async void Awake()
+    // private async void Awake()
+    // {
+    //     await UnityServices.InitializeAsync();
+
+    //         if (!AuthenticationService.Instance.IsSignedIn)
+    //         {
+    //             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                
+    //     }
+    // }
+    async Task Start()
     {
         await UnityServices.InitializeAsync();
 
-            if (!AuthenticationService.Instance.IsSignedIn)
-            {
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                Debug.Log("Signed in anonymously.");
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            Debug.Log("Signed in anonymously.");
         }
     }
-
 
 
     public async void StartRelay(string level)

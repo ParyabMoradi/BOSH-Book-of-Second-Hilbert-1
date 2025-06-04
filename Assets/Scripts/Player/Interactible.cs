@@ -3,15 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class Interactible : MonoBehaviour
 {
-    public enum InteractibleType { PressurePlate, EnemySpawnerActivator, LevelTeleport, CameraFocus /*, Add more types here */ }
+    public enum InteractibleType { PressurePlate, EnemySpawnerActivator, LevelTeleport, CameraFocus, CoopPressurePlate }
     [SerializeField] private InteractibleType type;
-    [SerializeField] private GameObject objectToDisable; // For PressurePlate
+    [SerializeField] private GameObject objectToDisable; // For PressurePlate and CoopPressurePlate
     [SerializeField] private EnemySpawner enemySpawner;  // For EnemySpawnerActivator
     [SerializeField] private SceneLoader sceneLoader; // For LevelTeleport
     [SerializeField] private CameraController cameraController; // For CameraFocus
     [SerializeField] private Transform cameraFocusTarget; // For CameraFocus
-    [SerializeField] private float zoomLevel = 8f; // New field for zoom
-    [SerializeField] private Collider2D cameraClampArea; // New field for bounds
+    [SerializeField] private float zoomLevel = 8f; // For CameraFocus
+    [SerializeField] private Collider2D cameraClampArea; // For CameraFocus
+
+    // For CoopPressurePlate
+    [SerializeField] private Collider2D button1;
+    [SerializeField] private Collider2D button2;
+    private bool player1OnButton = false;
+    private bool player2OnButton = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -40,7 +46,35 @@ public class Interactible : MonoBehaviour
                     cameraController.FocusOnTarget(cameraFocusTarget, zoomLevel, area);
                 }
                 break;
-            // Add more cases for new types here
+            case InteractibleType.CoopPressurePlate:
+                // Do nothing here, handled in button triggers
+                break;
+        }
+    }
+
+    // CoopPressurePlate logic
+    void Update()
+    {
+        if (type != InteractibleType.CoopPressurePlate) return;
+        if (objectToDisable == null || button1 == null || button2 == null) return;
+
+        // Reset
+        player1OnButton = false;
+        player2OnButton = false;
+
+        // Find all players
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (var player in players)
+        {
+            if (button1.bounds.Contains(player.transform.position))
+                player1OnButton = true;
+            if (button2.bounds.Contains(player.transform.position))
+                player2OnButton = true;
+        }
+
+        if (player1OnButton && player2OnButton)
+        {
+            objectToDisable.SetActive(false);
         }
     }
 }

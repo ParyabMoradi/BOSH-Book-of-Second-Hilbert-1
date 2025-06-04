@@ -6,7 +6,7 @@ public class OutOfBounds : NetworkBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (!IsOwner) return; // Only the owner applies damage
+        if (!IsServer) return; // Only the owner applies damage
 
         if (other.CompareTag("Player"))
         {

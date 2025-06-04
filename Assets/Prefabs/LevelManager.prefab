@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6161153764969077053}
-  - component: {fileID: 2570691872951866105}
+  - component: {fileID: 5867820559512742190}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2570691872951866105
+--- !u!114 &5867820559512742190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +41,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5884430604827714149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1546f90acfe98c240947ec86890513cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 67e1d53f324cc394089c0b7879111b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelDoor: {fileID: 0}
-  enemiesToDefeat: 1
+  enemiesToDefeat: 0

@@ -23,6 +23,8 @@ public class PauseMenu : NetworkBehaviour
 
     void Update()
     {
+        if (IsClient && !isPaused && PlayerJoinHandler.IsJoinCanvasActive && Input.GetKeyDown(KeyCode.Escape))
+            RequestPauseServerRpc();
         // Only listen to input if this is a client and the join canvas isn't active
         if (!IsClient || PlayerJoinHandler.IsJoinCanvasActive)
             return;

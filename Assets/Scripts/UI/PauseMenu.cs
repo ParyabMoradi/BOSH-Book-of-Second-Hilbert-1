@@ -88,8 +88,8 @@ public class PauseMenu : NetworkBehaviour
         {
             runtimeUI.SetActive(true);
         }
-
-        Time.timeScale = 1f;
+        
+        Time.timeScale = PlayerJoinHandler.IsJoinCanvasActive?0f:1f;
         isPaused = false;
         Debug.Log("Game resumed. isPaused: " + isPaused);
     }

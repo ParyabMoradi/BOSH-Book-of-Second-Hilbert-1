@@ -26,7 +26,6 @@ public class EnemyClickSequence : NetworkBehaviour
     [SerializeField] private Transform circleLarge;
     [SerializeField] private Transform circleMid;
     [SerializeField] private Transform circleSmall;
-
     [SerializeField] private SpriteRenderer circleLargeRenderer;
     [SerializeField] private SpriteRenderer circleMidRenderer;
     [SerializeField] private SpriteRenderer circleSmallRenderer;
@@ -229,6 +228,8 @@ public class EnemyClickSequence : NetworkBehaviour
     public void DefeatClientRpc()
     {
         Defeat(); // This will run locally on each client
+
+        
     }
 
     public void Defeat()
@@ -247,6 +248,9 @@ public class EnemyClickSequence : NetworkBehaviour
         {
             AudioManager.Instance.PlaySFX(CoinEnemyDefeatSFX);
         }
+
+        LevelManager.Instance.IncreaseDefeatedEnemies();
+        
     }
     private IEnumerator FadeOutAndDisable()
     {

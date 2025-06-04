@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 976330744232073467}
   - component: {fileID: 3313137118065105143}
   - component: {fileID: 6878817554066872843}
-  - component: {fileID: 5217397250531818483}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -72,28 +71,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxEnemyCount: 5
+  maxEnemyCount: 1
   spawnCooldown: 2
   enemyPrefab: {fileID: 0}
   minSpawnPos: {x: 0, y: 0}
   maxSpawnPos: {x: 0, y: 0}
-  enemies: []
---- !u!114 &5217397250531818483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5201547485136144973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60b1fde363a494969b9df255f0801f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxEnemyCount: 5
-  spawnCooldown: 2
-  enemyPrefab: {fileID: 0}
-  minSpawnPos: {x: 0, y: 0}
-  maxSpawnPos: {x: 0, y: 0}
+  spawnPoints: []
+  isSpawnable: 0
   enemies: []

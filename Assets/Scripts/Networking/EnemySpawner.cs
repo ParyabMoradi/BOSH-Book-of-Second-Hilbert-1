@@ -15,6 +15,8 @@ public class EnemySpawner : NetworkBehaviour
     private Vector2 minSpawnPos;
     [SerializeField]
     private Vector2 maxSpawnPos;
+    [SerializeField]
+    private List<Transform> spawnPoints = new List<Transform>();
 
     public bool isSpawnable = false;
 
@@ -43,10 +45,21 @@ public class EnemySpawner : NetworkBehaviour
 
             for (int i = 0; i < toSpawn; i++)
             {
-                Vector2 spawnPos = new Vector2(
-                    Random.Range(minSpawnPos.x, maxSpawnPos.x),
-                    Random.Range(minSpawnPos.y, maxSpawnPos.y)
-                );
+                Vector2 spawnPos;
+                if (spawnPoints != null && spawnPoints.Count > 0)
+                {
+                    // Pick a random spawn point from the list
+                    Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+                    spawnPos = spawnPoint.position;
+                }
+                else
+                {
+                    // Fallback to random position in area
+                    spawnPos = new Vector2(
+                        Random.Range(minSpawnPos.x, maxSpawnPos.x),
+                        Random.Range(minSpawnPos.y, maxSpawnPos.y)
+                    );
+                }
 
                 if (this.isSpawnable)
                 {
@@ -56,18 +69,14 @@ public class EnemySpawner : NetworkBehaviour
 
                     // Optional: Set dynamic path
                     enemyMover.pathPositions = new Vector2[] {
-                    spawnPos,
-                    spawnPos + new Vector2(2f, 0),
-                    spawnPos + new Vector2(2f, 2f),
-                    spawnPos + new Vector2(0f, 2f)
-                };
+                        spawnPos,
+                        spawnPos + new Vector2(2f, 0),
+                        spawnPos + new Vector2(2f, 2f),
+                        spawnPos + new Vector2(0f, 2f)
+                    };
                     enemy.GetComponent<NetworkObject>().Spawn();
                     enemies.Add(enemy);
                 }
-
-
-
-
             }
 
             // Optional: add a delay between each clone

@@ -67,12 +67,12 @@ private IEnumerator WaitAndAssignCameraTarget()
 }
 
     [ClientRpc]
-    public void RestartLevelClientRpc()
+    public void RestartLevelClientRpc(string level)
     {
         Debug.Log(PlayerController.AllPlayers.Count + " players in the game");
 
         // Get camera
-        var cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        // var cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
         foreach (var player in PlayerController.AllPlayers)
         {
@@ -101,7 +101,7 @@ private IEnumerator WaitAndAssignCameraTarget()
         //isGameFrozen.Value = false;
         Time.timeScale = 1;
 
-        NetworkManager.Singleton.SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(level, LoadSceneMode.Single);
     }
 
     // [ClientRpc]

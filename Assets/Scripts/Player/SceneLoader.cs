@@ -9,13 +9,16 @@ public class SceneLoader : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void LoadSceneServerRpc()
     {
+        
         // Load the scene on the server
         NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        MatchManager.Instance.RestartLevelClientRpc(sceneName);
     }
 
     // Call this function from a client (e.g., a button click)
     public void RequestSceneLoad()
     {
         LoadSceneServerRpc(); // Call the server method
+        
     }
 }

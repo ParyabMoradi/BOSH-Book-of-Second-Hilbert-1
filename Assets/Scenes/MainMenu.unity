@@ -569,6 +569,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209737487}
   m_CullTransparentMesh: 1
+--- !u!1001 &322888407
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2459462800876652334, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1496743
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0985187
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.12591021
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068434834650918294, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
 --- !u!1 &379088415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1166,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459688593}
   m_CullTransparentMesh: 1
+--- !u!114 &656659762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5803931163321051820, guid: b99e76ded7af69043b93f1be1ce3abce, type: 3}
+  m_PrefabInstance: {fileID: 322888407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53cd304be144c564faecd1c047c08b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &720672718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1462,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: LevelSelect
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 656659762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 342973c4af840448aad650bfcf78813c, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &828363618
@@ -2020,6 +2100,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Level 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 656659762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: e1a6a038b857040d79a01ffd73d0b1df, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &883108179
@@ -3088,7 +3180,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1261129636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 656659762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 342973c4af840448aad650bfcf78813c, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1261129636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4761,6 +4865,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 656659762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 342973c4af840448aad650bfcf78813c, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1791070758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5750,3 +5866,4 @@ SceneRoots:
   - {fileID: 1777212215}
   - {fileID: 1503267146}
   - {fileID: 1324822}
+  - {fileID: 322888407}

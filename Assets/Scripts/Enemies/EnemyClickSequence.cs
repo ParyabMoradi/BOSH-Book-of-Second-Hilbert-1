@@ -288,10 +288,20 @@ public class EnemyClickSequence : NetworkBehaviour
         enemyManager.RegisterEnemyServerRpc(gameObject);
     }
 
-
     private Color GetColorForClick(int clickType)
     {
-        return clickType == 0 ? Color.red : Color.blue;
+        if (clickType == 0)
+        {
+            Color color;
+            ColorUtility.TryParseHtmlString("#FF3333", out color); // Bright red
+            return color;
+        }
+        else
+        {
+            Color color;
+            ColorUtility.TryParseHtmlString("#0f8bff", out color); // Bright blue
+            return color;
+        }
     }
     
     [ClientRpc]

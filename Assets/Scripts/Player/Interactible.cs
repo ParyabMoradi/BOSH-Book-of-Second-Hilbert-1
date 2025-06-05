@@ -19,6 +19,11 @@ public class Interactible : MonoBehaviour
     private bool player1OnButton = false;
     private bool player2OnButton = false;
 
+    // Add this line
+    [SerializeField] private SpriteRenderer pressurePlateRenderer;
+
+    private bool pressurePlateActivated = false;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
@@ -28,6 +33,11 @@ public class Interactible : MonoBehaviour
             case InteractibleType.PressurePlate:
                 if (objectToDisable != null)
                     objectToDisable.SetActive(false);
+                if (pressurePlateRenderer != null && !pressurePlateActivated)
+                {
+                    pressurePlateRenderer.color *= 0.7f; // Slightly darker
+                    pressurePlateActivated = true;
+                }
                 break;
             case InteractibleType.EnemySpawnerActivator:
                 if (enemySpawner != null)

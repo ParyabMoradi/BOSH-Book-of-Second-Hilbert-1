@@ -262,7 +262,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      boyAbilityEffectOnEnemy_0: -3267055281580182904
+      boyAbilityEffectOnEnemy_1: 5146435490306856308
+      boyAbilityEffectOnEnemy_2: 4439787539094659795
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

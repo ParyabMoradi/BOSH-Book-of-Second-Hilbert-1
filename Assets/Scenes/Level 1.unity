@@ -4703,6 +4703,9 @@ MonoBehaviour:
   cameraFocusTarget: {fileID: 0}
   zoomLevel: 8
   cameraClampArea: {fileID: 0}
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  pressurePlateRenderer: {fileID: 0}
 --- !u!1 &324495631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5330,6 +5333,9 @@ MonoBehaviour:
   cameraFocusTarget: {fileID: 0}
   zoomLevel: 8
   cameraClampArea: {fileID: 0}
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  pressurePlateRenderer: {fileID: 0}
 --- !u!66 &474422016
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -44905,7 +44911,59 @@ CompositeCollider2D:
       - {x: 75.96667, y: 20.966639}
       - {x: 75.966675, y: 20.033325}
       - {x: 76.03335, y: 19.966667}
-    - - {x: 125.96667, y: 27.033363}
+    - - {x: 144.96666, y: 27.033363}
+      - {x: 144.03334, y: 27.033363}
+      - {x: 144.03334, y: 27.166672}
+      - {x: 143.16666, y: 28.033335}
+      - {x: 143.03334, y: 28.033363}
+      - {x: 143.03334, y: 28.166672}
+      - {x: 142.16666, y: 29.033335}
+      - {x: 142.03334, y: 29.033363}
+      - {x: 142.03333, y: 29.166666}
+      - {x: 140.96666, y: 29.166637}
+      - {x: 140.96663, y: 29.033335}
+      - {x: 140.56667, y: 29.03333}
+      - {x: 139.96666, y: 28.699984}
+      - {x: 139.96663, y: 28.033335}
+      - {x: 139.56667, y: 28.03333}
+      - {x: 138.96666, y: 27.699984}
+      - {x: 138.9666, y: 27.233416}
+      - {x: 138.16666, y: 28.033335}
+      - {x: 138.03334, y: 28.033363}
+      - {x: 138.03333, y: 28.166672}
+      - {x: 137.16666, y: 29.033335}
+      - {x: 137.03334, y: 29.033363}
+      - {x: 137.03333, y: 29.166666}
+      - {x: 135.96666, y: 29.166637}
+      - {x: 135.96663, y: 29.033335}
+      - {x: 135.56667, y: 29.03333}
+      - {x: 134.96666, y: 28.699984}
+      - {x: 134.96663, y: 28.033335}
+      - {x: 134.56667, y: 28.03333}
+      - {x: 133.96666, y: 27.699984}
+      - {x: 133.96663, y: 27.033335}
+      - {x: 133.03334, y: 27.033363}
+      - {x: 133.03333, y: 27.166672}
+      - {x: 132.16666, y: 28.033335}
+      - {x: 132.03334, y: 28.033363}
+      - {x: 132.03333, y: 28.166672}
+      - {x: 131.16666, y: 29.033335}
+      - {x: 131.03334, y: 29.033363}
+      - {x: 131.03333, y: 29.166672}
+      - {x: 130.16666, y: 30.033335}
+      - {x: 130.03334, y: 30.033363}
+      - {x: 130.03333, y: 30.166666}
+      - {x: 128.96666, y: 30.166637}
+      - {x: 128.96663, y: 30.033335}
+      - {x: 128.56667, y: 30.03333}
+      - {x: 127.96667, y: 29.699984}
+      - {x: 127.966644, y: 29.033335}
+      - {x: 127.56667, y: 29.03333}
+      - {x: 126.96667, y: 28.699984}
+      - {x: 126.966644, y: 28.033335}
+      - {x: 126.56667, y: 28.03333}
+      - {x: 125.96667, y: 27.699984}
+      - {x: 125.966644, y: 27.033335}
       - {x: 125.03333, y: 27.033363}
       - {x: 125.03332, y: 27.166672}
       - {x: 124.16666, y: 28.033335}
@@ -45068,58 +45126,6 @@ CompositeCollider2D:
       - {x: 145.96663, y: 28.033335}
       - {x: 145.56667, y: 28.03333}
       - {x: 144.96666, y: 27.699984}
-      - {x: 144.96663, y: 27.033335}
-      - {x: 144.03334, y: 27.033363}
-      - {x: 144.03334, y: 27.166672}
-      - {x: 143.16666, y: 28.033335}
-      - {x: 143.03334, y: 28.033363}
-      - {x: 143.03334, y: 28.166672}
-      - {x: 142.16666, y: 29.033335}
-      - {x: 142.03334, y: 29.033363}
-      - {x: 142.03333, y: 29.166666}
-      - {x: 140.96666, y: 29.166637}
-      - {x: 140.96663, y: 29.033335}
-      - {x: 140.56667, y: 29.03333}
-      - {x: 139.96666, y: 28.699984}
-      - {x: 139.96663, y: 28.033335}
-      - {x: 139.56667, y: 28.03333}
-      - {x: 138.96666, y: 27.699984}
-      - {x: 138.9666, y: 27.233416}
-      - {x: 138.16666, y: 28.033335}
-      - {x: 138.03334, y: 28.033363}
-      - {x: 138.03333, y: 28.166672}
-      - {x: 137.16666, y: 29.033335}
-      - {x: 137.03334, y: 29.033363}
-      - {x: 137.03333, y: 29.166666}
-      - {x: 135.96666, y: 29.166637}
-      - {x: 135.96663, y: 29.033335}
-      - {x: 135.56667, y: 29.03333}
-      - {x: 134.96666, y: 28.699984}
-      - {x: 134.96663, y: 28.033335}
-      - {x: 134.56667, y: 28.03333}
-      - {x: 133.96666, y: 27.699984}
-      - {x: 133.96663, y: 27.033335}
-      - {x: 133.03334, y: 27.033363}
-      - {x: 133.03333, y: 27.166672}
-      - {x: 132.16666, y: 28.033335}
-      - {x: 132.03334, y: 28.033363}
-      - {x: 132.03333, y: 28.166672}
-      - {x: 131.16666, y: 29.033335}
-      - {x: 131.03334, y: 29.033363}
-      - {x: 131.03333, y: 29.166672}
-      - {x: 130.16666, y: 30.033335}
-      - {x: 130.03334, y: 30.033363}
-      - {x: 130.03333, y: 30.166666}
-      - {x: 128.96666, y: 30.166637}
-      - {x: 128.96663, y: 30.033335}
-      - {x: 128.56667, y: 30.03333}
-      - {x: 127.96667, y: 29.699984}
-      - {x: 127.966644, y: 29.033335}
-      - {x: 127.56667, y: 29.03333}
-      - {x: 126.96667, y: 28.699984}
-      - {x: 126.966644, y: 28.033335}
-      - {x: 126.56667, y: 28.03333}
-      - {x: 125.96667, y: 27.699984}
     - - {x: 130.03333, y: 54.5}
       - {x: 130.03337, y: 54.56667}
       - {x: 130.96666, y: 54.56667}
@@ -46920,7 +46926,7 @@ Transform:
   m_GameObject: {fileID: 696782836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 130.47, y: 26.4, z: 10}
+  m_LocalPosition: {x: 132.42, y: 26.4, z: 10}
   m_LocalScale: {x: 54.1, y: 29.9, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49271,6 +49277,9 @@ MonoBehaviour:
   cameraFocusTarget: {fileID: 7938177789072831560, guid: 373ecde031cc7be4f9d960a3622cbb97, type: 3}
   zoomLevel: 15
   cameraClampArea: {fileID: 696782838}
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  pressurePlateRenderer: {fileID: 0}
 --- !u!1 &842920548
 GameObject:
   m_ObjectHideFlags: 0
@@ -50192,7 +50201,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56.74, y: 40.95}
+  m_AnchoredPosition: {x: 53.7, y: 40.91}
   m_SizeDelta: {x: 18.0546, y: 11.1332}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943934266
@@ -50215,11 +50224,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Aim at the enemy to slow their movement and attacks using the boy''s ability.
-
-    Both
-    players should kill the enemy by doing the click sequence around the enemy a
-    the certain time'
+  m_text: The boy can slow the enemy by using the click sequence indicated in the
+    bottom left. This will help in tricky combat situations.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d69d5a4fabad0a341afaad76cc005fe9, type: 2}
   m_sharedMaterial: {fileID: 153426065048646884, guid: d69d5a4fabad0a341afaad76cc005fe9, type: 2}
@@ -52016,6 +52022,9 @@ MonoBehaviour:
   cameraFocusTarget: {fileID: 0}
   zoomLevel: 8
   cameraClampArea: {fileID: 0}
+  button1: {fileID: 0}
+  button2: {fileID: 0}
+  pressurePlateRenderer: {fileID: 0}
 --- !u!1 &1547208480
 GameObject:
   m_ObjectHideFlags: 0
@@ -53586,23 +53595,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[0].x
-      value: 144.91
+      value: 143.9
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[0].y
-      value: 31.9
+      value: 28.6
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[1].x
-      value: 123.5
+      value: 132.2
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[1].y
-      value: 32.3
+      value: 26.6
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[2].x
-      value: 112.1
+      value: 142.7
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[2].y
@@ -53610,11 +53619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[3].x
-      value: 144.92
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 5940585131160585233, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: polygonPoints.Array.data[3].y
-      value: 17.1
+      value: 14.7
       objectReference: {fileID: 0}
     - target: {fileID: 6329223814053900442, guid: c66b6f1bb050dee40ac192d59f3ad985, type: 3}
       propertyPath: m_Enabled

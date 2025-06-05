@@ -50383,6 +50383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca0d10588371c04d89f2da2046dff08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Wall2: {fileID: 920651652}
   requiredClientCount: 2
   door: {fileID: 917689682}
   wall: {fileID: 817052153}

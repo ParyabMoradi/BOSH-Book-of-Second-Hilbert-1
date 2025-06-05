@@ -4,6 +4,7 @@ using Unity.Netcode;
 
 public class BothClientsInTrigger : MonoBehaviour
 {
+    public GameObject Wall2;
     private HashSet<ulong> clientsInZone = new HashSet<ulong>();
 
     [Tooltip("Expected number of clients (players) in zone to trigger action")]
@@ -48,6 +49,9 @@ public class BothClientsInTrigger : MonoBehaviour
 
         if (wall != null)
             wall.SetActive(true);
+
+        if (Wall2 != null)
+            Wall2.SetActive(false);
 
         Debug.Log("Door enabled, wall disabled.");
     }

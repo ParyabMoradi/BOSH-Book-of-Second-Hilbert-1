@@ -425,7 +425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5699342332658252293, guid: 3d45d462092814654afaae035574e8ed, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5844156179000127556, guid: 3d45d462092814654afaae035574e8ed, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5675,7 +5675,7 @@ CompositeCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dcfa3719e7ea5a949bf3d7cd7105d89d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5752,7 +5752,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dcfa3719e7ea5a949bf3d7cd7105d89d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -74168,7 +74168,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1333064526
+--- !u!1001 &1346399305
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -74222,7 +74222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4905387939346912878, guid: cf0c8d1dfb810d4449f3d25f13c2de75, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 63079802
+      value: 3446988510
       objectReference: {fileID: 0}
     - target: {fileID: 4905387939346912878, guid: cf0c8d1dfb810d4449f3d25f13c2de75, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
@@ -78866,10 +78866,10 @@ SceneRoots:
   - {fileID: 1969543588}
   - {fileID: 441916820}
   - {fileID: 1631358485}
-  - {fileID: 1333064526}
   - {fileID: 1437407691}
   - {fileID: 57331295}
   - {fileID: 1846073346}
   - {fileID: 212249108}
   - {fileID: 427405938}
   - {fileID: 1275809564}
+  - {fileID: 1346399305}

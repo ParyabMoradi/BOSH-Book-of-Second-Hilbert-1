@@ -1,117 +1,72 @@
 # BOSH-Book-of-Second-Hilbert-1
 
-## Deadlines
-29 May 2025: GDD & Storyboard & GTD <br>
-05 Jun 2025: Game Prototype <br>
-12 Jun 2025: Game Trailer <br>
+## Overview
 
-## Tasks
-### week 1 (10 April)
+BOSH: Book of Second Hilbert is a 2-player cooperative roguelike fighting game where players must infiltrate a secret organization, retrieve a stolen book, and protect it at all costs.
 
-**Paryab**
-- AI algorithm
-- Movement mechanics
-- Find a theme for assets and UI
+Set in the present day, the story follows two students on a dangerous mission to recover the Book of Second Hilbert—the key to solving all of Hilbert’s problems—and earn the money needed to save their mother.
 
-**Valeria**
-(Platforms and interactables in the environment, these being crafting stations and such)
-- Finding assets and notify fred so he knows theme for UI
-- Environmental puzzles (It takes two inspired)
-- Find a theme for assets and UI
+<img width="1425" height="795" alt="Gameplay Screenshot" src="https://github.com/user-attachments/assets/79d700da-77d5-479f-a0fc-9a319ff49c15" />
 
-**Frederick**
-- Figma sketch
-- Unity prototype
-- Rayman inspired jump-into-portal-selection of levels
-- Find a theme for assets and UI
 
-### week 2 (17 April)
-  **Paryab**
-- Camera movement
-- Configure the player movement
-- Find animations for player movement
-- Try to create some cut-scenes
-- Other types of enemies
-  
-**Valeria**
-- Design the school level
-  
-**Fredrick**
-- Continue woriking on menus
-- Implimantation in-game UI (spells, hearts, UI of enemies, etc.)
-- Implimentation of the level selection scene
+## 🧩 Core Concept
 
-### week 3 (24 April)
-**Paryab**
-- camera movement
-- add basic animations
-- cut-scenes
+Genre: Roguelike / Fighting (Beat’em up)
+Mode: Local Multiplayer (2 players required)
+Player Type: Achievers (skill, mastery, and teamwork-driven)
+Mindset: Casual but skill-focused
+Platform: PC
 
-**Valeria**
-- level design
-- cut-scenes
+## Tech Stack
 
-**Fredrick**
-- ui design
+| Category | Technology |
+|-----------|-------------|
+| **Game Engine** | [Unity](https://unity.com/) (C#) |
+| **Version Control** | [GitHub](https://github.com/) |
+| **Multiplayer Functionality** | Unity Relay |
+| **Art & Design** | Ready 2D Assets free for use |
+| **Animation** | Unity Animator, Spine (if applicable) |
+| **Audio** | FL Studio (for Lo-Fi / R&B inspired tracks) |
+| **UI / UX** | Unity UI Toolkit, custom layout prefabs |
+| **Collaboration** | Trello for task tracking |
+| **Build Target** | Windows (PC) and MacOS |
 
-### week 4 (1 May)
+## ✨ Story
 
-**Paryab**
-- add the book mechanism
-- craftable platforms for the girl
-- cut-scense
-- implementing the abilities
-- level design
-  
-**Valeria**
-- add achievement system for levels
-- cut-scenes
-- R&D about networking
-- level design
-  
-**Fredrick**
-- level selection scene for the shop and school level
-- shop and power-ups
-- implementing the power-ups
-- setting button implitation
-- R&D about networking
+A brilliant student known as The Second Hilbert solved all of Hilbert’s unsolved problems and documented them in a mysterious book.
+Before he could publish his work, he was murdered, and the Book of Second Hilbert was stolen by a secret organization.
 
-**prototype of first level**: test the movements, enemies, camera movement for first level
+Two of his classmates—siblings of a dying mother—are offered a deal by their mentor:
 
-### week 5 (8 May)
-**Paryab**
+“Retrieve the book, and I’ll help you decrypt it to claim the Hilbert Prize. The reward will pay for your mother’s treatment.”
 
-**Valeria**
+The players embark on a high-stakes heist to steal back the book, only to discover that their mentor’s intentions may not be as pure as they seem...
 
-**Fredrick**
+## ⚔️ Gameplay
+🎭 Phases
 
-### week 6 (15 May)
-Start working on multiplayer
-boy/girl abilities
-ui for connection of players
-**Paryab**
+Before the Book – Players focus on combat and survival.
+After the Book – Players must protect the book while continuing to fight and solve puzzles.
+Each stage tests teamwork, timing, and strategy as enemies grow stronger and mechanics evolve.
 
-**Valeria**
 
-**Fredrick**
+## Core Mechanics
+🎨 Combat
 
-### week 7 (22 May)
-**Paryab**
+Enemies have randomized color-coded click sequences.
+The girl paints the enemy with the correct color.
+The boy attacks using his spell sequence.
+Missing or attacking too early breaks the combo.
 
-**Valeria**
+## 📚 Protecting the Book
 
-**Fredrick**
+After retrieving it, players take turns carrying the book.
+The book has durability—if destroyed, the mission fails.
+Players can drag and drop the book using the mouse within a time limit.
 
-### week 8 (29 May)
-**Paryab**
+## 🧩 Cooperation & Puzzles
 
-**Valeria**
+Many platforms and devices require coordinated color activation.
+Some obstacles can only be overcome by alternating between abilities.
 
-**Fredrick**
 
-### week 9 (5 Jun)
-**Paryab**
-
-**Valeria**
-
-**Fredrick**
